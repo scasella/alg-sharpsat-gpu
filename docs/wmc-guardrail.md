@@ -1,4 +1,4 @@
-# wmc-guardrail v3.2
+# wmc-guardrail and Guardrail Studio v3.3
 
 `CompiledGuardrail` attaches independent variable weights to a compiled CNF support graph. Hard constraints describe which assignments are permitted; they do not establish that those constraints capture every real-world safety requirement.
 
@@ -73,3 +73,200 @@ python -m alg_sharpsat.guardrail_benchmarks --sizes 18 22 26 30 \
 The benchmark compares the existing seed-0 planted coupled/bipartite fixtures against an independent recursive weighted DPLL that uses `n+1` counting passes. It validates distinct batch vectors against single evaluations and selected vectors against DPLL. Timings separate compilation, warm inference, fresh compile-plus-inference, and batch throughput; CPU one/four-thread and available accelerator results are reported separately.
 
 The rare-event showcase is a deliberately simple 20-unit-clause formula with uniform priors and acceptance `2^-20`. It isolates rejection overhead; it is not evidence that every rare-event constraint compiles cheaply. The report bounds rejection simulation to 10,000 proposals and records expected work analytically. Sparse compilation and join width can still grow exponentially. This release does not benchmark a neural model or claim semantic safety beyond the supplied CNF.
+
+## V3.3: interactive Guardrail Studio
+
+The Studio adds named variables, a restricted Boolean language, exact policy diffs,
+and a local browser interface. It uses the existing compiled sparse weighted
+engine. There is no Node build, CDN, additional web framework, or external model
+call. HTML, CSS, and JavaScript are packaged in the wheel.
+
+```sh
+python -m pip install -e .
+wmc-guardrail-studio
+# Equivalent: python -m alg_sharpsat.webapp
+wmc-guardrail-studio --host 127.0.0.1 --port 8765 --no-browser
+wmc-guardrail-studio --demo-cli
+```
+
+Open `http://127.0.0.1:8765`. Select a domain and preset, adjust the prior sliders,
+and inspect Z, KL in bits, the threshold action, every violated rule, MAP changes,
+and prior/posterior bars. Enable **Exact rational (Fraction)** to display exact
+numerators and denominators. Disable, edit, or add a rule to see states and prior
+probability mass exposed/revoked relative to the original built-in policy. Restore
+rules to return to the starting policy. Resampling produces five independent
+conditional draws; repeats are legitimate.
+
+The three packs are **editable engineering fixtures**: cloud operations (20
+variables / 16 rules), clinical prescribing (22 / 19), and fintech treasury
+(20 / 16). Each has routine, conflict, and rare-event presets. The cloud presets
+have acceptance probabilities approximately **0.9321**, **0.01051**, and
+**10^-24**. The clinical examples deliberately omit dosing, patient history,
+exceptions, and professional judgment; the combined pregnancy/lactation flag is
+a simplification. They are not validated clinical protocols. Treasury examples
+are not a compliance certification. Primary clinical references and explicit
+simplifications are documented in [`domains.py`](../src/alg_sharpsat/domains.py).
+
+All variables, including context and control flags, are inferred jointly.
+**Set observed facts to probability 0 or 1 to clamp them.** Otherwise posterior
+conditioning and MAP can change their values. Setting an “approval” flag in a
+model does not obtain an approval or perform a real safeguard. The Studio only
+inspects Boolean assignments; it executes no operational, clinical, or financial
+actions. MAP is the highest-prior-probability compliant tuple, not a minimum
+Hamming-distance repair. Its displayed probability is the prior joint weight,
+not its conditional probability.
+
+### Named policies in Python
+
+```python
+from fractions import Fraction
+from alg_sharpsat import VariableSpec, RuleSpec, PolicySpec, diff_policies
+
+variables = [
+    VariableSpec("deploy", "Deploy the proposed build", category="action"),
+    VariableSpec("tested", "Integration tests passed", category="evidence"),
+    VariableSpec("approved", "Peer approved this change", category="evidence"),
+]
+policy = PolicySpec(variables, [
+    RuleSpec("release_gate", "Deploy only with tests and approval",
+             "deploy -> (tested and approved)"),
+])
+compiled = policy.compile_guardrail()
+probs = {"deploy": Fraction(4, 5), "tested": Fraction(3, 5),
+         "approved": Fraction(2, 5)}
+result = compiled.evaluate(probs, mode="exact_rational")
+assert compiled.cnf.num_vars == 3  # This common form needs no auxiliaries.
+assert compiled.model_count == 5
+assert result.partition_function == Fraction(49, 125)
+assert [r.rule_id for r in policy.check_violations(
+    {"deploy": 1, "tested": 1, "approved": 0})] == ["release_gate"]
+action, probability = compiled.map_inference(probs)
+assert action == (1, 1, 1)
+assert probability == Fraction(24, 125)
+samples = compiled.sample_conditional(probs, num_samples=5, seed=7)
+
+relaxed = PolicySpec(variables, [
+    RuleSpec("release_gate", "Deploy only with tests", "deploy -> tested"),
+])
+diff = diff_policies(policy, relaxed, probs)
+assert (diff.old_allowed_count, diff.new_allowed_count) == (5, 6)
+assert diff.newly_exposed_count == 1
+assert diff.newly_exposed_prob == Fraction(36, 125)
+assert diff.revoked_count == 0
+```
+
+Names are case-sensitive identifiers, not Python code. No `eval`, attribute
+access, imports, indexing, or arbitrary function calls are accepted. Missing
+variables, duplicate IDs, unknown names, and invalid binary assignments raise
+errors. Rule diagnostics return the enabled `RuleSpec` objects that failed.
+
+| Syntax | Meaning |
+|---|---|
+| `not a`, `~a`, `!a` | Negation |
+| `a and b`, `a & b` | Conjunction |
+| `a or b`, `a \| b` | Disjunction |
+| `a -> b`, `implies(a, b)` | Implication |
+| `a <-> b`, `iff(a, b)` | Equivalence |
+| `xor(a, b)` | Exactly one of two expressions |
+| `at_most_one(a, b, ...)` | Pairwise exclusion |
+| `at_least_one(a, b, ...)` | One or more true |
+| `exactly_one(a, b, ...)` | One and only one true |
+| `forbid(a, b, ...)` | `not (a and b and ...)` |
+| `require(a, b, ...)` | `a and b and ...` |
+
+Precedence, highest first: negation, `and`, `xor`, `or`, implication,
+equivalence. Implication associates right. Parentheses are recommended for
+mixed operators. `require()` and `at_most_one()` are true; `forbid()`,
+`at_least_one()`, and `exactly_one()` are false. Empty helper semantics follow
+empty conjunction/disjunction identities.
+
+The compiler emits direct clauses for bounded expansions of simple expressions,
+including `a -> (b and c)` and pairwise exclusions. More complex expressions use
+**full deterministic equivalences** for Tseitin auxiliaries. Every named
+assignment has a unique extension, so auxiliary weights must be `(1,1)`.
+`CompiledPolicy` applies original Bernoulli weights once, keeps auxiliaries
+neutral, exposes only named marginals/actions/samples, and reports acceptance
+as Z. Do not pass probabilities of 1/2 for auxiliaries to a raw CNF evaluator.
+
+`CompiledPolicy.evaluate` accepts named dictionaries, ordered vectors, or numeric
+NumPy/Torch batches in floating modes. Numeric floating batches bypass rational
+conversion. Rational mode takes one vector, with `Fraction`, `Decimal`, or
+rational strings; nested sequences denote batches, not numerator/denominator
+pairs. `.compiled` exposes the underlying `CompiledGuardrail`, with its normal
+resource options available at compilation.
+
+Policy diffs compile old, new, and their intersection through the sparse engine.
+They calculate `new - intersection` and `old - intersection`, for counts and
+exact rational masses. Rules are compiled together with fresh auxiliary IDs;
+concatenating separately allocated auxiliary CNFs would be incorrect. Policies
+may order the same names differently; probabilities are aligned by name. Without
+probabilities the Python diff returns counts and `None` mass fields.
+
+### Local REST API
+
+`GET /api/domains` returns all variable/rule definitions and all nine named
+presets. `GET /` returns the self-contained interface. Requests and responses
+are JSON; custom policies use `variables` and `rules` instead of `domain`.
+A named probability dictionary must contain exactly the policy's names.
+
+```sh
+curl -s http://127.0.0.1:8765/api/evaluate \
+  -H 'Content-Type: application/json' \
+  -d '{"variables":[{"name":"deploy","description":"Deploy"},
+                    {"name":"approved","description":"Approval exists"}],
+       "rules":[{"rule_id":"approval","description":"Approval required",
+                 "expr":"deploy -> approved","enabled":true}],
+       "probs":{"deploy":"4/5","approved":"2/5"},
+       "mode":"exact_rational","num_samples":5,"seed":7}'
+```
+
+| Endpoint | Inputs and output |
+|---|---|
+| `POST /api/evaluate` | `domain` or custom variables/rules; `probs`; mode `float64` or `exact_rational`; optional `num_samples` (0–100), `seed`. Returns Z, log Z, KL, named marginals, threshold violations, exact MAP, repaired flags, samples, and pruning telemetry. |
+| `POST /api/policy-diff` | `domain` or custom variables; `base_rules`, `modified_rules`, `probs`. Returns old/new/intersection/exposed/revoked counts and masses, with exact rational mass strings. |
+| `POST /api/batch-benchmark` | Current policy and priors. Runs 256 distinct deterministic perturbations through the cached CPU float64 graph; returns median of three batches and vectors/s. |
+
+`exact_rational_z`, `exact_rational_marginals`, `exact_rational_map_prob`, and
+sample rational probability fields use `numerator/denominator` strings. Numeric
+JSON fields approximate those values. MAP and sampling use exact integer
+arithmetic even when posterior display uses float64. Sample `probability` is
+its prior joint mass; `conditional_probability` is that mass divided by Z.
+With true zero mass, the API returns `null` marginals/MAP/KL and empty samples,
+plus a diagnostic. Floating underflow is distinguished by a finite
+`log_acceptance_prob`. No NaN or Infinity tokens are emitted in JSON.
+
+`eval_ms` measures posterior evaluation only. `map_ms`, `sample_ms`, and
+`total_ms` report the additional work; HTTP transport/rendering is outside those
+timers. `compile_ms` includes first compilation and the exact model-count query,
+and is zero on cache hits. `compile_historical_ms` retains the original cost.
+The LRU caches eight compiled supports, keyed by canonical clauses, CNF variable
+count, and named-original count. Changed descriptions or priors reuse a plan;
+changed policy logic uses the corresponding plan. Engine operations are serialized
+to avoid races in mutable numerical caches; the HTTP server uses bounded threads.
+
+Pruning reports **per-group local rows**, at owned phase 1, after proxy/semi-join
+construction, and after backward structural pruning. Proxy expansion can make
+semi-join rows exceed phase-1 rows. These numbers are not directly comparable
+to `2**n` global Boolean states. The UI computes the actual semi-join-to-backward
+reduction; it does not transplant the v3.2 benchmark's 99.85% cumulative key
+reduction onto unrelated domain fixtures.
+
+The server defaults to loopback and is intended for local use. It has no user
+authentication or TLS. Origin/Host validation, a 128 KiB JSON limit, parser
+bounds, probability-size checks, and sparse-work limits reject oversized requests.
+The web API supports up to 24 named variables and 64 rules; complex policies can
+still hit its compilation budget. Avoid exposing the unauthenticated development
+server to untrusted networks. Set `GUARDRAIL_TORCH_THREADS=4` before starting to
+compare CPU threading; the default is one thread. The Studio's batch button
+measures CPU inference, not MPS. The v3.2 benchmark CLI remains available for
+native accelerator comparisons.
+
+### Verification
+
+`pytest -m g16` exercises DSL truth tables, counting-preserving auxiliary
+extensions, exact weighted marginals, policy intersection diffs, all nine domain
+MAP scenarios, planned/emergency database authorization, and the clinical fixture
+contracts. `pytest -m g17` starts an ephemeral loopback server and exercises every
+endpoint, exact and floating output, caching, zero mass, subnormal acceptance,
+request validation, and the terminal demo. The full suite also retains all
+pre-Studio engine regressions.

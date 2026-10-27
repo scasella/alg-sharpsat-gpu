@@ -3,6 +3,7 @@
 from .cnf import CNF, Clause, Literal, brute_force_count, dpll_count, parse_dimacs
 
 __all__ = [
+    "VariableSpec", "RuleSpec", "PolicySpec", "CompiledPolicy", "PolicyDiff", "diff_policies",
     "CNF", "Clause", "Literal", "brute_force_count", "dpll_count",
     "parse_dimacs", "gpu_algebraic_sharp_sat", "jet_sharp_sat",
     "CompiledGuardrail", "GuardrailResult", "WMCResult", "compile_guardrail",
@@ -12,6 +13,10 @@ __all__ = [
 
 
 def __getattr__(name: str):
+    if name in ("VariableSpec", "RuleSpec", "PolicySpec", "CompiledPolicy", "PolicyDiff", "diff_policies"):
+        from . import policy_dsl
+
+        return getattr(policy_dsl, name)
     if name in ("CompiledGuardrail", "GuardrailResult", "WMCResult", "compile_guardrail",
                 "wmc_sharp_sat", "exact_marginals", "guardrail_project"):
         from . import stage5_wmc_guardrail

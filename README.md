@@ -1,4 +1,4 @@
-# alg-sharpsat-gpu v3.2
+# alg-sharpsat-gpu v3.3
 
 An exact Python/PyTorch prototype of the supplied cut-and-interpolate #SAT
 construction. It implements counting-preserving CNF transformations, local
@@ -8,8 +8,12 @@ and an executable miniature SWAP–Möbius reference. CUDA, MPS, and CPU selecti
 is subject to an actual arithmetic capability check. V3.1 filters incoming
 proxy tuples using source groups’ feasible master assignments. V3.2 adds
 `wmc-guardrail`: compiled weighted counting, posterior marginals, MAP, and
-rejection-free conditional sampling.
+rejection-free conditional sampling. V3.3 adds a local interactive Studio,
+named policy DSL, and exact policy blast-radius auditing.
 
+> **V3.3 Studio:** Run `wmc-guardrail-studio` for named rules, live posterior
+> calibration, MAP repairs, and exact policy diffs. [Studio guide](docs/wmc-guardrail.md#v33-interactive-guardrail-studio).
+>
 > **V3.2:** [wmc-guardrail API](docs/wmc-guardrail.md) adds exact rational
 > inference and batched floating-point posterior projection on the sparse graph.
 >
@@ -46,7 +50,7 @@ python -m alg_sharpsat.benchmarks
 ```
 
 Python 3.11 or later is required. Dependencies are declared in `pyproject.toml`.
-The current release tag is `v3.2.0`; the Python distribution version is `0.3.2`.
+The current release tag is `v3.3.0`; the Python distribution version is `0.3.3`.
 The original v3.1 release is retained as tag `v3.1.0`.
 The [v3.1 release verification report](verification-release.xml) records 437 passed
 tests and six skips for unavailable CUDA/MPS hardware. The GitHub Actions
@@ -109,6 +113,48 @@ boundaries. The v1 and v2 entry points retain their explicit interpolation paths
 `Literal.var` is zero-based (`0..num_vars-1`). DIMACS uses its standard signed,
 one-based identifiers. Declared unused variables contribute a factor of two.
 The empty formula has `2**num_vars` models; an empty clause has none.
+
+## V3.3: wmc-guardrail-studio — named policies and live decisions
+
+Validation: **581 passed, 7 skipped**, including 93 new Studio tests. Native
+MPS floating inference passed; CUDA and unsupported MPS exact integer checks
+were skipped. [Verification report](verification-v3.3.xml).
+
+```sh
+python -m pip install -e .
+wmc-guardrail-studio                         # Opens http://127.0.0.1:8765
+python -m alg_sharpsat.webapp --no-browser   # Same local server
+wmc-guardrail-studio --demo-cli              # Nine-scenario terminal report
+```
+
+A self-contained dark-mode dashboard runs on Python's standard-library HTTP
+server, with **no extra packages or Node build**. Choose cloud operations,
+clinical prescribing, or fintech treasury; change probability sliders; inspect
+prior/posterior shifts and all violated rules; view the most probable compliant
+assignment; and draw rejection-free conditional samples. Toggle, edit, or add
+DSL rules to measure exact newly exposed/revoked state counts and probability
+mass. A live benchmark evaluates 256 distinct perturbed vectors on the cached
+CPU float64 graph. Exact rational mode shows Fraction results; MAP and sampling
+remain exact in both display modes.
+
+| Example pack | Variables / rules | Routine Z | Conflict Z | Rare-event Z |
+|---|---:|---:|---:|---:|
+| Cloud operations | 20 / 16 | 0.9321 | 0.01051 | 1.00 × 10⁻²⁴ |
+| Clinical prescribing fixture | 22 / 19 | 0.9049 | 1.082 × 10⁻⁵ | 2.797 × 10⁻²³ |
+| Fintech treasury fixture | 20 / 16 | 0.9226 | 9.801 × 10⁻⁹ | 9.811 × 10⁻¹² |
+
+These are measured acceptance masses of the supplied synthetic presets, not
+real-world risk estimates. Context variables are jointly inferred: clamp known
+facts to 0 or 1. MAP maximizes prior probability rather than minimizing flips.
+The clinical and financial packs are illustrative engineering fixtures, not
+validated decision protocols. No external action is executed.
+
+The public `VariableSpec`, `RuleSpec`, `PolicySpec`, and `diff_policies` APIs
+support human-readable Boolean expressions, deterministic neutral auxiliaries,
+and exact intersection-based policy audits. The REST endpoints are
+`/api/domains`, `/api/evaluate`, `/api/policy-diff`, and `/api/batch-benchmark`.
+See the [Studio guide and API examples](docs/wmc-guardrail.md#v33-interactive-guardrail-studio)
+for syntax, numerical contracts, timing fields, cache limits, and reproduction.
 
 ## V3.2: wmc-guardrail — weighted marginals, MAP, and sampling
 
