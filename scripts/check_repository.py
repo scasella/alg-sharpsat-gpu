@@ -45,7 +45,8 @@ SENSITIVE = {
     ),
 }
 INLINE_LINK = re.compile(
-    r"!?\[[^\]\n]*\]\(\s*(<[^>\n]+>|(?:\\.|[^()\s]|\([^()]*\))+)"
+    # Labels may wrap across lines, as the verification links in the API guide do.
+    r"!?\[[^\]]*\]\(\s*(<[^>\n]+>|(?:\\.|[^()\s]|\([^()]*\))+)"
     r"(?:\s+[\"'][^\n]*?[\"'])?\s*\)"
 )
 REFERENCE = re.compile(r"^\s{0,3}\[([^\]]+)\]:\s*(<[^>]+>|\S+)", re.M)

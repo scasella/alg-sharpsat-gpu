@@ -92,7 +92,14 @@ GitHub Actions runs the offline suite, documentation audit, and CLI smoke tests
 on Python 3.11 and 3.12. Live extraction requires a separately authenticated
 `codex` CLI; ordinary CI uses deterministic extraction and subprocess mocks.
 
-The final v3.4 release recheck recorded **643 passed, 8 skipped offline**
+The CPU-only Linux documentation-audit recheck recorded **646 passed, 9 skipped**
+([report](verification-v3.4-audit.xml)) on Python 3.12.14 and PyTorch 2.14.1+cpu.
+This includes four regression cases for wrapped Markdown link labels. Eight
+accelerator checks and the opt-in live model check were skipped; this recheck
+does not claim a fresh authenticated model run. The audit also executed all four
+standalone use-case recipes successfully and checked every local Markdown link.
+
+The earlier macOS v3.4 release recheck recorded **643 passed, 8 skipped offline**
 ([report](verification-v3.4-release.xml)), then **63 passed** with authenticated
 g18 enabled ([report](verification-v3.4-live.xml)). Together they validate
 **644 distinct passing tests**: the live test replaces one offline skip, while

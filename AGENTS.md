@@ -126,6 +126,8 @@ unmarked tests: a gate run does not replace the full suite.
 For arithmetic changes, also run [test_tensor_arithmetic.py](tests/test_tensor_arithmetic.py)
 and [test_jet_arithmetic.py](tests/test_jet_arithmetic.py), which contain unmarked
 coverage. Hardware skips must identify the unavailable device, not claim a pass.
+The unmarked [repository-audit regression tests](tests/test_repository_audit.py)
+verify local link detection and run as part of the full suite.
 
 ## Offline and live workflows
 
@@ -163,19 +165,25 @@ URL; API payloads and endpoint examples are in [the guide](docs/wmc-guardrail.md
 **New domain**
 
 1. Extend `domains.py` with stable variable names, explicit roles, meaningful
-   descriptions, named rules, presets and scenarios. Complete when every variable
-   has a role and every preset's claimed violation agrees with `check_violations`.
-2. Add domain tests and run g16–g18. Complete when policy semantics, extraction
-   validation and evidence preservation pass for the new pack.
+   descriptions, named rules, presets and scenarios. Register the new pack's
+   factory in `domains.get_domains()` so `get_domain()` and Studio can discover it.
+   Complete when every variable has a role and every preset's claimed violation
+   agrees with `check_violations`.
+2. Add the new presets to `SCENARIOS` and update the fixed-domain expectations in
+   `tests/test_guardrail_domains.py`. Add extraction and evidence-preservation
+   coverage for the new pack, then run g16–g18. Complete when policy semantics,
+   extraction validation and evidence preservation pass for the new pack.
 3. Open Studio. Complete when the pack appears, scenarios load, and changing the
    domain/preset clears evidence locks.
 
 **External agent loop**
 
-1. Compile the policy once and obtain a complete soft probability mapping.
-   Validate extraction through the bridge or an equivalent boundary. Complete
+1. Build a `PolicySpec` and call `compiled = policy.compile_guardrail()` once to
+   obtain a reusable `CompiledPolicy`. Obtain a complete soft probability mapping
+   and validate extraction through the bridge or an equivalent boundary. Complete
    when malformed extraction and attempted action clamps are rejected.
-2. Apply evidence clamps consistently to evaluate/MAP/sample calls. Complete when
+2. Pass the same `clamped_vars` to `compiled.evaluate()`,
+   `compiled.map_inference()` and `compiled.sample_conditional()`. Complete when
    contradictory locks and zero-mass inputs fail visibly, and returned tuples
    preserve evidence and satisfy enabled rules.
 3. Inspect violations and the full repaired tuple before the caller decides an

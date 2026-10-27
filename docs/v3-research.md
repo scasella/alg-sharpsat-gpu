@@ -4,8 +4,8 @@ Research date: 27 October 2026. This is an implementation comparison, not an ind
 
 ## Primary sources actually read
 
-1. [Ryan O'Donnell, *Some exposition of “The Exponential Time Hypothesis Is False”*](https://www.cs.cmu.edu/~odonnell/some_eth_false_exposition.pdf), all 12 pages. The title page is dated **26 October 2026**; the author's public post was dated 27 October 2026, 02:04 UTC. The footnote attributes production to interaction with LLMs. This is the requested primary exposition, not a substitute article. Local reading copy: `/tmp/odonnell-eth-exposition.pdf`; text: `/tmp/odonnell-eth-exposition.txt`. Its independent-set specialization has different parameter names from the manuscript.
-2. [OpenAI, *The Exponential Time Hypothesis is False*, revised 25 October 2026](https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf), relevant complete Sections 2.1–2.6, 3.3–3.5, and their equations, pp. 7–13 and 22–26. Root obtained the manuscript and source files; this note does not claim to have independently checked the entire manuscript. Local PDF: `/tmp/eth-manuscript-oct25.pdf`.
+1. [Ryan O'Donnell, *Some exposition of “The Exponential Time Hypothesis Is False”*](https://www.cs.cmu.edu/~odonnell/some_eth_false_exposition.pdf), all 12 pages. The title page is dated **26 October 2026**; the author's public post was dated 27 October 2026, 02:04 UTC. The footnote attributes production to interaction with LLMs. This is the requested primary exposition, not a substitute article. Its independent-set specialization has different parameter names from the manuscript.
+2. [OpenAI, *The Exponential Time Hypothesis is False*, revised 25 October 2026](https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf), relevant complete Sections 2.1–2.6, 3.3–3.5, and their equations, pp. 7–13 and 22–26. This comparison covers the sections listed here; it does not independently verify the entire manuscript.
 
 The exposition URL was recovered from the full link behind the author's quoted post, then downloaded directly from CMU. Its text and the complete rendered pages 7–10 were inspected. An indexed social mirror was used only to discover the URL, not as mathematical evidence.
 
@@ -110,7 +110,6 @@ asymptotic incidence design, its balancing/rank guarantees, full sparsification,
 or polynomial-space enumeration. The older multilinear counter remains an
 independent comparison and explicitly pays for its monomial expansion.
 The benchmark distinguishes both representations and uses occurrence-specific
-cost bounds for the default path. A new review compared the preserved primary
-source copies against these identities; fresh access to the CMU URL was
-unavailable, but the source copies and original download provenance remain as
-listed above.
+cost bounds for the default path. A subsequent review compared previously
+retrieved primary-source copies against these identities. That review could not
+re-fetch the CMU URL; the original retrieval and review scope are described above.
