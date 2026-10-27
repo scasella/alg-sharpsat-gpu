@@ -15,7 +15,14 @@ import threading
 import time
 import webbrowser
 
-from .policy_dsl import PolicySpec, VariableSpec, RuleSpec, CompiledPolicy
+from .policy_dsl import (
+    PolicySpec,
+    VariableSpec,
+    RuleSpec,
+    CompiledPolicy,
+    apply_clamps,
+    validate_clamps,
+)
 
 MAX_BODY = 128 * 1024
 _CACHE = OrderedDict()
@@ -91,7 +98,7 @@ def _compiled(policy):
         tuple(
             sorted(
                 set(
-                    tuple(sorted(set(l.signed for l in c.literals)))
+                    tuple(sorted(set(literal.signed for literal in c.literals)))
                     for c in cnf.clauses
                 )
             )
@@ -160,6 +167,84 @@ def _probability(value: object) -> Fraction:
     return result
 
 
+def _clamps(policy, data):
+    if "clamped_evidence" in data and "clamped_vars" in data:
+        if data["clamped_evidence"] != data["clamped_vars"]:
+            raise ValueError("conflicting clamped_evidence and clamped_vars")
+    clamps = validate_clamps(
+        data.get("clamped_evidence", data.get("clamped_vars")), policy.variable_names
+    )
+    if any(not v.can_clamp for v in policy.variables if v.name in clamps):
+        raise ValueError("only evidence and safeguard variables can be clamped")
+    return clamps
+
+
+def _inference_options(data):
+    mode = data.get("mode", "float64")
+    if mode not in ("float64", "exact_rational"):
+        raise ValueError("invalid mode")
+    n = data.get("num_samples", 0)
+    seed = data.get("seed", 0)
+    if (
+        type(n) is not int
+        or not 0 <= n <= 100
+        or type(seed) is not int
+        or abs(seed) > 2**63
+    ):
+        raise ValueError("invalid sampling options")
+    return mode, n, seed
+
+
+def intercept(data: dict) -> dict:
+    from .llm_bridge import extract
+
+    started = time.perf_counter()
+    policy = _policy(data)
+    policy.to_cnf()  # Validate clause and auxiliary bounds before external extraction.
+    manual_clamps = _clamps(policy, data)
+    _inference_options(data)
+    _probs(policy, data)
+    scenario = data.get("scenario_text", data.get("text"))
+    if not isinstance(scenario, str) or not scenario.strip() or len(scenario) > 16000:
+        raise ValueError("provide scenario_text of 1 to 16000 characters")
+    backend = data.get("backend", "codex")
+    if backend not in ("codex", "deterministic"):
+        raise ValueError("invalid backend")
+    timeout = data.get("timeout", 30)
+    if (
+        isinstance(timeout, bool)
+        or not isinstance(timeout, (int, float))
+        or not math.isfinite(timeout)
+        or not 0 < timeout <= 120
+    ):
+        raise ValueError("timeout must be greater than 0 and at most 120 seconds")
+    # Extraction can block on an external process; keep it outside the engine lock.
+    extraction = extract(policy, scenario, backend=backend, timeout=timeout)
+    extracted_clamps = _clamps(
+        policy, {"clamped_evidence": extraction["clamped_evidence"]}
+    )
+    if any(
+        name in extracted_clamps and extracted_clamps[name] != value
+        for name, value in manual_clamps.items()
+    ):
+        raise ValueError("extracted evidence conflicts with manual clamped evidence")
+    merged_clamps = dict(extracted_clamps, **manual_clamps)
+    request = dict(data, probs=extraction["probs"], clamped_evidence=merged_clamps)
+    request.pop("clamped_vars", None)
+    result = evaluate(request)
+    result.update(
+        extraction=extraction,
+        extracted_probs=extraction["probs"],
+        evidence_sources=extraction.get("evidence_sources", {}),
+        llm_ms=extraction["llm_ms"],
+        model=extraction["model"],
+        backend=extraction["backend"],
+        rationale=extraction["rationale"],
+        intercept_total_ms=(time.perf_counter() - started) * 1000,
+    )
+    return result
+
+
 def _rational(value):
     value = Fraction(value)
     return f"{value.numerator}/{value.denominator}"
@@ -173,20 +258,13 @@ def _float(value):
 def evaluate(data: dict) -> dict:
     total_start = time.perf_counter()
     policy = _policy(data)
-    probs = _probs(policy, data)
+    clamps = _clamps(policy, data)
+    probs = apply_clamps(_probs(policy, data), policy.variable_names, clamps)
     names = policy.variable_names
-    mode = data.get("mode", "float64")
-    if mode not in ("float64", "exact_rational"):
-        raise ValueError("invalid mode")
-    n = data.get("num_samples", 0)
-    seed = data.get("seed", 0)
-    if (
-        type(n) is not int
-        or not 0 <= n <= 100
-        or type(seed) is not int
-        or abs(seed) > 2**63
-    ):
-        raise ValueError("invalid sampling options")
+    evidence_names = {
+        v.name for v in policy.variables if v.effective_role == "evidence"
+    }
+    mode, n, seed = _inference_options(data)
     with _LOCK:
         engine, hit, compile_ms, historical, count = _compiled(policy)
         start = time.perf_counter()
@@ -257,6 +335,7 @@ def evaluate(data: dict) -> dict:
             kl_divergence_nats=_float(result.kl_divergence_nats),
             kl_divergence_bits=_float(result.kl_divergence_nats / math.log(2)),
             exact_rational_z=_rational(z) if mode == "exact_rational" else None,
+            clamped_evidence=clamps,
             prior_probs=dict(zip(names, map(float, map(Fraction, map(str, probs))))),
             posterior_marginals=marginals,
             exact_rational_marginals=dict(
@@ -275,15 +354,31 @@ def evaluate(data: dict) -> dict:
             repaired_variables=[
                 dict(name=n, **{"from": raw[n], "to": action[n]})
                 for n in names
-                if action is not None and raw[n] != action[n]
+                if action is not None
+                and n not in evidence_names
+                and raw[n] != action[n]
+            ],
+            inferred_context_changes=[
+                dict(name=n, **{"from": raw[n], "to": action[n]})
+                for n in names
+                if action is not None
+                and n in evidence_names
+                and n not in clamps
+                and raw[n] != action[n]
             ],
             samples=samples,
             diagnostics=[]
             if positive
             else [
                 "Policy has zero probability mass; conditional inference is undefined."
+                + (
+                    " No positive-weight policy-valid extension exists for the supplied evidence and priors."
+                    if clamps
+                    else ""
+                )
             ],
             pruning_telemetry=dict(
+                scope="unconditional_policy",
                 total_nominal_states=2 ** len(names),
                 valid_model_count=count,
                 phase1_rows=list(getattr(before, "phase1_assignment_counts", [])),
@@ -300,7 +395,8 @@ def evaluate(data: dict) -> dict:
 def policy_diff(data: dict) -> dict:
     old = _policy(data, "base_rules")
     new = _policy(data, "modified_rules")
-    probs = _probs(old, data)
+    clamps = _clamps(old, data)
+    probs = apply_clamps(_probs(old, data), old.variable_names, clamps)
     combined = PolicySpec(
         old.variables,
         [
@@ -341,9 +437,14 @@ def policy_diff(data: dict) -> dict:
 
 def batch_benchmark(data: dict) -> dict:
     policy = _policy(data)
-    probs = _probs(policy, data)
+    clamps = _clamps(policy, data)
+    probs = apply_clamps(_probs(policy, data), policy.variable_names, clamps)
     batch = [
-        [0.98 * float(Fraction(str(p))) + 0.02 * ((i + 0.5) / 256) for p in probs]
+        apply_clamps(
+            [0.98 * float(Fraction(str(p))) + 0.02 * ((i + 0.5) / 256) for p in probs],
+            policy.variable_names,
+            clamps,
+        )
         for i in range(256)
     ]
     with _LOCK:
@@ -390,7 +491,7 @@ class StudioServer(ThreadingHTTPServer):
 class Handler(BaseHTTPRequestHandler):
     def setup(self):
         super().setup()
-        self.connection.settimeout(10)
+        self.connection.settimeout(135)
 
     def log_message(self, *args):
         pass
@@ -433,7 +534,15 @@ class Handler(BaseHTTPRequestHandler):
                             domain_id=p.domain_id,
                             title=p.title,
                             description=p.description,
-                            variables=[asdict(v) for v in p.policy.variables],
+                            variables=[
+                                dict(
+                                    asdict(v),
+                                    effective_role=v.effective_role,
+                                    can_clamp=v.can_clamp,
+                                )
+                                for v in p.policy.variables
+                            ],
+                            sample_prompts=p.sample_prompts,
                             rules=[asdict(r) for r in p.policy.rules],
                             presets=p.presets,
                             preset_labels=p.preset_labels,
@@ -449,6 +558,7 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(403, {"error": "Origin or host not allowed"})
         routes = {
             "/api/evaluate": evaluate,
+            "/api/intercept": intercept,
             "/api/policy-diff": policy_diff,
             "/api/batch-benchmark": batch_benchmark,
         }
@@ -464,6 +574,8 @@ class Handler(BaseHTTPRequestHandler):
             if not isinstance(data, dict):
                 raise ValueError("JSON object required")
             self._send(200, routes[self.path](data))
+        except TimeoutError:
+            self._send(504, {"error": "Extraction timed out"})
         except ValueError as exc:
             message = " ".join(str(exc).split())[:240]
             self._send(
@@ -488,7 +600,8 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def create_server(host: str = "127.0.0.1", port: int = 8765) -> StudioServer:
-    import os, torch
+    import os
+    import torch
 
     torch.set_num_threads(
         max(1, min(8, int(os.environ.get("GUARDRAIL_TORCH_THREADS", "1"))))
@@ -502,7 +615,65 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--no-browser", action="store_true")
     parser.add_argument("--demo-cli", action="store_true")
+    parser.add_argument("--intercept", metavar="TEXT")
+    parser.add_argument("--domain")
+    parser.add_argument(
+        "--backend", choices=("codex", "deterministic"), default="codex"
+    )
+    parser.add_argument("--timeout", type=float, default=30)
+    parser.add_argument(
+        "--mode", choices=("float64", "exact_rational"), default="float64"
+    )
     args = parser.parse_args(argv)
+    if args.intercept is not None:
+        if not args.domain:
+            parser.error("--intercept requires --domain")
+        import torch
+
+        torch.set_num_threads(1)
+        try:
+            result = intercept(
+                dict(
+                    domain=args.domain,
+                    scenario_text=args.intercept,
+                    backend=args.backend,
+                    timeout=args.timeout,
+                    mode=args.mode,
+                )
+            )
+        except (ValueError, TimeoutError, RuntimeError) as exc:
+            parser.exit(1, f"Intercept failed: {exc}\n")
+        print(f"Backend: {result['backend']} | Model: {result['model']}")
+        print(f"Rationale: {result['rationale']}")
+        print(f"Evidence: {json.dumps(result['clamped_evidence'])}")
+        print(f"Raw action: {json.dumps(result['raw_threshold_action'])}")
+        print("Violations:")
+        for rule in result["violated_rules"]:
+            print(f"  {rule['rule_id']}: {rule['description']} ({rule['expr']})")
+        if not result["violated_rules"]:
+            print("  none")
+        print(
+            f"Z: {result['acceptance_prob']} | KL: {result['kl_divergence_nats']} nats"
+        )
+        print(f"MAP action: {json.dumps(result['map_action'])}")
+        print(f"MAP changes: {json.dumps(result['repaired_variables'])}")
+        print(
+            "Inferred context changes (unobserved facts): "
+            + json.dumps(result["inferred_context_changes"])
+        )
+        print("All marginals: effective prior -> posterior")
+        posterior = result["posterior_marginals"]
+        for name, prior in result["prior_probs"].items():
+            value = f"{posterior[name]:.6g}" if posterior is not None else "undefined"
+            locked = " [locked]" if name in result["clamped_evidence"] else ""
+            print(f"  {name}: {prior:.6g} -> {value}{locked}")
+        for diagnostic in result["diagnostics"]:
+            print(f"Diagnostic: {diagnostic}")
+        print(
+            "Timings: "
+            + json.dumps({k: v for k, v in result.items() if k.endswith("_ms")})
+        )
+        return
     if args.demo_cli:
         import torch
 

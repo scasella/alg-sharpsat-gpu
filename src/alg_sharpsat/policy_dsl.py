@@ -43,6 +43,61 @@ class VariableSpec:
     description: str
     category: str = "general"
     default_prob: object = 0.5
+    role: str | None = None
+
+    def __post_init__(self):
+        if self.role not in (None, "evidence", "action", "safeguard"):
+            raise ValueError("variable role must be evidence, action, or safeguard")
+
+    @property
+    def effective_role(self) -> str:
+        if self.role is not None:
+            return self.role
+        if self.category in {"context", "evidence", "patient_state"}:
+            return "evidence"
+        if self.category in {"control", "controls", "safeguard", "safeguards"}:
+            return "safeguard"
+        return "action"
+
+    @property
+    def can_clamp(self) -> bool:
+        """Boundary eligibility; safeguards still require verified provenance."""
+        return self.effective_role in {"evidence", "safeguard"}
+
+
+def validate_clamps(clamped_vars, variable_names) -> dict[str, int]:
+    """Validate explicit binary observations without coercing strings or floats."""
+    if clamped_vars is None:
+        return {}
+    if not isinstance(clamped_vars, Mapping):
+        raise ValueError("clamped_vars must be a mapping")
+    if any(name not in variable_names for name in clamped_vars):
+        raise ValueError("clamped_vars contains unknown variable names")
+    if any(
+        not isinstance(value, (numbers.Integral, np.bool_)) or value not in (0, 1)
+        for value in clamped_vars.values()
+    ):
+        raise ValueError("clamped_vars values must be binary booleans or integers")
+    return {name: int(value) for name, value in clamped_vars.items()}
+
+
+def apply_clamps(probs, variable_names, clamped_vars=None):
+    """Copy a probability mapping/vector/batch and replace observed priors."""
+    clamps = validate_clamps(clamped_vars, variable_names)
+    if isinstance(probs, Mapping):
+        if set(probs) != set(variable_names):
+            raise ValueError(
+                "probability mapping must contain exactly the policy variables"
+            )
+        return {name: clamps.get(name, probs[name]) for name in variable_names}
+    if hasattr(probs, "detach"):
+        probs = probs.detach().cpu().numpy()
+    values = np.array(probs, copy=True)
+    if values.ndim not in (1, 2) or values.shape[-1] != len(variable_names):
+        raise ValueError("probabilities must have shape (n,) or (K,n)")
+    for name, value in clamps.items():
+        values[..., variable_names.index(name)] = value
+    return values
 
 
 @dataclass(frozen=True)
@@ -349,9 +404,13 @@ class CompiledPolicy:
         )
         return int(result.partition_function)
 
-    def _weights(self, probs, *, floating: bool = False):
+    def _weights(self, probs, *, floating: bool = False, clamped_vars=None):
         if probs is None:
             probs = [v.default_prob for v in self.policy.variables]
+        if clamped_vars is not None:
+            # Validate original priors before overriding evidence.
+            self._weights(probs, floating=floating)
+            probs = apply_clamps(probs, self.variable_names, clamped_vars)
         if isinstance(probs, Mapping):
             if set(probs) != set(self.variable_names):
                 raise ValueError(
@@ -401,14 +460,20 @@ class CompiledPolicy:
         )
         return weights if weights else np.empty((0, 2), dtype=object)
 
-    def evaluate(self, probs=None, mode: str = "float64", **kwargs) -> "WMCResult":
+    def evaluate(
+        self, probs=None, mode: str = "float64", *, clamped_vars=None, **kwargs
+    ) -> "WMCResult":
         """Evaluate a vector or floating batch; use Fraction/strings for rationals.
 
         Nested sequences always denote batches, never numerator/denominator pairs.
-        Exact arithmetic accepts a single probability vector.
+        Exact arithmetic accepts a single probability vector. ``clamped_vars``
+        accepts any named library variable; extraction and HTTP/UI boundaries
+        restrict eligibility to evidence and verified safeguards.
         """
         result = self.compiled.evaluate(
-            weights=self._weights(probs, floating=mode != "exact_rational"),
+            weights=self._weights(
+                probs, floating=mode != "exact_rational", clamped_vars=clamped_vars
+            ),
             mode=mode,
             **kwargs,
         )
@@ -433,10 +498,13 @@ class CompiledPolicy:
         return result
 
     def map_inference(
-        self, probs=None, mode: str = "exact_rational"
+        self, probs=None, mode: str = "exact_rational", *, clamped_vars=None
     ) -> tuple[tuple[int, ...] | None, Fraction | float]:
         assignment, weight = self.compiled.map_inference(
-            weights=self._weights(probs, floating=mode != "exact_rational"), mode=mode
+            weights=self._weights(
+                probs, floating=mode != "exact_rational", clamped_vars=clamped_vars
+            ),
+            mode=mode,
         )
         return (
             None if assignment is None else assignment[: len(self.variable_names)]
@@ -448,9 +516,13 @@ class CompiledPolicy:
         num_samples: int = 1,
         seed: int = 0,
         mode: str = "exact_rational",
+        *,
+        clamped_vars=None,
     ) -> np.ndarray:
         return self.compiled.sample_conditional(
-            weights=self._weights(probs, floating=mode != "exact_rational"),
+            weights=self._weights(
+                probs, floating=mode != "exact_rational", clamped_vars=clamped_vars
+            ),
             num_samples=num_samples,
             seed=seed,
             mode=mode,

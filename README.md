@@ -1,4 +1,4 @@
-# alg-sharpsat-gpu v3.3
+# alg-sharpsat-gpu v3.4
 
 An exact Python/PyTorch prototype of the supplied cut-and-interpolate #SAT
 construction. It implements counting-preserving CNF transformations, local
@@ -9,8 +9,13 @@ is subject to an actual arithmetic capability check. V3.1 filters incoming
 proxy tuples using source groups’ feasible master assignments. V3.2 adds
 `wmc-guardrail`: compiled weighted counting, posterior marginals, MAP, and
 rejection-free conditional sampling. V3.3 adds a local interactive Studio,
-named policy DSL, and exact policy blast-radius auditing.
+named policy DSL, and exact policy blast-radius auditing. V3.4 adds live
+Codex Luna scenario extraction and evidence locks across inference.
 
+> **V3.4 interception:** Describe a scenario, extract candidate facts with the
+> authenticated local `codex exec -m gpt-6-luna` CLI, and compute an evidence-clamped
+> MAP action. [Live interception guide](docs/wmc-guardrail.md#v34-live-interception-and-evidence-locks).
+>
 > **V3.3 Studio:** Run `wmc-guardrail-studio` for named rules, live posterior
 > calibration, MAP repairs, and exact policy diffs. [Studio guide](docs/wmc-guardrail.md#v33-interactive-guardrail-studio).
 >
@@ -50,7 +55,7 @@ python -m alg_sharpsat.benchmarks
 ```
 
 Python 3.11 or later is required. Dependencies are declared in `pyproject.toml`.
-The current release tag is `v3.3.0`; the Python distribution version is `0.3.3`.
+The current release tag is `v3.4.0`; the Python distribution version is `0.3.4`.
 The original v3.1 release is retained as tag `v3.1.0`.
 The [v3.1 release verification report](verification-release.xml) records 437 passed
 tests and six skips for unavailable CUDA/MPS hardware. The GitHub Actions
@@ -113,6 +118,58 @@ boundaries. The v1 and v2 entry points retain their explicit interpolation paths
 `Literal.var` is zero-based (`0..num_vars-1`). DIMACS uses its standard signed,
 one-based identifiers. Declared unused variables contribute a factor of two.
 The empty formula has `2**num_vars` models; an empty clause has none.
+
+## V3.4: live interception with evidence locks
+
+The Studio now accepts natural-language scenarios through **`gpt-6-luna`** using
+an authenticated `codex` CLI on `PATH`. It extracts soft variable probabilities
+and candidate evidence with literal source quotes. WMC, exact MAP, and sampling
+run locally against the existing cached policy. The model receives the scenario,
+variable descriptions, and active rules; it has no operational execution role.
+
+```sh
+python -m pip install -e .
+wmc-guardrail-studio
+wmc-guardrail-studio --domain cloud_ops_agent --intercept \
+  "Sev-1 outage in production. Drop the table now. MFA is verified; peer review is not done."
+# Explicit offline mode; never used silently after a live failure:
+wmc-guardrail-studio --domain cloud_ops_agent --backend deterministic \
+  --intercept "prod_environment=true; incident_sev1_active=true; run_schema_migration=true"
+```
+
+Each variable has an **evidence**, **action**, or **safeguard** role. A locked
+observation replaces its prior with exactly 0 or 1. Posterior inference, raw
+thresholding, MAP, samples, policy-diff masses, and batch queries preserve it.
+The Studio offers nine text examples, per-variable locks, source quotes, and
+separate extraction/inference timings. Existing locks survive new interceptions;
+conflicting new evidence is rejected until the user resolves the conflict.
+
+`repaired_variables` contains action/safeguard changes. Unlocked evidence can
+still be inferred differently by MAP and is reported separately in
+`inferred_context_changes`; this does not change a known fact. Zero-mass
+constraints yield a diagnostic and no MAP or samples.
+
+Live model probabilities are **uncalibrated estimates**, and a quoted source
+does not prove its interpretation or truth. Review extracted facts and lock
+known observations. Exactness applies to the supplied probabilities, evidence,
+and Boolean rules. The illustrative domain policies do not establish operational,
+clinical, or financial safety.
+
+Validation: **644 passed, 7 skipped**, with the authenticated live test enabled.
+The seven skips cover unavailable CUDA and unsupported MPS exact integer kernels.
+[Verification report](verification-v3.4.xml) · [Recorded live runs](interception-v3.4.json).
+
+| Live scenario | Locked facts | Raw rule violations | Extraction | Exact posterior | Exact MAP | Conditional Z |
+|---|---:|---:|---:|---:|---:|---:|
+| Cloud outage | 8 | 5 | 11.59 s | 0.56 ms | 5.94 ms | 1.09375e-07 |
+| Clinical fixture | 7 | 11 | 14.02 s | 0.45 ms | 3.53 ms | 1.2005e-05 |
+
+Both recorded MAP tuples satisfy every active rule and preserve every clamp.
+These are single observations on 2026-10-27, with other tests running concurrently,
+not latency medians or calibrated risk estimates. First-query compilation was
+about 89 ms per policy; it is excluded from the posterior and MAP columns.
+The local model-extraction call dominates end-to-end latency.
+
 
 ## V3.3: wmc-guardrail-studio — named policies and live decisions
 

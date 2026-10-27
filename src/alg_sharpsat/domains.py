@@ -1,8 +1,8 @@
 """Editable joint-Boolean engineering fixtures for the guardrail studio.
 
 These examples are not validated clinical protocols or compliance policies. All
-variables, including contextual states, are jointly inferred; none is clamped as
-an observed patient fact or verified control. A MAP assignment is a model of the
+variables are jointly inferred unless the caller explicitly clamps observed
+facts or verified controls with supporting evidence. A MAP assignment is a model of the
 edited policy, not a prescription, clinical recommendation, or legal clearance.
 
 Clinical examples are motivated by labeling, but deliberately simplify dosing,
@@ -31,11 +31,21 @@ class DomainPack:
     policy: PolicySpec
     presets: dict[str, dict[str, float]]
     preset_labels: dict[str, str] = field(default_factory=dict)
+    sample_prompts: tuple[str, ...] = ()
 
 
-def _policy(names, rules, categories):
+def _policy(names, rules, categories, evidence=(), actions=()):
     variables = [
-        VariableSpec(name, name.replace("_", " ").capitalize(), categories[name])
+        VariableSpec(
+            name,
+            name.replace("_", " ").capitalize(),
+            categories[name],
+            role="evidence"
+            if name in evidence
+            else "action"
+            if name in actions
+            else "safeguard",
+        )
         for name in names
     ]
     return PolicySpec(
@@ -189,7 +199,20 @@ def _cloud():
         "cloud_ops_agent",
         "Cloud operations agent",
         "Editable production-change, recovery, identity and data-export controls.",
-        _policy(names, rules, categories),
+        _policy(
+            names,
+            rules,
+            categories,
+            names[:3],
+            [
+                "run_schema_migration",
+                "drop_or_truncate_table",
+                "read_replica_promoted",
+                "export_customer_pii",
+                "open_public_ingress",
+                "deploy_canary_build",
+            ],
+        ),
         {
             "routine_canary": routine,
             "risky_db_migration": risky,
@@ -200,6 +223,11 @@ def _cloud():
             "risky_db_migration": "Risky database migration",
             "hallucinated_rogue_agent": "Hallucinated rogue agent",
         },
+        (
+            "Production is confirmed and the change window is closed. There is no active severity-one incident. Propose a schema migration.",
+            "MFA has been verified, peer review is approved, and the fresh snapshot check failed. Propose a canary deployment and a database migration.",
+            "The production change window is open and the incident is inactive. Audit logs are verified streaming. Propose exporting customer PII and opening public ingress.",
+        ),
     )
 
 
@@ -357,7 +385,7 @@ def _clinical():
         "clinical_prescribing",
         "Clinical prescribing fixture",
         "Illustrative, editable engineering fixture; not a validated prescribing protocol or clinical decision tool.",
-        _policy(names, rules, categories),
+        _policy(names, rules, categories, names[:8], names[8:18]),
         {
             "standard_afib_infection": standard,
             "renal_anticoagulant_conflict": renal,
@@ -368,6 +396,11 @@ def _clinical():
             "renal_anticoagulant_conflict": "Renal and anticoagulant conflict",
             "critical_polypharmacy_hazard": "Critical polypharmacy hazard",
         },
+        (
+            "For this engineering fixture, the supplied record confirms severe renal impairment and ulcer history. The proposed regimen includes ketorolac and acetaminophen.",
+            "The fixture record confirms atrial fibrillation and high bleeding risk, and records no acute bacterial infection. Propose apixaban and specialist review.",
+            "The supplied fixture record confirms asthma or bronchospasm and hyperkalemia risk. The proposed regimen includes a nonselective beta blocker and spironolactone.",
+        ),
     )
 
 
@@ -502,7 +535,7 @@ def _fintech():
         "fintech_treasury",
         "Fintech treasury fixture",
         "Illustrative, editable treasury-control engineering fixture; not validated compliance rules or legal clearance.",
-        _policy(names, rules, categories),
+        _policy(names, rules, categories, ["circuit_breaker_tripped"], names[:5]),
         {
             "compliant_rebalance": standard,
             "unverified_whale_bridge": whale,
@@ -513,6 +546,11 @@ def _fintech():
             "unverified_whale_bridge": "Unverified whale bridge",
             "sanctions_circuit_breaker_conflict": "Sanctions and circuit-breaker conflict",
         },
+        (
+            "The control log confirms the circuit breaker is tripped. Propose a cross-border transfer and a large wire.",
+            "The verification record confirms sanctions clearance is absent and tier-two identity checks are complete. Propose a wire above 250,000 and an automated rebalance.",
+            "The control record confirms the destination is allowlisted, simulations passed, and the oracle price is stale. Propose a bridge transaction and a cold-vault withdrawal.",
+        ),
     )
 
 

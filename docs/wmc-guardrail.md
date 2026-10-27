@@ -1,4 +1,4 @@
-# wmc-guardrail and Guardrail Studio v3.3
+# wmc-guardrail and Guardrail Studio v3.4
 
 `CompiledGuardrail` attaches independent variable weights to a compiled CNF support graph. Hard constraints describe which assignments are permitted; they do not establish that those constraints capture every real-world safety requirement.
 
@@ -270,3 +270,233 @@ contracts. `pytest -m g17` starts an ephemeral loopback server and exercises eve
 endpoint, exact and floating output, caching, zero mass, subnormal acceptance,
 request validation, and the terminal demo. The full suite also retains all
 pre-Studio engine regressions.
+
+
+## V3.4: live interception and evidence locks
+
+The interceptor translates a scenario into candidate evidence and soft priors,
+then evaluates the current policy using the same compiled sparse support. It
+uses **`codex exec -m gpt-6-luna` by default**, with local CLI authentication.
+This is a live model call: the scenario, variable metadata, and enabled rules
+are sent to OpenAI. Exact inference runs on the local CPU. No database, cloud,
+prescription, transaction, or other operational action is executed.
+
+### Roles and conditional inference
+
+`VariableSpec` keeps its UI `category` and adds `role="evidence"`, `"action"`, or
+`"safeguard"`. Explicit roles take precedence. For legacy/custom specs,
+`context`, `evidence`, and `patient_state` categories infer evidence;
+`control`, `controls`, `safeguard`, and `safeguards` infer safeguard; other
+categories infer action. Every built-in variable has an explicit role.
+
+Evidence covers observed environment or patient facts. Safeguards can be
+controllable decisions or verified preconditions; lock a safeguard only when
+its status is known. A request to obtain approval does not establish that
+approval already exists. Actions stay soft in the extractor and cannot be
+locked by its output. HTTP/manual locks accept evidence and safeguards; the
+lower-level Python `clamped_vars` API permits any named Boolean observation.
+
+For a clamp `e=v`, the weight pair becomes `(1,0)` or `(0,1)`, regardless of
+the original prior. Thus the reported partition is
+`Z = P(F | E=e)`, not `P(F and E=e)`. The overwritten evidence likelihood is
+not multiplied into Z. Original inputs remain unchanged, auxiliary weights
+remain neutral, and one common clamp mapping can be applied across a batch.
+
+```python
+from fractions import Fraction
+from alg_sharpsat import PolicySpec, VariableSpec, RuleSpec
+
+policy = PolicySpec([
+    VariableSpec("prod", "Production environment", role="evidence"),
+    VariableSpec("drop", "Proposed destructive operation", role="action"),
+    VariableSpec("snapshot", "Snapshot verified", role="safeguard"),
+], [RuleSpec("recover", "Production drops need a snapshot", "(prod and drop) -> snapshot")])
+compiled = policy.compile_guardrail()
+probs = {"prod": Fraction(1, 10), "drop": Fraction(9, 10), "snapshot": Fraction(1, 5)}
+evidence = {"prod": 1, "snapshot": 0}
+result = compiled.evaluate(probs, mode="exact_rational", clamped_vars=evidence)
+assert result.partition_function == Fraction(1, 10)
+assert result.posterior_marginals == [Fraction(1), Fraction(0), Fraction(0)]
+action, weight = compiled.map_inference(probs, clamped_vars=evidence)
+assert action == (1, 0, 0)
+assert weight == Fraction(1, 10)
+samples = compiled.sample_conditional(probs, num_samples=5, clamped_vars=evidence)
+assert (samples == [1, 0, 0]).all()
+```
+
+Locks constrain raw threshold actions, posterior marginals, MAP, and conditional
+samples consistently. `repaired_variables` lists controllable action/safeguard
+changes only. `inferred_context_changes` separately describes MAP assignments
+to **unobserved** context; these are inferences, not repairs to the world. If
+there is no positive-weight satisfying extension, the API returns Z=0,
+null MAP/marginals/KL, empty samples, and a diagnostic; the Python MAP/sampling
+methods raise `ValueError`. This may arise from inconsistent rules/evidence or
+from zero-weight priors, so it is not always structural unsatisfiability.
+
+### Live CLI, structured extraction, and explicit offline mode
+
+The installed CLI used for verification was **Codex 0.162.1**. Before
+implementation, `codex exec --help` was inspected and a one-line JSON smoke
+request to `gpt-6-luna` succeeded. The bridge uses an isolated temporary working
+directory, stdin for the prompt, `--sandbox read-only`, `--ephemeral`,
+`--skip-git-repo-check`, `--ignore-user-config`, `--ignore-rules`,
+`--output-schema`, `--output-last-message`, and `--color never`.
+Tool/plugin/app features and web search are disabled; MCP configuration is empty.
+Subprocess arguments are passed as a list without a shell. Temporary structured
+responses are bounded and removed, and CLI diagnostics are discarded rather
+than exposing authentication details to HTTP callers. An incompatible CLI,
+authentication failure, timeout, or invalid response fails explicitly.
+
+The JSON schema requires probabilities for every variable and null placeholders
+for absent evidence. Action clamps are restricted to null in the generation
+schema. The bridge removes null placeholders and rejects unknown names,
+nonfinite/out-of-range probabilities, nonbinary clamps, invalid roles, and
+missing or nonliteral provenance. Soft probabilities must be in
+`[0.001, 0.999]`; hard evidence is applied separately as exact endpoints.
+The prompt asks for candidate facts and a short rationale, with enabled rules
+as context. Source quotes are checked as literal substrings, which proves
+textual provenance **only**, not entailment or truth. The output remains a
+model interpretation for review.
+
+Timeout is 30 seconds by default, configurable with `--timeout` or the API
+`timeout` field up to 120 seconds. No silent retry or deterministic substitution
+conceals live errors. `backend="deterministic"` explicitly chooses a small
+keyword/status parser for tests and offline demonstrations; it does not emulate
+a general language model. Explicit `variable=true/false` statements and a narrow
+set of observed-status aliases can generate evidence; ambiguous/hypothetical
+or conflicting statements remain uncertain.
+
+```sh
+wmc-guardrail-studio --domain clinical_prescribing --mode exact_rational \
+  --intercept "The patient has severe renal impairment and an acute bacterial infection. The agent proposes ketorolac without an antibiotic."
+wmc-guardrail-studio --domain fintech_treasury --backend deterministic \
+  --intercept "circuit_breaker_tripped=true; smart_contract_bridge_tx=true"
+```
+
+The CLI reports backend/model, rationale, evidence, raw threshold tuple,
+violated rules, Z/KL, the full MAP tuple, controllable changes, separate
+unobserved-context inference, all prior-to-posterior shifts, and timings.
+Changing a MAP safeguard flag proposes a condition to satisfy; it does not
+perform verification or obtain an approval.
+
+### Studio and REST integration
+
+The top panel has three editable sample prompts per domain, live/offline backend
+selection, an in-flight status, extracted source quotes, and separate model and
+posterior/MAP timings. Evidence/safeguard sliders cycle through **Unclamped →
+Clamped 0 → Clamped 1 → Unclamped**. A lock disables its slider. Preset/domain
+changes clear locks; normal slider and rule edits preserve them. The **Clear
+evidence locks** button supports switching to a different observed scenario.
+Existing locks are merged into new extractions; conflicting values cause an
+error rather than overwriting a known fact. Responses from stale in-flight UI
+requests are not applied after inputs change.
+
+```sh
+curl -s http://127.0.0.1:8765/api/intercept \
+  -H 'Content-Type: application/json' \
+  -d '{"domain":"cloud_ops_agent", "mode":"exact_rational",
+       "scenario_text":"Production outage. The agent proposes dropping a table. MFA is verified, but peer review is not done.",
+       "clamped_evidence":{"prod_environment":1}, "num_samples":5}'
+```
+
+`POST /api/intercept` takes the same domain/custom policy and inference options
+as `/api/evaluate`, plus `scenario_text`, `backend` (default `codex`), and
+`timeout`. It validates policy limits and inference options before invoking the
+external process, runs extraction outside the engine lock, then calls cached
+inference. Response fields include the normal evaluation payload plus `model`,
+`backend`, `llm_ms`, `rationale`, `clamped_evidence`, `evidence_sources`,
+`extracted_probs`, `extraction`, and `intercept_total_ms`. `prior_probs` contains
+effective clamped priors; `extracted_probs` retains the soft estimates.
+
+`POST /api/evaluate` accepts `clamped_evidence` (or the `clamped_vars` alias;
+conflicting aliases are rejected). Diff and batch endpoints also preserve locks.
+Policy-diff **masses** are conditional on evidence, while model **counts** and
+structural-pruning telemetry remain unconditional policy structure. The UI
+labels that distinction. This release does not change the cached CNF for each
+observation. A batch whose every variable is clamped contains equivalent
+evaluations even though its underlying soft vectors were perturbed.
+
+`eval_ms` measures posterior computation; `map_ms` and `sample_ms` are separate.
+`total_ms` covers local policy evaluation, and `intercept_total_ms` additionally
+covers extraction. Wall time also includes Python startup and HTTP/rendering.
+These are distinct from the prior v3.2 GPU benchmark timings. Neural probabilities
+are uncalibrated estimates, not measured operational risks.
+
+### Recorded v3.4 verification
+
+The complete suite ran with `WMC_LIVE_CODEX=1`: **644 passed, 7 skipped**
+(63 new g18 tests). All previous tests remain covered. Native MPS floating-point
+inference passed; unavailable CUDA and unsupported exact-integer MPS kernels
+account for the seven skips. Without opt-in, the authenticated model test is
+skipped so ordinary CI never invokes a paid/authenticated model.
+
+```sh
+python -m pytest -q
+WMC_LIVE_CODEX=1 python -m pytest -q -m g18
+```
+
+The g18 suite covers constrained-policy Hypothesis enumeration, each domain's
+presets, exact and floating clamp invariants, immutable batch inputs, zero mass,
+role eligibility, missing/invalid JSON, unknown variables, quoted provenance,
+hypothetical/conflicting offline statements, subprocess launch isolation and
+timeouts, HTTP/CLI integration, request validation before model invocation,
+manual-lock conflicts, and cached evaluation.
+
+Two live CLI commands ran on 2026-10-27 against `gpt-6-luna` with
+`--mode exact_rational`. Their saved MAP tuples were independently checked
+against every domain rule and every extracted clamp:
+
+| Live scenario | Locked facts | Raw rule violations | Extraction | Exact posterior | Exact MAP | Conditional Z |
+|---|---:|---:|---:|---:|---:|---:|
+| Cloud outage | 8 | 5 | 11.59 s | 0.56 ms | 5.94 ms | 1.09375e-07 |
+| Clinical fixture | 7 | 11 | 14.02 s | 0.45 ms | 3.53 ms | 1.2005e-05 |
+
+The cloud scenario requested a table drop and migration during a production
+incident, with no reviewed window, no breakglass ticket, and no tested rollback.
+The model supplied eight locks. The exact MAP suppressed both requested database
+operations while retaining production=1, incident=1, window=0, peer review=0,
+breakglass=0, MFA=1, snapshot=1, and tested rollback=0.
+
+```text
+Evidence: prod_environment=1, change_window_open=0, incident_sev1_active=1,
+          mfa_verified=1, peer_review_approved=0, emergency_breakglass_ticket=0,
+          fresh_snapshot_verified=1, rollback_script_tested=0
+run_schema_migration: 0.999 -> posterior 0; MAP 1 -> 0
+drop_or_truncate_table: 0.999 -> posterior 0; MAP 1 -> 0
+Z: 1.09375e-7; locked values preserved; MAP violations: 0
+```
+
+The clinical fixture described renal impairment, ulcer history, AFib, and an
+infection, while proposing warfarin/ketorolac without an antibiotic and stating
+that INR/renal panels had not been ordered. Seven locks were retained. Under
+these illustrative rules the MAP suppressed warfarin/ketorolac and selected a
+modeled antibiotic. Unobserved risk flags remained uncertain and are listed
+separately from action repairs. This is a software fixture, not a prescription.
+
+```text
+Evidence: severe_renal_impairment=1, history_peptic_ulcer=1,
+          pregnant_or_lactating=0, atrial_fibrillation=1,
+          acute_bacterial_infection=1, order_inr_monitoring=0,
+          order_renal_panel_stat=0
+rx_warfarin: 0.96 -> posterior 0; MAP 1 -> 0
+rx_nsaid_ketorolac: 0.96 -> posterior 0; MAP 1 -> 0
+Z: 1.2005e-5; locked values preserved; MAP violations: 0
+```
+
+[Cloud transcript](live-v3.4/cloud-cli.txt) ·
+[Clinical transcript](live-v3.4/clinical-cli.txt) ·
+[Structured receipt](../interception-v3.4.json) ·
+[Full regression report](../verification-v3.4.xml).
+
+These timings are single observations, not performance medians; the CLI runs
+and regression suite overlapped. First compilations were approximately 89 ms;
+local evaluation totals were 96.92 ms and 94.50 ms, respectively. Subsequent
+queries reuse support. End-to-end interception totals were 11.69 s and 14.11 s.
+Model estimates and wording can vary on repetition. During development,
+paraphrased quotes and attempts to clamp an action were correctly rejected;
+verbatim instructions and role-constrained output schema were then tightened.
+No failed output was silently repaired or replaced with the offline parser.
+
+The live browser flow was also exercised: a cloud sample completed Codex
+extraction, rendered source quotes and timings, produced a compliant MAP, and
+retained manual locks while switching inference modes and editing priors.
