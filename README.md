@@ -1,4 +1,4 @@
-# alg-sharpsat-gpu v3.1
+# alg-sharpsat-gpu v3.2
 
 An exact Python/PyTorch prototype of the supplied cut-and-interpolate #SAT
 construction. It implements counting-preserving CNF transformations, local
@@ -6,8 +6,13 @@ integer measurements, finite-field boundary factors, Lagrange and Hermite interp
 and arbitrary-precision CRT reconstruction. V3 adds sparse boundary contraction
 and an executable miniature SWAP–Möbius reference. CUDA, MPS, and CPU selection
 is subject to an actual arithmetic capability check. V3.1 filters incoming
-proxy tuples using source groups’ feasible master assignments.
+proxy tuples using source groups’ feasible master assignments. V3.2 adds
+`wmc-guardrail`: compiled weighted counting, posterior marginals, MAP, and
+rejection-free conditional sampling.
 
+> **V3.2:** [wmc-guardrail API](docs/wmc-guardrail.md) adds exact rational
+> inference and batched floating-point posterior projection on the sparse graph.
+>
 > **Summary of Findings & Documentation**
 >
 > Read the [technical blog post](docs/blog-post.md) for the executive findings
@@ -41,8 +46,9 @@ python -m alg_sharpsat.benchmarks
 ```
 
 Python 3.11 or later is required. Dependencies are declared in `pyproject.toml`.
-The release tag is `v3.1.0`; the Python distribution version is `0.3.1`.
-The [release verification report](verification-release.xml) records 437 passed
+The current release tag is `v3.2.0`; the Python distribution version is `0.3.2`.
+The original v3.1 release is retained as tag `v3.1.0`.
+The [v3.1 release verification report](verification-release.xml) records 437 passed
 tests and six skips for unavailable CUDA/MPS hardware. The GitHub Actions
 workflow runs the suite and a CLI smoke test on Python 3.11 and 3.12.
 XML reports retain test results and timings; machine-specific repository paths
@@ -103,6 +109,93 @@ boundaries. The v1 and v2 entry points retain their explicit interpolation paths
 `Literal.var` is zero-based (`0..num_vars-1`). DIMACS uses its standard signed,
 one-based identifiers. Declared unused variables contribute a factor of two.
 The empty formula has `2**num_vars` models; an empty clause has none.
+
+## V3.2: wmc-guardrail — weighted marginals, MAP, and sampling
+
+[API and numerical contracts](docs/wmc-guardrail.md) ·
+[benchmark artifact](benchmark-v3.2-guardrail.json) ·
+[verification report](verification-v3.2.xml)
+
+Validation: **487 passed, 8 skipped** (unavailable CUDA/MPS hardware),
+including 150 rational differential cases, 50 MAP cases, exact sampling,
+subnormal probabilities, expandable CRT, and distinct batched inputs.
+
+Compile a hard CNF once, then evaluate independent neural probability vectors
+against the cached sparse graph. One upward/downward sum-product traversal
+returns the partition function and **all original-variable marginals**.
+Max-product backtracking returns a safe MAP assignment; conditional tree
+sampling draws valid assignments without rejection. Auxiliary and proxy
+weights remain neutral, and unused original variables keep their prior factors.
+
+```python
+from fractions import Fraction
+from alg_sharpsat import parse_dimacs, compile_guardrail
+
+formula = parse_dimacs("p cnf 3 2\n1 2 0\n-2 3 0\n")
+compiled = compile_guardrail(formula, num_groups=2)
+p = [Fraction(1, 5), Fraction(7, 10), Fraction(2, 5)]
+result = compiled.evaluate(p, mode="exact_rational")
+assert result.partition_function == Fraction(17, 50)
+assignment, prior_probability = compiled.map_inference(p)
+samples = compiled.sample_conditional(p, num_samples=1000, seed=7)
+```
+
+`exact_rational` returns exact Fractions using bounded int64 or expandable CRT;
+MAP and sampling default to exact integer arithmetic. `float64` runs batched
+log-domain inference on CPU; `float32` supports CPU and capability-probed MPS
+or CUDA. The floating modes are numerical approximations. `log_partition`
+remains available when Z underflows, with a log-domain fallback for unusually
+tiny marginals. General weights use normalized acceptance `Z/product(w0+w1)`;
+for probabilities, acceptance is Z and intervention KL is `-log(Z)`.
+Zero mass has no posterior: MAP/sampling fail explicitly, and evaluation marks
+marginals undefined. See the API documentation for shapes and edge cases.
+
+The final recorded run used native **arm64 macOS, PyTorch 2.10.0**, one CPU
+Torch thread, and medians of three runs. MPS and CUDA were unavailable in this
+execution environment. The table uses the existing seed-0 planted families;
+DPLL here computes WMC plus all marginals using `n+1` passes, so these baseline
+times should not be compared with the unweighted DPLL timings below.
+Batch timings cover **256 distinct probability vectors**, not repeated copies.
+
+| Family | n | DPLL WMC + marginals ms | Compile + float64 ms | Compile + rational ms | Warm single ms | Batch 256 ms | Vectors/s |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Coupled | 18 | 29.499 | 1.357 | 1.319 | 0.190 | 0.663 | 386,003 |
+| Coupled | 22 | 60.013 | 1.792 | 2.187 | 0.196 | 1.197 | 213,838 |
+| Coupled | 26 | 107.695 | 1.986 | 1.679 | 0.198 | 0.594 | 431,309 |
+| Coupled | 30 | 228.912 | 2.200 | 1.911 | 0.300 | 1.065 | 240,282 |
+| Bipartite | 18 | 19.618 | 2.240 | 1.928 | 0.184 | 0.537 | 476,981 |
+| Bipartite | 22 | 56.717 | 2.481 | 2.345 | 0.186 | 0.735 | 348,161 |
+| Bipartite | 26 | 82.814 | 4.109 | 3.753 | 0.207 | 1.762 | 145,279 |
+| Bipartite | 30 | 219.428 | 17.518 | 17.797 | 0.311 | 18.915 | 13,535 |
+
+Single compiled queries meet the sub-millisecond target on all eight fixtures;
+a complete 256-vector batch does not meet it on every fixture. The report also
+contains four-thread CPU measurements. Bipartite n=30 throughput there was
+29,271 vectors/s; multithreading was not uniformly faster.
+Compilation remains a real cost and can be exponential in local or join width.
+Backward structural pruning reduces the n=30 local tables from 51,562/17,198
+rows to 831/727 rows, with 639 compatible keys in each group.
+
+For the separate 20-unit-clause rare-event fixture, `Z=2^-20≈9.54e-7`.
+Exact MAP took **0.147 ms**, and
+**1,000 exact valid samples took 5.466 ms**.
+Naive rejection would require 1,048,576,000 proposals on average for 1,000
+samples; a bounded 10,000-proposal simulation accepted 0.
+This simple fixture isolates rejection overhead, not general compilation cost.
+All completed counts and marginals match the independent reference; no neural
+model or accelerator speedup is claimed by these CPU results.
+
+```sh
+python -m alg_sharpsat.guardrail_benchmarks --sizes 18 22 26 30 \
+  --batch-size 256 --repeats 3 --json benchmark-v3.2-guardrail.json
+# Equivalent installed command: wmc-guardrail-bench
+```
+
+On a native Apple Silicon or CUDA installation, use
+`compiled.evaluate(batch, mode="float32", device="mps")` or `device="cuda"`.
+The benchmark probes available accelerators automatically and records unsupported
+or unavailable devices. The older sparse/interpolation CLI's device checks are
+separate from these floating-point probes.
 
 ## V3: sparse boundary contraction
 

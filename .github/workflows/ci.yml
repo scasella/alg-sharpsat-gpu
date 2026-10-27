@@ -29,3 +29,5 @@ jobs:
         run: pytest -q
       - name: Smoke test benchmark CLI
         run: python -m alg_sharpsat.benchmarks --engine v3 --family coupled --sizes 18 --repeats 1
+      - name: Smoke test weighted guardrail CLI
+        run: wmc-guardrail-bench --sizes 6 --batch-size 4 --repeats 1 --skip-accelerators --json /tmp/guardrail-smoke.json

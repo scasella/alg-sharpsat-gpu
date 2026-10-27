@@ -5,11 +5,18 @@ from .cnf import CNF, Clause, Literal, brute_force_count, dpll_count, parse_dima
 __all__ = [
     "CNF", "Clause", "Literal", "brute_force_count", "dpll_count",
     "parse_dimacs", "gpu_algebraic_sharp_sat", "jet_sharp_sat",
+    "CompiledGuardrail", "GuardrailResult", "WMCResult", "compile_guardrail",
+    "wmc_sharp_sat", "exact_marginals", "guardrail_project",
     "contract_sharp_sat", "auto_sharp_sat", "swap_mobius_count",
 ]
 
 
 def __getattr__(name: str):
+    if name in ("CompiledGuardrail", "GuardrailResult", "WMCResult", "compile_guardrail",
+                "wmc_sharp_sat", "exact_marginals", "guardrail_project"):
+        from . import stage5_wmc_guardrail
+
+        return getattr(stage5_wmc_guardrail, name)
     if name in ("contract_sharp_sat", "auto_sharp_sat"):
         from . import stage3_sparse_contract
 

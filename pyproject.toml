@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "alg-sharpsat-gpu"
-version = "0.3.1"
+version = "0.3.2"
 description = "Executable audit of the Oct 2026 ETH refutation mechanism and sparse boundary-contraction #SAT micro-engine"
 readme = "README.md"
 license = {text = "MIT"}
@@ -19,6 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
+wmc-guardrail-bench = "alg_sharpsat.guardrail_benchmarks:main"
 alg-sharpsat-bench = "alg_sharpsat.benchmarks:main"
 alg-sharpsat-benchmark = "alg_sharpsat.benchmarks:main"
 
@@ -30,6 +31,9 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra"
 markers = [
+  "g13: exact rational weighted counting and all marginals",
+  "g14: safe MAP and rejection-free conditional sampling",
+  "g15: batched guardrail evaluation and benchmark verification",
   "g1: deterministic OR-gate counting bijection",
   "g2: implication-cycle counting bijection",
   "g3: finite-field boundary identities",
