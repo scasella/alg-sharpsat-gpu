@@ -1,8 +1,10 @@
 # Auditing the OpenAI ETH Proof in Code: Why the Asymptotic Algorithm Is Galactic, and What Actually Beats DPLL Today
 
-*Release notes for alg-sharpsat-gpu v3.1 — 27 October 2026*
+*Release notes for alg-sharpsat-gpu v3.2 — updated 27 October 2026*
 
 The strongest practical result in this release comes from sparse boundary tables and an exact semi-join filter. On our 26-variable planted bipartite fixture, sparse v3.1 takes 2.544 ms, compared with 4,678.745 ms for our v1 Lagrange engine: approximately **1,839× faster**. It also beats the repository's DPLL counter on seven of eight recorded fixtures. The asymptotic SWAP–Möbius construction runs only as a bounded mathematical reference; its measured three-variable example is much slower than DPLL.
+
+V3.2 adds compile-once weighted inference: the native CPU run evaluates single probability vectors in 0.178–0.285 ms, while successful MPS float32 checks establish accelerator correctness within the benchmark tolerances. CPU is faster on all eight recorded batch fixtures. [Section 6](#section-6-real-time-neuro-symbolic-guardrails-v32) reports those results and the cumulative reduction from 442,784 to 639 joint boundary keys.
 
 Those are different results. This project audits executable identities inspired by the October 25 manuscript [*The Exponential Time Hypothesis is False*](https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf) and [Ryan O'Donnell's exposition](https://www.cs.cmu.edu/~odonnell/some_eth_false_exposition.pdf). It neither verifies the full proof nor implements its full asymptotic algorithm. “Galactic” here describes the enormous auxiliary dimensions exposed by these sufficient parameter bounds, not an impossibility theorem about every implementation or future refinement.
 
@@ -14,7 +16,7 @@ The problem is exact #SAT: count all satisfying assignments of a CNF formula. Th
 
 The hard word is *correctly*. A master variable may appear in several links or destinations. Its copies cannot be conditioned independently. Incoming proxy marginals alone also lose correlations with outgoing masters and local clauses. Every engine must retain enough joint information to recover the original count.
 
-Arithmetic is exact: finite-field evaluation and expandable arbitrary-precision CRT where required, and bounded signed-int64 operations where a count bound proves safety. Hardware selection checks actual arithmetic capability. These recorded measurements used CPU, Python 3.13.11, PyTorch 2.10.0, and one Torch thread; they establish no GPU speedup. Explicit work and allocation guards stop oversized computations instead of silently substituting DPLL.
+The unweighted and rational-weighted paths use exact arithmetic: finite-field evaluation and expandable arbitrary-precision CRT where required, and bounded signed-int64 operations where a count bound proves safety. V3.2 also offers explicitly finite-precision float64/float32 modes. Hardware selection checks actual arithmetic capability. The historical v1–v3.1 measurements used CPU, Python 3.13.11, PyTorch 2.10.0, and one Torch thread; the native MPS comparison appears in Section 6. Explicit work and allocation guards stop oversized computations instead of silently substituting DPLL.
 
 The [README](../README.md) documents the mathematical contract; the implementations are [v1](../src/alg_sharpsat/stage3_gpu_engine.py), [v2](../src/alg_sharpsat/stage3_jet_engine.py), [sparse contraction](../src/alg_sharpsat/stage3_sparse_contract.py), and [SWAP–Möbius](../src/alg_sharpsat/stage4_swap_mobius.py).
 
@@ -143,9 +145,61 @@ At bipartite $n=30$, peak compressed joint rows fall from **442,784 to 40,303**,
 
 These are medians of three complete CPU runs, including preprocessing and construction, on seed-0 planted formulas with two groups. Every completed count agrees with DPLL. Sparse v3.1 beats the custom DPLL comparator across both recorded families at every tested size from $n=22$ through $n=30$. The approximately 1,839× figure at $n=26$ compares sparse v3.1 with our interpolation engine; the advantage over DPLL there is about 1.78×. The $n=18$ case is slightly slower than DPLL, illustrating the overhead of setup and filtering. A resource-limit result is not a completed timing. Full samples and diagnostics are in the [bipartite](../benchmark-v3.1-bipartite.json) and [coupled](../benchmark-v3.1-coupled.json) reports.
 
+## Section 6: Real-Time Neuro-Symbolic Guardrails (v3.2)
+
+`wmc-guardrail` extends sparse counting to independent soft variable probabilities under a hard CNF constraint. Compile the constraint once; each new probability vector then yields its acceptance probability, all conditional marginals, and intervention KL. A max-product traversal finds a most likely permitted assignment, and conditional tree traversal samples permitted assignments without rejection. Original variables receive the user weights exactly once; auxiliary variables and proxies remain neutral. See the [API and numerical contracts](wmc-guardrail.md) and [implementation](../src/alg_sharpsat/stage5_wmc_guardrail.py).
+
+The compiled join tree reuses the master-first semi-join construction, then applies **Backward Structural Pruning**: start at the root's feasible support and walk backward, removing each key and local row that cannot participate in a complete model. The retained structure is independent of the neural probabilities, so it can be reused for every query. One upward sum-product pass and one reverse cavity pass recover all original-variable marginals together, without `n+1` solver calls. Rational inference repeats that pass for each required CRT prime; MAP uses a separate max-product traversal of the same structure.
+
+### Over 99.85% cumulative boundary-key reduction
+
+For the seeded bipartite `n=30` fixture, Group 0's compressed joint key table changes as follows:
+
+| Stage | Group 0 joint boundary keys | Reduction from previous stage |
+|---|---:|---:|
+| v3 unfiltered sparse construction | 442,784 | — |
+| v3.1 master-first semi-join | 40,303 | 90.90% |
+| v3.2 backward-pruned compiled support | 639 | 98.41% |
+
+The complete reduction is **442,784 → 639**, or **99.8557%: over 99.85%**. This headline combines semi-join pushdown with backward pruning; backward pruning alone removes 98.41% of the v3.1 keys. It describes Group 0's joint-key table, not process memory, local assignment rows, or the model count. Both final groups retain 639 compatible keys. Their surviving local assignment rows are 831 and 727, down from 51,562 and 17,198 before backward pruning; weighted multiplicities still give **933 models** at unit weights. The baseline is in the [v3 report](../benchmark-v3-bipartite.json), and retained support counts are in the [native v3.2 report](../benchmark-v3.2-native.json).
+
+### Native CPU and Apple Metal results
+
+**MPS ran successfully and passed the float32 partition-function and marginal accuracy checks on all eight cases.** The [saved native report](../benchmark-v3.2-native.json) records arm64 macOS, PyTorch 2.10.0, MPS available, and CUDA unavailable. The benchmark uses the same seed-0 planted coupled/bipartite fixtures, with batches of **256 distinct probability vectors** and three timing samples. The table shows recorded median batch latency in milliseconds; it excludes CNF compilation. CPU uses float64; MPS uses float32. All batch rows were checked against single-vector evaluations, selected vectors against independent weighted DPLL, and MPS results against the CPU reference.
+
+| Family | n | CPU, 1 thread (ms) | CPU, 4 threads (ms) | MPS (ms) |
+|---|---:|---:|---:|---:|
+| Coupled | 18 | 0.68 | 0.75 | 11.98 |
+| Coupled | 22 | 0.93 | 1.24 | 16.03 |
+| Coupled | 26 | 0.64 | 0.91 | 14.18 |
+| Coupled | 30 | 1.06 | 1.25 | 11.91 |
+| Bipartite | 18 | 0.52 | 0.94 | 10.32 |
+| Bipartite | 22 | 0.72 | 1.22 | 11.56 |
+| Bipartite | 26 | 1.91 | 2.08 | 14.99 |
+| Bipartite | 30 | 20.03 | 8.72 | 27.57 |
+
+**CPU wins on every fixture in this run.** At bipartite `n=30`, four CPU threads reduce batch latency to **8.72 ms**, compared with **20.03 ms** on one thread and **27.57 ms** on MPS. Four threads are not uniformly faster on the smaller fixtures. Compiled one-thread CPU single-query medians range from **0.178 to 0.285 ms**; a full batch is not uniformly sub-millisecond. Compilation and both rational and floating end-to-end measurements remain separately recorded in JSON.
+
+These GPU timings are consistent with dispatch, transfer, and synchronization overhead dominating small sparse computations; that is a hypothesis, not a measured breakdown. The first MPS call took **1.83 seconds** on coupled `n=18`. This run has no explicit accelerator warmup and includes the initial call among its three samples. Explicit warmup, more repetitions, and profiling are needed for a steady-state comparison. The terminal summary prints CPU rows only; accelerator status and timings are present in JSON. The earlier [CPU-only report](../benchmark-v3.2-guardrail.json) came from an environment where MPS was unavailable and remains a separate historical measurement.
+
+### Rare events and the meaning of exactness
+
+The native run's separate 20-unit-clause fixture has acceptance $Z=2^{-20}\approx9.54\times10^{-7}$. Exact rational inference took **0.167 ms**, exact MAP took **0.206 ms**, and **1,000 valid exact conditional samples took 5.101 ms**, excluding compilation. Naive rejection would require **1,048,576,000 proposals on average** for 1,000 accepted samples; the bounded 10,000-proposal simulation accepted zero. This deliberately simple formula isolates rejection overhead, not general constraint-compilation cost.
+
+Exact rational mode returns Fraction-valued partition functions and marginals using bounded int64 or expandable CRT. Default MAP uses exact integer comparisons, and exact sampling uses integer categorical draws. CPU float64 and MPS float32 are finite-precision implementations of the same inference equations, not rational exact arithmetic. They use stabilized log-domain messages and a fallback for unusually tiny marginal masses. For Bernoulli priors, intervention KL is $-\log Z$; at true zero mass, the conditional distribution is undefined and MAP/sampling fail explicitly.
+
+The [v3.2 regression report](../verification-v3.2.xml) records **487 passed and 8 hardware skips** in the original test environment. That test run is distinct from the successful native MPS benchmark accuracy checks. The release provides a probabilistic guardrail mechanism, not a benchmark of an integrated neural model: the hard formula must still express the intended constraints, and sparse compilation can remain exponential.
+
+Reproduce the native benchmark on a terminal with MPS-enabled PyTorch:
+
+```sh
+python -m alg_sharpsat.guardrail_benchmarks --sizes 18 22 26 30 \
+  --batch-size 256 --repeats 3 --json benchmark-v3.2-native.json
+```
+
 ## Where the practical engine might belong
 
-Several applications are worth testing, but none is validated by these planted fixtures:
+The weighted mechanism now runs as a standalone engine; these broader applications still need validation beyond planted fixtures:
 
 - **EDA with modular buses:** partitions with few feasible boundary patterns could benefit from joint support filtering. Large boundary width or dense feasible supports could erase that advantage.
 - **Neuro-symbolic exact guardrails:** a learned component could propose a partition or candidate simplification while an exact counter checks a small residual constraint system. The learned proposal would need separate validation and bounded failure behavior.

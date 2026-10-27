@@ -150,7 +150,7 @@ for probabilities, acceptance is Z and intervention KL is `-log(Z)`.
 Zero mass has no posterior: MAP/sampling fail explicitly, and evaluation marks
 marginals undefined. See the API documentation for shapes and edge cases.
 
-The final recorded run used native **arm64 macOS, PyTorch 2.10.0**, one CPU
+The original CPU-only run used **arm64 macOS, PyTorch 2.10.0**, one CPU
 Torch thread, and medians of three runs. MPS and CUDA were unavailable in this
 execution environment. The table uses the existing seed-0 planted families;
 DPLL here computes WMC plus all marginals using `n+1` passes, so these baseline
@@ -167,6 +167,15 @@ Batch timings cover **256 distinct probability vectors**, not repeated copies.
 | Bipartite | 22 | 56.717 | 2.481 | 2.345 | 0.186 | 0.735 | 348,161 |
 | Bipartite | 26 | 82.814 | 4.109 | 3.753 | 0.207 | 1.762 | 145,279 |
 | Bipartite | 30 | 219.428 | 17.518 | 17.797 | 0.311 | 18.915 | 13,535 |
+
+A subsequent [native MPS run](benchmark-v3.2-native.json) passed float32
+partition-function and marginal checks on all eight cases. CPU was faster on
+all eight batch comparisons: bipartite n=30 took 20.03 ms on one CPU thread,
+8.72 ms on four threads, and 27.57 ms on MPS. The first MPS call took 1.83 s;
+this three-sample run includes startup and has no explicit warmup. See
+[the blog's Section 6](docs/blog-post.md#section-6-real-time-neuro-symbolic-guardrails-v32)
+for the complete native table and the **over 99.85% cumulative key reduction**
+(442,784 → 639); backward pruning alone reduces the v3.1 table by 98.41%.
 
 Single compiled queries meet the sub-millisecond target on all eight fixtures;
 a complete 256-vector batch does not meet it on every fixture. The report also

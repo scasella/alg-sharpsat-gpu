@@ -1,0 +1,2316 @@
+{
+  "schema": "benchmark-v3.2-guardrail",
+  "host": {
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "logical_cpu_count": 14,
+    "torch_version": "2.10.0",
+    "mps_available": true,
+    "cuda_available": false
+  },
+  "configuration": {
+    "sizes": [
+      18,
+      22,
+      26,
+      30
+    ],
+    "family": [
+      "coupled",
+      "bipartite"
+    ],
+    "repeats": 3,
+    "batch_size": 256,
+    "json": "benchmark-v3.2-native.json",
+    "skip_accelerators": false,
+    "family_seed": 0,
+    "planted": true,
+    "compile_and_evaluate_torch_threads": 1
+  },
+  "cases": [
+    {
+      "model_count": "48",
+      "family": "coupled",
+      "num_vars": 18,
+      "num_clauses": 76,
+      "baseline_float64": {
+        "seconds": [
+          0.031870874925516546,
+          0.03000179200898856,
+          0.02915650000795722
+        ],
+        "median_seconds": 0.03000179200898856
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.032707541016861796,
+          0.03210229205433279,
+          0.03212866699323058
+        ],
+        "median_seconds": 0.03212866699323058
+      },
+      "compile": {
+        "seconds": [
+          0.023828125093132257,
+          0.0012429170310497284,
+          0.00105441699270159
+        ],
+        "median_seconds": 0.0012429170310497284
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          21,
+          24
+        ],
+        "joint_signature_counts": [
+          7,
+          9
+        ],
+        "group_variable_counts": [
+          11,
+          11
+        ],
+        "original_group_variable_counts": [
+          9,
+          9
+        ],
+        "free_variables": 0,
+        "active_local_variables": 22,
+        "join_pair_counts": [
+          7
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          9,
+          9
+        ],
+        "feasible_master_mask_counts": [
+          3,
+          3
+        ],
+        "peak_frontier_rows": [
+          21,
+          24
+        ],
+        "peak_temporary_rows": [
+          32,
+          30
+        ],
+        "peak_joint_rows": 9,
+        "preprocessing_seconds": 0.0005313759902492166,
+        "build_seconds": 0.0005117079708725214,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.001043083961121738,
+        "retained_assignment_counts": [
+          21,
+          16
+        ],
+        "retained_join_pair_counts": [
+          7
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          21,
+          24
+        ],
+        "joint_signature_counts": [
+          7,
+          9
+        ],
+        "group_variable_counts": [
+          11,
+          11
+        ],
+        "original_group_variable_counts": [
+          9,
+          9
+        ],
+        "free_variables": 0,
+        "active_local_variables": 22,
+        "join_pair_counts": [
+          7
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          9,
+          9
+        ],
+        "feasible_master_mask_counts": [
+          3,
+          3
+        ],
+        "peak_frontier_rows": [
+          21,
+          24
+        ],
+        "peak_temporary_rows": [
+          32,
+          30
+        ],
+        "peak_joint_rows": 9,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.0005117079708725214,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        7,
+        7,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.006489375024102628,
+            0.00026941706892102957,
+            0.00019237492233514786
+          ],
+          "median_seconds": 0.00026941706892102957,
+          "partition_function": "tensor(8.6070e-05, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0015384999569505453,
+              0.0012946249917149544,
+              0.0012021249858662486
+            ],
+            "median_seconds": 0.0012946249917149544
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.00022866693325340748,
+            0.00016008305829018354,
+            0.0001443339278921485
+          ],
+          "median_seconds": 0.00016008305829018354,
+          "partition_function": "11829375/137438953472",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.001326874946244061,
+              0.001193417003378272,
+              0.001196625060401857
+            ],
+            "median_seconds": 0.001196625060401857
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 57408750000,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.00028283405117690563,
+              0.00020000000949949026,
+              0.00019145803526043892
+            ],
+            "median_seconds": 0.00020000000949949026
+          },
+          "batch": {
+            "seconds": [
+              0.0006751250475645065,
+              0.0006757909432053566,
+              0.0005875829374417663
+            ],
+            "median_seconds": 0.0006751250475645065
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 379189.01235187816
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.00018191698472946882,
+              0.00016758404672145844,
+              0.00015954195987433195
+            ],
+            "median_seconds": 0.00016758404672145844
+          },
+          "batch": {
+            "seconds": [
+              0.0011939581017941236,
+              0.0007461250061169267,
+              0.0007146659772843122
+            ],
+            "median_seconds": 0.0007461250061169267
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 343106.04510135093
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            1.8293990000383928,
+            0.009935209061950445,
+            0.011984540964476764
+          ],
+          "median_seconds": 0.011984540964476764
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          1.8293990000383928,
+          0.009935209061950445,
+          0.011984540964476764
+        ],
+        "median_seconds": 0.011984540964476764
+      }
+    },
+    {
+      "model_count": "156",
+      "family": "coupled",
+      "num_vars": 22,
+      "num_clauses": 92,
+      "baseline_float64": {
+        "seconds": [
+          0.06058662501163781,
+          0.05883270793128759,
+          0.059776959009468555
+        ],
+        "median_seconds": 0.059776959009468555
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.06378733296878636,
+          0.06490087497513741,
+          0.06702250009402633
+        ],
+        "median_seconds": 0.06490087497513741
+      },
+      "compile": {
+        "seconds": [
+          0.0019149590516462922,
+          0.0013345000334084034,
+          0.0012153750285506248
+        ],
+        "median_seconds": 0.0013345000334084034
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          56,
+          28
+        ],
+        "joint_signature_counts": [
+          10,
+          10
+        ],
+        "group_variable_counts": [
+          14,
+          12
+        ],
+        "original_group_variable_counts": [
+          11,
+          11
+        ],
+        "free_variables": 0,
+        "active_local_variables": 26,
+        "join_pair_counts": [
+          10
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          12,
+          14
+        ],
+        "feasible_master_mask_counts": [
+          2,
+          5
+        ],
+        "peak_frontier_rows": [
+          56,
+          35
+        ],
+        "peak_temporary_rows": [
+          72,
+          70
+        ],
+        "peak_joint_rows": 10,
+        "preprocessing_seconds": 0.0006222488591447473,
+        "build_seconds": 0.0005801670486107469,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.0012024159077554941,
+        "retained_assignment_counts": [
+          56,
+          28
+        ],
+        "retained_join_pair_counts": [
+          10
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          56,
+          28
+        ],
+        "joint_signature_counts": [
+          10,
+          10
+        ],
+        "group_variable_counts": [
+          14,
+          12
+        ],
+        "original_group_variable_counts": [
+          11,
+          11
+        ],
+        "free_variables": 0,
+        "active_local_variables": 26,
+        "join_pair_counts": [
+          10
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          12,
+          14
+        ],
+        "feasible_master_mask_counts": [
+          2,
+          5
+        ],
+        "peak_frontier_rows": [
+          56,
+          35
+        ],
+        "peak_temporary_rows": [
+          72,
+          70
+        ],
+        "peak_joint_rows": 10,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.0005801670486107469,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        10,
+        10,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.0007674590451642871,
+            0.00026895804330706596,
+            0.00019916694145649672
+          ],
+          "median_seconds": 0.00026895804330706596,
+          "partition_function": "tensor(3.5783e-05, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0018749580485746264,
+              0.0015912919770926237,
+              0.0013938330812379718
+            ],
+            "median_seconds": 0.0015912919770926237
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.00024637498427182436,
+            0.00018395809456706047,
+            0.00038833299186080694
+          ],
+          "median_seconds": 0.00024637498427182436,
+          "partition_function": "629497575/17592186044416",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0019892079290002584,
+              0.001633416977711022,
+              0.001515457988716662
+            ],
+            "median_seconds": 0.001633416977711022
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 60279187500000,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.00020841602236032486,
+              0.00017845898400992155,
+              0.00017204100731760263
+            ],
+            "median_seconds": 0.00017845898400992155
+          },
+          "batch": {
+            "seconds": [
+              0.0010470839915797114,
+              0.0009254999458789825,
+              0.0009094170527532697
+            ],
+            "median_seconds": 0.0009254999458789825
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 276607.25550541986
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.0001771249808371067,
+              0.00016841699834913015,
+              0.00016612501349300146
+            ],
+            "median_seconds": 0.00016841699834913015
+          },
+          "batch": {
+            "seconds": [
+              0.0015443330630660057,
+              0.001243624952621758,
+              0.0010984999826177955
+            ],
+            "median_seconds": 0.001243624952621758
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 205849.8419964247
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.18286358402110636,
+            0.01091487507801503,
+            0.016027958947233856
+          ],
+          "median_seconds": 0.016027958947233856
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.18286358402110636,
+          0.01091487507801503,
+          0.016027958947233856
+        ],
+        "median_seconds": 0.016027958947233856
+      }
+    },
+    {
+      "model_count": "37",
+      "family": "coupled",
+      "num_vars": 26,
+      "num_clauses": 108,
+      "baseline_float64": {
+        "seconds": [
+          0.10670554102398455,
+          0.10608116700313985,
+          0.10509791597723961
+        ],
+        "median_seconds": 0.10608116700313985
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.11250733304768801,
+          0.11102679197210819,
+          0.11274362495169044
+        ],
+        "median_seconds": 0.11250733304768801
+      },
+      "compile": {
+        "seconds": [
+          0.004220540984533727,
+          0.0017304589273408055,
+          0.0014756249729543924
+        ],
+        "median_seconds": 0.0017304589273408055
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          8,
+          17
+        ],
+        "joint_signature_counts": [
+          4,
+          4
+        ],
+        "group_variable_counts": [
+          15,
+          15
+        ],
+        "original_group_variable_counts": [
+          13,
+          13
+        ],
+        "free_variables": 0,
+        "active_local_variables": 30,
+        "join_pair_counts": [
+          4
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          4,
+          10
+        ],
+        "feasible_master_mask_counts": [
+          2,
+          2
+        ],
+        "peak_frontier_rows": [
+          35,
+          33
+        ],
+        "peak_temporary_rows": [
+          70,
+          66
+        ],
+        "peak_joint_rows": 4,
+        "preprocessing_seconds": 0.0007596670184284449,
+        "build_seconds": 0.0007004999788478017,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.0014601669972762465,
+        "retained_assignment_counts": [
+          8,
+          17
+        ],
+        "retained_join_pair_counts": [
+          4
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          8,
+          17
+        ],
+        "joint_signature_counts": [
+          4,
+          4
+        ],
+        "group_variable_counts": [
+          15,
+          15
+        ],
+        "original_group_variable_counts": [
+          13,
+          13
+        ],
+        "free_variables": 0,
+        "active_local_variables": 30,
+        "join_pair_counts": [
+          4
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          4,
+          10
+        ],
+        "feasible_master_mask_counts": [
+          2,
+          2
+        ],
+        "peak_frontier_rows": [
+          35,
+          33
+        ],
+        "peak_temporary_rows": [
+          70,
+          66
+        ],
+        "peak_joint_rows": 4,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.0007004999788478017,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        4,
+        4,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.0005339999916031957,
+            0.0002322919899597764,
+            0.00019470800179988146
+          ],
+          "median_seconds": 0.0002322919899597764,
+          "partition_function": "tensor(3.1412e-08, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0024372499901801348,
+              0.0018515828996896744,
+              0.0018362500704824924
+            ],
+            "median_seconds": 0.0018515828996896744
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.0002988340565934777,
+            0.00021050008945167065,
+            0.00019874994177371264
+          ],
+          "median_seconds": 0.00021050008945167065,
+          "partition_function": "4526925975/144115188075855872",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.001892582979053259,
+              0.001596249989233911,
+              0.0022269580513238907
+            ],
+            "median_seconds": 0.001892582979053259
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 235273359375000,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.0002817079657688737,
+              0.00019508297555148602,
+              0.00018891692161560059
+            ],
+            "median_seconds": 0.00019508297555148602
+          },
+          "batch": {
+            "seconds": [
+              0.0006332909688353539,
+              0.0007876659510657191,
+              0.000644249957986176
+            ],
+            "median_seconds": 0.000644249957986176
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 397361.2987111644
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.00021487497724592686,
+              0.0001976670464500785,
+              0.0001913330052047968
+            ],
+            "median_seconds": 0.0001976670464500785
+          },
+          "batch": {
+            "seconds": [
+              0.0009679580107331276,
+              0.000887540983967483,
+              0.0009134999709203839
+            ],
+            "median_seconds": 0.0009134999709203839
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 280240.8408859289
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.28402108303271234,
+            0.014182082959450781,
+            0.007241165963932872
+          ],
+          "median_seconds": 0.014182082959450781
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.28402108303271234,
+          0.014182082959450781,
+          0.007241165963932872
+        ],
+        "median_seconds": 0.014182082959450781
+      }
+    },
+    {
+      "model_count": "253",
+      "family": "coupled",
+      "num_vars": 30,
+      "num_clauses": 124,
+      "baseline_float64": {
+        "seconds": [
+          0.21714795799925923,
+          0.21822508296463639,
+          0.21285774989519268
+        ],
+        "median_seconds": 0.21714795799925923
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.22817912499886006,
+          0.22870124992914498,
+          0.23241020797286183
+        ],
+        "median_seconds": 0.22870124992914498
+      },
+      "compile": {
+        "seconds": [
+          0.0021922909654676914,
+          0.001743667060509324,
+          0.0017658750293776393
+        ],
+        "median_seconds": 0.0017658750293776393
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          69,
+          11
+        ],
+        "joint_signature_counts": [
+          3,
+          3
+        ],
+        "group_variable_counts": [
+          19,
+          15
+        ],
+        "original_group_variable_counts": [
+          15,
+          15
+        ],
+        "free_variables": 0,
+        "active_local_variables": 34,
+        "join_pair_counts": [
+          3
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          23,
+          11
+        ],
+        "feasible_master_mask_counts": [
+          1,
+          3
+        ],
+        "peak_frontier_rows": [
+          84,
+          68
+        ],
+        "peak_temporary_rows": [
+          168,
+          136
+        ],
+        "peak_joint_rows": 3,
+        "preprocessing_seconds": 0.0009607500396668911,
+        "build_seconds": 0.0007908330298960209,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.001751583069562912,
+        "retained_assignment_counts": [
+          69,
+          11
+        ],
+        "retained_join_pair_counts": [
+          3
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          69,
+          11
+        ],
+        "joint_signature_counts": [
+          3,
+          3
+        ],
+        "group_variable_counts": [
+          19,
+          15
+        ],
+        "original_group_variable_counts": [
+          15,
+          15
+        ],
+        "free_variables": 0,
+        "active_local_variables": 34,
+        "join_pair_counts": [
+          3
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          23,
+          11
+        ],
+        "feasible_master_mask_counts": [
+          1,
+          3
+        ],
+        "peak_frontier_rows": [
+          84,
+          68
+        ],
+        "peak_temporary_rows": [
+          168,
+          136
+        ],
+        "peak_joint_rows": 3,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.0007908330298960209,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        3,
+        3,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.0013506250688806176,
+            0.00026841694489121437,
+            0.0002126670442521572
+          ],
+          "median_seconds": 0.00026841694489121437,
+          "partition_function": "tensor(1.1304e-07, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0023761249613016844,
+              0.0019196670036762953,
+              0.0018753750482574105
+            ],
+            "median_seconds": 0.0019196670036762953
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.0002745829988270998,
+            0.00023562496062368155,
+            0.00022475002333521843
+          ],
+          "median_seconds": 0.00023562496062368155,
+          "partition_function": "8340855778125/73786976294838206464",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0018655420280992985,
+              0.0017936250660568476,
+              0.0017060419777408242
+            ],
+            "median_seconds": 0.0017936250660568476
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 98477470458984375,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.00029729201924055815,
+              0.00020179199054837227,
+              0.00019108306150883436
+            ],
+            "median_seconds": 0.00020179199054837227
+          },
+          "batch": {
+            "seconds": [
+              0.0010992500465363264,
+              0.0010556250344961882,
+              0.001000500051304698
+            ],
+            "median_seconds": 0.0010556250344961882
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 242510.35323558765
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.00019112497102469206,
+              0.0001859170151874423,
+              0.00018133397679775953
+            ],
+            "median_seconds": 0.0001859170151874423
+          },
+          "batch": {
+            "seconds": [
+              0.0012329579330980778,
+              0.0012605410302057862,
+              0.001253125024959445
+            ],
+            "median_seconds": 0.001253125024959445
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 204289.27273899503
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.2609594580717385,
+            0.011913167079910636,
+            0.011002207989804447
+          ],
+          "median_seconds": 0.011913167079910636
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.2609594580717385,
+          0.011913167079910636,
+          0.011002207989804447
+        ],
+        "median_seconds": 0.011913167079910636
+      }
+    },
+    {
+      "model_count": "17",
+      "family": "bipartite",
+      "num_vars": 18,
+      "num_clauses": 72,
+      "baseline_float64": {
+        "seconds": [
+          0.0187537909951061,
+          0.01817962503992021,
+          0.018827332998625934
+        ],
+        "median_seconds": 0.0187537909951061
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.019899458973668516,
+          0.07336262497119606,
+          0.019176166970282793
+        ],
+        "median_seconds": 0.019899458973668516
+      },
+      "compile": {
+        "seconds": [
+          0.002102959086187184,
+          0.0014673750847578049,
+          0.0013424160424619913
+        ],
+        "median_seconds": 0.0014673750847578049
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 16,
+        "boundary_variables": 16,
+        "local_assignment_counts": [
+          439,
+          185
+        ],
+        "joint_signature_counts": [
+          301,
+          183
+        ],
+        "group_variable_counts": [
+          17,
+          17
+        ],
+        "original_group_variable_counts": [
+          9,
+          9
+        ],
+        "free_variables": 0,
+        "active_local_variables": 34,
+        "join_pair_counts": [
+          10
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          144,
+          112
+        ],
+        "feasible_master_mask_counts": [
+          104,
+          99
+        ],
+        "peak_frontier_rows": [
+          439,
+          185
+        ],
+        "peak_temporary_rows": [
+          818,
+          244
+        ],
+        "peak_joint_rows": 301,
+        "preprocessing_seconds": 0.0005551240174099803,
+        "build_seconds": 0.0007750419899821281,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.0013301660073921084,
+        "retained_assignment_counts": [
+          17,
+          10
+        ],
+        "retained_join_pair_counts": [
+          10
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 16,
+        "boundary_variables": 16,
+        "local_assignment_counts": [
+          439,
+          185
+        ],
+        "joint_signature_counts": [
+          301,
+          183
+        ],
+        "group_variable_counts": [
+          17,
+          17
+        ],
+        "original_group_variable_counts": [
+          9,
+          9
+        ],
+        "free_variables": 0,
+        "active_local_variables": 34,
+        "join_pair_counts": [
+          10
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          144,
+          112
+        ],
+        "feasible_master_mask_counts": [
+          104,
+          99
+        ],
+        "peak_frontier_rows": [
+          439,
+          185
+        ],
+        "peak_temporary_rows": [
+          818,
+          244
+        ],
+        "peak_joint_rows": 301,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.0007750419899821281,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        10,
+        10,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.00041108299046754837,
+            0.0001925410469993949,
+            0.00019679195247590542
+          ],
+          "median_seconds": 0.00019679195247590542,
+          "partition_function": "tensor(0.0001, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0021026249742135406,
+              0.0017780829221010208,
+              0.0015584580833092332
+            ],
+            "median_seconds": 0.0017780829221010208
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.0001853749854490161,
+            0.00015400000847876072,
+            0.00014441704843193293
+          ],
+          "median_seconds": 0.00015400000847876072,
+          "partition_function": "80025975/549755813888",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0018563340418040752,
+              0.0016106669791042805,
+              0.0015019590500742197
+            ],
+            "median_seconds": 0.0016106669791042805
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 29046093750,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.00022120901849120855,
+              0.00017858401406556368,
+              0.00017745897639542818
+            ],
+            "median_seconds": 0.00017858401406556368
+          },
+          "batch": {
+            "seconds": [
+              0.0005752081051468849,
+              0.0005220840685069561,
+              0.0005156670231372118
+            ],
+            "median_seconds": 0.0005220840685069561
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 490342.48589906766
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.00017679191660135984,
+              0.0001691670622676611,
+              0.00016633293125778437
+            ],
+            "median_seconds": 0.0001691670622676611
+          },
+          "batch": {
+            "seconds": [
+              0.000970749999396503,
+              0.0009443330345675349,
+              0.00081362493801862
+            ],
+            "median_seconds": 0.0009443330345675349
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 271090.8023219132
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.0663385409861803,
+            0.010319583001546562,
+            0.0086772080976516
+          ],
+          "median_seconds": 0.010319583001546562
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.0663385409861803,
+          0.010319583001546562,
+          0.0086772080976516
+        ],
+        "median_seconds": 0.010319583001546562
+      }
+    },
+    {
+      "model_count": "24",
+      "family": "bipartite",
+      "num_vars": 22,
+      "num_clauses": 88,
+      "baseline_float64": {
+        "seconds": [
+          0.05382783303502947,
+          0.05359733395744115,
+          0.0529633330879733
+        ],
+        "median_seconds": 0.05359733395744115
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.05558987497352064,
+          0.05769554199650884,
+          0.05598704202566296
+        ],
+        "median_seconds": 0.05598704202566296
+      },
+      "compile": {
+        "seconds": [
+          0.0025758330011740327,
+          0.0018403339199721813,
+          0.0018068330828100443
+        ],
+        "median_seconds": 0.0018403339199721813
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 19,
+        "boundary_variables": 19,
+        "local_assignment_counts": [
+          554,
+          840
+        ],
+        "joint_signature_counts": [
+          478,
+          707
+        ],
+        "group_variable_counts": [
+          20,
+          21
+        ],
+        "original_group_variable_counts": [
+          11,
+          11
+        ],
+        "free_variables": 0,
+        "active_local_variables": 41,
+        "join_pair_counts": [
+          17
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          210,
+          254
+        ],
+        "feasible_master_mask_counts": [
+          153,
+          119
+        ],
+        "peak_frontier_rows": [
+          554,
+          840
+        ],
+        "peak_temporary_rows": [
+          794,
+          1336
+        ],
+        "peak_joint_rows": 707,
+        "preprocessing_seconds": 0.0006961249746382236,
+        "build_seconds": 0.001096084015443921,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.0017922089900821447,
+        "retained_assignment_counts": [
+          22,
+          19
+        ],
+        "retained_join_pair_counts": [
+          17
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 19,
+        "boundary_variables": 19,
+        "local_assignment_counts": [
+          554,
+          840
+        ],
+        "joint_signature_counts": [
+          478,
+          707
+        ],
+        "group_variable_counts": [
+          20,
+          21
+        ],
+        "original_group_variable_counts": [
+          11,
+          11
+        ],
+        "free_variables": 0,
+        "active_local_variables": 41,
+        "join_pair_counts": [
+          17
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          210,
+          254
+        ],
+        "feasible_master_mask_counts": [
+          153,
+          119
+        ],
+        "peak_frontier_rows": [
+          554,
+          840
+        ],
+        "peak_temporary_rows": [
+          794,
+          1336
+        ],
+        "peak_joint_rows": 707,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.001096084015443921,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        17,
+        17,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.0004977089120075107,
+            0.00021637510508298874,
+            0.00018379208631813526
+          ],
+          "median_seconds": 0.00021637510508298874,
+          "partition_function": "tensor(1.4283e-06, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0026560419937595725,
+              0.002243082970380783,
+              0.0021842910209670663
+            ],
+            "median_seconds": 0.002243082970380783
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.0002574169775471091,
+            0.00017941591795533895,
+            0.00019583303947001696
+          ],
+          "median_seconds": 0.00019583303947001696,
+          "partition_function": "402025275/281474976710656",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0021847080206498504,
+              0.0022009590175002813,
+              0.0021069999784231186
+            ],
+            "median_seconds": 0.0021847080206498504
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 16069324218750,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.00021812506020069122,
+              0.00018212490249425173,
+              0.00017308304086327553
+            ],
+            "median_seconds": 0.00018212490249425173
+          },
+          "batch": {
+            "seconds": [
+              0.0007201670669019222,
+              0.0007114999461919069,
+              0.0007223329739645123
+            ],
+            "median_seconds": 0.0007201670669019222
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 355473.07252091274
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.00017837504856288433,
+              0.00016912491992115974,
+              0.00016704096924513578
+            ],
+            "median_seconds": 0.00016912491992115974
+          },
+          "batch": {
+            "seconds": [
+              0.0015417080139741302,
+              0.001218500081449747,
+              0.001214000047184527
+            ],
+            "median_seconds": 0.001218500081449747
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 210094.3642904121
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.1637779159937054,
+            0.011559790931642056,
+            0.007892166031524539
+          ],
+          "median_seconds": 0.011559790931642056
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.1637779159937054,
+          0.011559790931642056,
+          0.007892166031524539
+        ],
+        "median_seconds": 0.011559790931642056
+      }
+    },
+    {
+      "model_count": "101",
+      "family": "bipartite",
+      "num_vars": 26,
+      "num_clauses": 104,
+      "baseline_float64": {
+        "seconds": [
+          0.07983458403032273,
+          0.07916420802939683,
+          0.08006145805120468
+        ],
+        "median_seconds": 0.07983458403032273
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.08568700007162988,
+          0.08691158308647573,
+          0.08492158399894834
+        ],
+        "median_seconds": 0.08568700007162988
+      },
+      "compile": {
+        "seconds": [
+          0.004234833060763776,
+          0.0033983339089900255,
+          0.003186166053637862
+        ],
+        "median_seconds": 0.0033983339089900255
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 24,
+        "boundary_variables": 24,
+        "local_assignment_counts": [
+          2324,
+          3845
+        ],
+        "joint_signature_counts": [
+          1446,
+          3845
+        ],
+        "group_variable_counts": [
+          26,
+          24
+        ],
+        "original_group_variable_counts": [
+          13,
+          13
+        ],
+        "free_variables": 0,
+        "active_local_variables": 50,
+        "join_pair_counts": [
+          52
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          289,
+          966
+        ],
+        "feasible_master_mask_counts": [
+          164,
+          966
+        ],
+        "peak_frontier_rows": [
+          2324,
+          4931
+        ],
+        "peak_temporary_rows": [
+          3332,
+          9862
+        ],
+        "peak_joint_rows": 3845,
+        "preprocessing_seconds": 0.0010347511852160096,
+        "build_seconds": 0.0021335409255698323,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.003168292110785842,
+        "retained_assignment_counts": [
+          101,
+          52
+        ],
+        "retained_join_pair_counts": [
+          52
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 24,
+        "boundary_variables": 24,
+        "local_assignment_counts": [
+          2324,
+          3845
+        ],
+        "joint_signature_counts": [
+          1446,
+          3845
+        ],
+        "group_variable_counts": [
+          26,
+          24
+        ],
+        "original_group_variable_counts": [
+          13,
+          13
+        ],
+        "free_variables": 0,
+        "active_local_variables": 50,
+        "join_pair_counts": [
+          52
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          289,
+          966
+        ],
+        "feasible_master_mask_counts": [
+          164,
+          966
+        ],
+        "peak_frontier_rows": [
+          2324,
+          4931
+        ],
+        "peak_temporary_rows": [
+          3332,
+          9862
+        ],
+        "peak_joint_rows": 3845,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.0021335409255698323,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        52,
+        52,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.0005533340154215693,
+            0.0002483749995008111,
+            0.00020762498024851084
+          ],
+          "median_seconds": 0.0002483749995008111,
+          "partition_function": "tensor(1.3665e-07, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.003952541039325297,
+              0.0034102919744327664,
+              0.003604582976549864
+            ],
+            "median_seconds": 0.003604582976549864
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.00030341697856783867,
+            0.00026650005020201206,
+            0.0001984169939532876
+          ],
+          "median_seconds": 0.00026650005020201206,
+          "partition_function": "19693722375/144115188075855872",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.0035568749299272895,
+              0.0035310829989612103,
+              0.003902417025528848
+            ],
+            "median_seconds": 0.0035568749299272895
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "bounded_int64",
+        "primes": [],
+        "integer_bound": 9085703554687500,
+        "upward_downward_passes": 1
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.0002882500411942601,
+              0.00022270891349762678,
+              0.00020825001411139965
+            ],
+            "median_seconds": 0.00022270891349762678
+          },
+          "batch": {
+            "seconds": [
+              0.001941957976669073,
+              0.0019098329357802868,
+              0.0018432500073686242
+            ],
+            "median_seconds": 0.0019098329357802868
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 134043.1381216116
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.00023020792286843061,
+              0.00020670797675848007,
+              0.00020733301062136889
+            ],
+            "median_seconds": 0.00020733301062136889
+          },
+          "batch": {
+            "seconds": [
+              0.002083375002257526,
+              0.0019037500023841858,
+              0.002075082971714437
+            ],
+            "median_seconds": 0.002075082971714437
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 123368.56091517747
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.07518783409614116,
+            0.00797554210294038,
+            0.014986875001341105
+          ],
+          "median_seconds": 0.014986875001341105
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.07518783409614116,
+          0.00797554210294038,
+          0.014986875001341105
+        ],
+        "median_seconds": 0.014986875001341105
+      }
+    },
+    {
+      "model_count": "933",
+      "family": "bipartite",
+      "num_vars": 30,
+      "num_clauses": 120,
+      "baseline_float64": {
+        "seconds": [
+          0.21086229104548693,
+          0.20875004096888006,
+          0.20907374995294958
+        ],
+        "median_seconds": 0.20907374995294958
+      },
+      "baseline_exact_rational": {
+        "seconds": [
+          0.23474079207517207,
+          0.2343531659571454,
+          0.24599066702648997
+        ],
+        "median_seconds": 0.23474079207517207
+      },
+      "compile": {
+        "seconds": [
+          0.018506458029150963,
+          0.016412666998803616,
+          0.016890250029973686
+        ],
+        "median_seconds": 0.016890250029973686
+      },
+      "compile_telemetry": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 27,
+        "boundary_variables": 27,
+        "local_assignment_counts": [
+          51562,
+          17198
+        ],
+        "joint_signature_counts": [
+          40303,
+          11003
+        ],
+        "group_variable_counts": [
+          29,
+          28
+        ],
+        "original_group_variable_counts": [
+          15,
+          15
+        ],
+        "free_variables": 0,
+        "active_local_variables": 57,
+        "join_pair_counts": [
+          639
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          2738,
+          1486
+        ],
+        "feasible_master_mask_counts": [
+          1136,
+          1133
+        ],
+        "peak_frontier_rows": [
+          51562,
+          17198
+        ],
+        "peak_temporary_rows": [
+          90684,
+          22564
+        ],
+        "peak_joint_rows": 40303,
+        "preprocessing_seconds": 0.005698291934095323,
+        "build_seconds": 0.01114454201888293,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction",
+        "compile_seconds": 0.016842833952978253,
+        "retained_assignment_counts": [
+          831,
+          727
+        ],
+        "retained_join_pair_counts": [
+          639
+        ]
+      },
+      "raw_sparse_stats": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 27,
+        "boundary_variables": 27,
+        "local_assignment_counts": [
+          51562,
+          17198
+        ],
+        "joint_signature_counts": [
+          40303,
+          11003
+        ],
+        "group_variable_counts": [
+          29,
+          28
+        ],
+        "original_group_variable_counts": [
+          15,
+          15
+        ],
+        "free_variables": 0,
+        "active_local_variables": 57,
+        "join_pair_counts": [
+          639
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "semi_join_pushdown": true,
+        "phase1_assignment_counts": [
+          2738,
+          1486
+        ],
+        "feasible_master_mask_counts": [
+          1136,
+          1133
+        ],
+        "peak_frontier_rows": [
+          51562,
+          17198
+        ],
+        "peak_temporary_rows": [
+          90684,
+          22564
+        ],
+        "peak_joint_rows": 40303,
+        "preprocessing_seconds": 0.0,
+        "build_seconds": 0.01114454201888293,
+        "contraction_seconds": 0.0,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "wmc_guardrail",
+        "selection_reason": "explicit sparse contraction"
+      },
+      "retained_signature_counts": [
+        639,
+        639,
+        1
+      ],
+      "evaluations": {
+        "float64": {
+          "seconds": [
+            0.0007089580176398158,
+            0.00029854103922843933,
+            0.0002673749113455415
+          ],
+          "median_seconds": 0.00029854103922843933,
+          "partition_function": "tensor(2.4196e-08, dtype=torch.float64)",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.017282500048168004,
+              0.017667583073489368,
+              0.01759175001643598
+            ],
+            "median_seconds": 0.01759175001643598
+          }
+        },
+        "exact_rational": {
+          "seconds": [
+            0.001130125019699335,
+            0.0008847500430420041,
+            0.0007701669819653034
+          ],
+          "median_seconds": 0.0008847500430420041,
+          "partition_function": "1785328745625/73786976294838206464",
+          "compile_plus_evaluate": {
+            "seconds": [
+              0.017497792025096714,
+              0.017537083011120558,
+              0.017728209029883146
+            ],
+            "median_seconds": 0.017537083011120558
+          }
+        }
+      },
+      "exact_arithmetic": {
+        "mode": "exact_rational",
+        "arithmetic": "expandable_crt",
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "integer_bound": 78384563334228515625,
+        "upward_downward_passes": 3
+      },
+      "cpu_float32_batch_validated": true,
+      "throughput": {
+        "cpu_1_threads": {
+          "single": {
+            "seconds": [
+              0.0004255409585312009,
+              0.00028470903635025024,
+              0.00026591692585498095
+            ],
+            "median_seconds": 0.00028470903635025024
+          },
+          "batch": {
+            "seconds": [
+              0.02110683300998062,
+              0.02002712502144277,
+              0.017634500050917268
+            ],
+            "median_seconds": 0.02002712502144277
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 1,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 12782.663498924798
+        },
+        "cpu_4_threads": {
+          "single": {
+            "seconds": [
+              0.0005103329895064235,
+              0.000539249973371625,
+              0.00034616596531122923
+            ],
+            "median_seconds": 0.0005103329895064235
+          },
+          "batch": {
+            "seconds": [
+              0.008719332981854677,
+              0.008884415961802006,
+              0.00822058308403939
+            ],
+            "median_seconds": 0.008719332981854677
+          },
+          "batch_size": 256,
+          "distinct_vectors": true,
+          "validation": "all batch rows versus singles; first three versus independent DPLL",
+          "torch_num_threads": 4,
+          "backend": "torch CPU log-scatter contraction",
+          "vectors_per_second": 29360.044000240327
+        }
+      },
+      "accelerators": {
+        "mps": {
+          "status": "available",
+          "mode": "float32",
+          "device": "mps",
+          "seconds": [
+            0.3331314999377355,
+            0.0240047910483554,
+            0.027573625091463327
+          ],
+          "median_seconds": 0.027573625091463327
+        },
+        "cuda": {
+          "status": "unavailable",
+          "reason": "CUDA unavailable on host"
+        }
+      },
+      "accelerator": {
+        "status": "available",
+        "mode": "float32",
+        "device": "mps",
+        "seconds": [
+          0.3331314999377355,
+          0.0240047910483554,
+          0.027573625091463327
+        ],
+        "median_seconds": 0.027573625091463327
+      }
+    }
+  ],
+  "rare_event": {
+    "num_vars": 20,
+    "acceptance_probability": 9.5367431640625e-07,
+    "expected_rejection_attempts_per_sample": 1048576.0,
+    "expected_rejection_attempts_for_1000_samples": 1048576000.0,
+    "bounded_rejection_simulation": {
+      "attempts": 10000,
+      "accepted": 0,
+      "seed": 1729,
+      "seconds": 0.0009919579606503248
+    },
+    "compile": {
+      "seconds": [
+        0.001055083004757762
+      ],
+      "median_seconds": 0.001055083004757762
+    },
+    "evaluate": {
+      "seconds": [
+        0.0002209170488640666,
+        0.0001670829951763153,
+        0.0001557499635964632
+      ],
+      "median_seconds": 0.0001670829951763153
+    },
+    "map_repair": {
+      "seconds": [
+        0.0002061669947579503
+      ],
+      "median_seconds": 0.0002061669947579503
+    },
+    "conditional_samples": {
+      "seconds": [
+        0.005100541980937123
+      ],
+      "median_seconds": 0.005100541980937123,
+      "count": 1000,
+      "mode": "exact_rational",
+      "all_valid": true
+    },
+    "posterior_marginals": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}
