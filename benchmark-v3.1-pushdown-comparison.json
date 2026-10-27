@@ -1,0 +1,906 @@
+[
+  {
+    "family": "coupled",
+    "n": 18,
+    "seed": 0,
+    "count": 48,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        21,
+        24
+      ],
+      "joint_signature_counts": [
+        7,
+        9
+      ],
+      "group_variable_counts": [
+        11,
+        11
+      ],
+      "original_group_variable_counts": [
+        9,
+        9
+      ],
+      "free_variables": 0,
+      "active_local_variables": 22,
+      "join_pair_counts": [
+        7
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        9,
+        9
+      ],
+      "feasible_master_mask_counts": [
+        3,
+        3
+      ],
+      "peak_frontier_rows": [
+        21,
+        24
+      ],
+      "peak_temporary_rows": [
+        32,
+        30
+      ],
+      "peak_joint_rows": 9,
+      "preprocessing_seconds": 0.0004950829315930605,
+      "build_seconds": 0.00046387501060962677,
+      "contraction_seconds": 4.504108801484108e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        28,
+        30
+      ],
+      "joint_signature_counts": [
+        10,
+        12
+      ],
+      "group_variable_counts": [
+        11,
+        11
+      ],
+      "original_group_variable_counts": [
+        9,
+        9
+      ],
+      "free_variables": 0,
+      "active_local_variables": 22,
+      "join_pair_counts": [
+        7
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        28,
+        30
+      ],
+      "peak_temporary_rows": [
+        32,
+        30
+      ],
+      "peak_joint_rows": 12,
+      "preprocessing_seconds": 0.0010350829688832164,
+      "build_seconds": 0.0024114999687299132,
+      "contraction_seconds": 0.001386250020004809,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "coupled",
+    "n": 22,
+    "seed": 0,
+    "count": 156,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        56,
+        28
+      ],
+      "joint_signature_counts": [
+        10,
+        10
+      ],
+      "group_variable_counts": [
+        14,
+        12
+      ],
+      "original_group_variable_counts": [
+        11,
+        11
+      ],
+      "free_variables": 0,
+      "active_local_variables": 26,
+      "join_pair_counts": [
+        10
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        12,
+        14
+      ],
+      "feasible_master_mask_counts": [
+        2,
+        5
+      ],
+      "peak_frontier_rows": [
+        56,
+        35
+      ],
+      "peak_temporary_rows": [
+        72,
+        70
+      ],
+      "peak_joint_rows": 10,
+      "preprocessing_seconds": 0.00048754189629107714,
+      "build_seconds": 0.0005164589965716004,
+      "contraction_seconds": 3.604101948440075e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        88,
+        28
+      ],
+      "joint_signature_counts": [
+        16,
+        10
+      ],
+      "group_variable_counts": [
+        14,
+        12
+      ],
+      "original_group_variable_counts": [
+        11,
+        11
+      ],
+      "free_variables": 0,
+      "active_local_variables": 26,
+      "join_pair_counts": [
+        10
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        88,
+        35
+      ],
+      "peak_temporary_rows": [
+        96,
+        70
+      ],
+      "peak_joint_rows": 16,
+      "preprocessing_seconds": 0.0006633748998865485,
+      "build_seconds": 0.0006692919414490461,
+      "contraction_seconds": 5.6999968364834785e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "coupled",
+    "n": 26,
+    "seed": 0,
+    "count": 37,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        8,
+        17
+      ],
+      "joint_signature_counts": [
+        4,
+        4
+      ],
+      "group_variable_counts": [
+        15,
+        15
+      ],
+      "original_group_variable_counts": [
+        13,
+        13
+      ],
+      "free_variables": 0,
+      "active_local_variables": 30,
+      "join_pair_counts": [
+        4
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        4,
+        10
+      ],
+      "feasible_master_mask_counts": [
+        2,
+        2
+      ],
+      "peak_frontier_rows": [
+        35,
+        33
+      ],
+      "peak_temporary_rows": [
+        70,
+        66
+      ],
+      "peak_joint_rows": 4,
+      "preprocessing_seconds": 0.0006015000399202108,
+      "build_seconds": 0.0005832089809700847,
+      "contraction_seconds": 3.254192415624857e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        14,
+        34
+      ],
+      "joint_signature_counts": [
+        8,
+        8
+      ],
+      "group_variable_counts": [
+        15,
+        15
+      ],
+      "original_group_variable_counts": [
+        13,
+        13
+      ],
+      "free_variables": 0,
+      "active_local_variables": 30,
+      "join_pair_counts": [
+        4
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        35,
+        34
+      ],
+      "peak_temporary_rows": [
+        70,
+        66
+      ],
+      "peak_joint_rows": 8,
+      "preprocessing_seconds": 0.0007497919723391533,
+      "build_seconds": 0.0005016250070184469,
+      "contraction_seconds": 0.00024970807135105133,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "coupled",
+    "n": 30,
+    "seed": 0,
+    "count": 253,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        69,
+        11
+      ],
+      "joint_signature_counts": [
+        3,
+        3
+      ],
+      "group_variable_counts": [
+        19,
+        15
+      ],
+      "original_group_variable_counts": [
+        15,
+        15
+      ],
+      "free_variables": 0,
+      "active_local_variables": 34,
+      "join_pair_counts": [
+        3
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        23,
+        11
+      ],
+      "feasible_master_mask_counts": [
+        1,
+        3
+      ],
+      "peak_frontier_rows": [
+        84,
+        68
+      ],
+      "peak_temporary_rows": [
+        168,
+        136
+      ],
+      "peak_joint_rows": 3,
+      "preprocessing_seconds": 0.0006639589555561543,
+      "build_seconds": 0.0006949589587748051,
+      "contraction_seconds": 3.483297768980265e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 4,
+      "boundary_variables": 4,
+      "local_assignment_counts": [
+        368,
+        11
+      ],
+      "joint_signature_counts": [
+        16,
+        3
+      ],
+      "group_variable_counts": [
+        19,
+        15
+      ],
+      "original_group_variable_counts": [
+        15,
+        15
+      ],
+      "free_variables": 0,
+      "active_local_variables": 34,
+      "join_pair_counts": [
+        3
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        368,
+        68
+      ],
+      "peak_temporary_rows": [
+        368,
+        136
+      ],
+      "peak_joint_rows": 16,
+      "preprocessing_seconds": 0.0007119160145521164,
+      "build_seconds": 0.0005936670349910855,
+      "contraction_seconds": 3.7416000850498676e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "bipartite",
+    "n": 18,
+    "seed": 0,
+    "count": 17,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 16,
+      "boundary_variables": 16,
+      "local_assignment_counts": [
+        439,
+        185
+      ],
+      "joint_signature_counts": [
+        301,
+        183
+      ],
+      "group_variable_counts": [
+        17,
+        17
+      ],
+      "original_group_variable_counts": [
+        9,
+        9
+      ],
+      "free_variables": 0,
+      "active_local_variables": 34,
+      "join_pair_counts": [
+        10
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        144,
+        112
+      ],
+      "feasible_master_mask_counts": [
+        104,
+        99
+      ],
+      "peak_frontier_rows": [
+        439,
+        185
+      ],
+      "peak_temporary_rows": [
+        818,
+        244
+      ],
+      "peak_joint_rows": 301,
+      "preprocessing_seconds": 0.0005665420321747661,
+      "build_seconds": 0.0007518749916926026,
+      "contraction_seconds": 5.395791959017515e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 16,
+      "boundary_variables": 16,
+      "local_assignment_counts": [
+        1784,
+        422
+      ],
+      "joint_signature_counts": [
+        1200,
+        420
+      ],
+      "group_variable_counts": [
+        17,
+        17
+      ],
+      "original_group_variable_counts": [
+        9,
+        9
+      ],
+      "free_variables": 0,
+      "active_local_variables": 34,
+      "join_pair_counts": [
+        10
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        1784,
+        422
+      ],
+      "peak_temporary_rows": [
+        1956,
+        480
+      ],
+      "peak_joint_rows": 1200,
+      "preprocessing_seconds": 0.0005149160278961062,
+      "build_seconds": 0.0005096249515190721,
+      "contraction_seconds": 6.479199510067701e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "bipartite",
+    "n": 22,
+    "seed": 0,
+    "count": 24,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 19,
+      "boundary_variables": 19,
+      "local_assignment_counts": [
+        554,
+        840
+      ],
+      "joint_signature_counts": [
+        478,
+        707
+      ],
+      "group_variable_counts": [
+        20,
+        21
+      ],
+      "original_group_variable_counts": [
+        11,
+        11
+      ],
+      "free_variables": 0,
+      "active_local_variables": 41,
+      "join_pair_counts": [
+        17
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        210,
+        254
+      ],
+      "feasible_master_mask_counts": [
+        153,
+        119
+      ],
+      "peak_frontier_rows": [
+        554,
+        840
+      ],
+      "peak_temporary_rows": [
+        794,
+        1336
+      ],
+      "peak_joint_rows": 707,
+      "preprocessing_seconds": 0.0005827920977026224,
+      "build_seconds": 0.0009492909302935004,
+      "contraction_seconds": 6.145902443677187e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 19,
+      "boundary_variables": 19,
+      "local_assignment_counts": [
+        1739,
+        7704
+      ],
+      "joint_signature_counts": [
+        1543,
+        5420
+      ],
+      "group_variable_counts": [
+        20,
+        21
+      ],
+      "original_group_variable_counts": [
+        11,
+        11
+      ],
+      "free_variables": 0,
+      "active_local_variables": 41,
+      "join_pair_counts": [
+        17
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        1739,
+        7704
+      ],
+      "peak_temporary_rows": [
+        1858,
+        8032
+      ],
+      "peak_joint_rows": 5420,
+      "preprocessing_seconds": 0.000661207945086062,
+      "build_seconds": 0.0007177920779213309,
+      "contraction_seconds": 0.00011654093395918608,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "bipartite",
+    "n": 26,
+    "seed": 0,
+    "count": 101,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 24,
+      "boundary_variables": 24,
+      "local_assignment_counts": [
+        2324,
+        3845
+      ],
+      "joint_signature_counts": [
+        1446,
+        3845
+      ],
+      "group_variable_counts": [
+        26,
+        24
+      ],
+      "original_group_variable_counts": [
+        13,
+        13
+      ],
+      "free_variables": 0,
+      "active_local_variables": 50,
+      "join_pair_counts": [
+        52
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        289,
+        966
+      ],
+      "feasible_master_mask_counts": [
+        164,
+        966
+      ],
+      "peak_frontier_rows": [
+        2324,
+        4931
+      ],
+      "peak_temporary_rows": [
+        3332,
+        9862
+      ],
+      "peak_joint_rows": 3845,
+      "preprocessing_seconds": 0.0006609580013900995,
+      "build_seconds": 0.0016995419282466173,
+      "contraction_seconds": 9.14999982342124e-05,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 24,
+      "boundary_variables": 24,
+      "local_assignment_counts": [
+        12336,
+        52272
+      ],
+      "joint_signature_counts": [
+        7680,
+        52272
+      ],
+      "group_variable_counts": [
+        26,
+        24
+      ],
+      "original_group_variable_counts": [
+        13,
+        13
+      ],
+      "free_variables": 0,
+      "active_local_variables": 50,
+      "join_pair_counts": [
+        52
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        12336,
+        52272
+      ],
+      "peak_temporary_rows": [
+        12336,
+        58968
+      ],
+      "peak_joint_rows": 52272,
+      "preprocessing_seconds": 0.000660124933347106,
+      "build_seconds": 0.001806250074878335,
+      "contraction_seconds": 0.00033895799424499273,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  },
+  {
+    "family": "bipartite",
+    "n": 30,
+    "seed": 0,
+    "count": 933,
+    "timing_note": "off is a single structural-check run; use the main reports for three-sample median timings",
+    "pushdown_enabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 27,
+      "boundary_variables": 27,
+      "local_assignment_counts": [
+        51562,
+        17198
+      ],
+      "joint_signature_counts": [
+        40303,
+        11003
+      ],
+      "group_variable_counts": [
+        29,
+        28
+      ],
+      "original_group_variable_counts": [
+        15,
+        15
+      ],
+      "free_variables": 0,
+      "active_local_variables": 57,
+      "join_pair_counts": [
+        639
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": true,
+      "phase1_assignment_counts": [
+        2738,
+        1486
+      ],
+      "feasible_master_mask_counts": [
+        1136,
+        1133
+      ],
+      "peak_frontier_rows": [
+        51562,
+        17198
+      ],
+      "peak_temporary_rows": [
+        90684,
+        22564
+      ],
+      "peak_joint_rows": 40303,
+      "preprocessing_seconds": 0.0007895829621702433,
+      "build_seconds": 0.005539166042581201,
+      "contraction_seconds": 0.0004241249989718199,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    },
+    "pushdown_disabled": {
+      "device": "cpu",
+      "device_fallbacks": [],
+      "boundary_links": 27,
+      "boundary_variables": 27,
+      "local_assignment_counts": [
+        544896,
+        102680
+      ],
+      "joint_signature_counts": [
+        442784,
+        65408
+      ],
+      "group_variable_counts": [
+        29,
+        28
+      ],
+      "original_group_variable_counts": [
+        15,
+        15
+      ],
+      "free_variables": 0,
+      "active_local_variables": 57,
+      "join_pair_counts": [
+        639
+      ],
+      "intermediate_rows": [
+        1
+      ],
+      "peak_intermediate_rows": 1,
+      "semi_join_pushdown": false,
+      "phase1_assignment_counts": [],
+      "feasible_master_mask_counts": [],
+      "peak_frontier_rows": [
+        544896,
+        102680
+      ],
+      "peak_temporary_rows": [
+        131072,
+        106736
+      ],
+      "peak_joint_rows": 442784,
+      "preprocessing_seconds": 0.0007560420781373978,
+      "build_seconds": 0.0129140829667449,
+      "contraction_seconds": 0.0025613330071792006,
+      "primes": [],
+      "arithmetic": "bounded_int64",
+      "selected_engine": "sparse_contract",
+      "selection_reason": "explicit sparse contraction"
+    }
+  }
+]

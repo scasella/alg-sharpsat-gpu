@@ -1,0 +1,7252 @@
+[
+  {
+    "engine": "v3",
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "n": 18,
+    "m": 72,
+    "count": 17,
+    "reference_count": 17,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0014867499703541398,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.001640666974708438,
+          0.0014867499703541398,
+          0.001448625000193715
+        ],
+        "completed_repeats": 3,
+        "count": 17,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.05404091696254909,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.05404091696254909,
+          0.054833458038046956,
+          0.053854750003665686
+        ],
+        "completed_repeats": 3,
+        "count": 17,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            1784,
+            422
+          ],
+          "source_signature_counts": [
+            36,
+            27
+          ],
+          "incoming_signature_counts": [
+            195,
+            170
+          ],
+          "free_variables": 0,
+          "boundary_links": 16,
+          "interpolation_nodes": 17,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 51,
+          "estimated_work": 354780,
+          "peak_frontier_rows": 1784,
+          "build_seconds": 0.001822250080294907,
+          "evaluation_seconds": 0.04872629407327622,
+          "conditioning_states": [
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              8,
+              8
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.16174354206304997,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.16716433397959918,
+          0.16174354206304997,
+          0.15877616696525365
+        ],
+        "completed_repeats": 3,
+        "count": 17,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            1784,
+            422
+          ],
+          "source_signature_counts": [
+            36,
+            27
+          ],
+          "incoming_signature_counts": [
+            195,
+            170
+          ],
+          "free_variables": 0,
+          "boundary_links": 16,
+          "interpolation_nodes": 6,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 18,
+          "estimated_work": 8723808,
+          "peak_frontier_rows": 1784,
+          "build_seconds": 0.0017076249932870269,
+          "evaluation_seconds": 0.15871699911076576,
+          "conditioning_states": [
+            [
+              36,
+              25
+            ],
+            [
+              34,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              25
+            ],
+            [
+              34,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              25
+            ],
+            [
+              34,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ],
+            [
+              36,
+              27
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              7,
+              6
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              7,
+              7
+            ]
+          ],
+          "node_evaluations": [
+            {
+              "prime": 998244353,
+              "node_index": 0,
+              "node": 1,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6300,
+              "conditioning_states_max": 900,
+              "conditioning_states": [
+                36,
+                25
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8091360,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 1,
+              "node": 2,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6426,
+              "conditioning_states_max": 918,
+              "conditioning_states": [
+                34,
+                27
+              ],
+              "residual_active_bits": [
+                6,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8249472,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 2,
+              "node": 3,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6804,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8723808,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 3,
+              "node": 4,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6804,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8723808,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 4,
+              "node": 5,
+              "k": 2,
+              "q": 2,
+              "requested_subsets": 4,
+              "processed_subsets": 4,
+              "full_set_processed": true,
+              "conditioning_states_sum": 3888,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                6,
+                8
+              ],
+              "subsets_by_order": [
+                1,
+                2,
+                1
+              ],
+              "estimated_work": 6496416,
+              "moment_tables_built": 5,
+              "moment_cache_hits": 3,
+              "subset_batches": 3,
+              "moment_batches_built": 4,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 5,
+              "node": 6,
+              "k": 2,
+              "q": 1,
+              "requested_subsets": 3,
+              "processed_subsets": 3,
+              "full_set_processed": false,
+              "conditioning_states_sum": 2916,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                2
+              ],
+              "estimated_work": 2192562,
+              "moment_tables_built": 4,
+              "moment_cache_hits": 2,
+              "subset_batches": 2,
+              "moment_batches_built": 4,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 0,
+              "node": 1,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6300,
+              "conditioning_states_max": 900,
+              "conditioning_states": [
+                36,
+                25
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8091360,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 1,
+              "node": 2,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6426,
+              "conditioning_states_max": 918,
+              "conditioning_states": [
+                34,
+                27
+              ],
+              "residual_active_bits": [
+                6,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8249472,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 2,
+              "node": 3,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6804,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8723808,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 3,
+              "node": 4,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6804,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8723808,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 4,
+              "node": 5,
+              "k": 2,
+              "q": 2,
+              "requested_subsets": 4,
+              "processed_subsets": 4,
+              "full_set_processed": true,
+              "conditioning_states_sum": 3888,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                6,
+                8
+              ],
+              "subsets_by_order": [
+                1,
+                2,
+                1
+              ],
+              "estimated_work": 6496416,
+              "moment_tables_built": 5,
+              "moment_cache_hits": 3,
+              "subset_batches": 3,
+              "moment_batches_built": 4,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 5,
+              "node": 6,
+              "k": 2,
+              "q": 1,
+              "requested_subsets": 3,
+              "processed_subsets": 3,
+              "full_set_processed": false,
+              "conditioning_states_sum": 2916,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                2
+              ],
+              "estimated_work": 2192562,
+              "moment_tables_built": 4,
+              "moment_cache_hits": 2,
+              "subset_batches": 2,
+              "moment_batches_built": 4,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 0,
+              "node": 1,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6300,
+              "conditioning_states_max": 900,
+              "conditioning_states": [
+                36,
+                25
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8091360,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 1,
+              "node": 2,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6426,
+              "conditioning_states_max": 918,
+              "conditioning_states": [
+                34,
+                27
+              ],
+              "residual_active_bits": [
+                6,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8249472,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 2,
+              "node": 3,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6804,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8723808,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 3,
+              "node": 4,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 6804,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                6
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 8723808,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 4,
+              "node": 5,
+              "k": 2,
+              "q": 2,
+              "requested_subsets": 4,
+              "processed_subsets": 4,
+              "full_set_processed": true,
+              "conditioning_states_sum": 3888,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                6,
+                8
+              ],
+              "subsets_by_order": [
+                1,
+                2,
+                1
+              ],
+              "estimated_work": 6496416,
+              "moment_tables_built": 5,
+              "moment_cache_hits": 3,
+              "subset_batches": 3,
+              "moment_batches_built": 4,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 5,
+              "node": 6,
+              "k": 2,
+              "q": 1,
+              "requested_subsets": 3,
+              "processed_subsets": 3,
+              "full_set_processed": false,
+              "conditioning_states_sum": 2916,
+              "conditioning_states_max": 972,
+              "conditioning_states": [
+                36,
+                27
+              ],
+              "residual_active_bits": [
+                7,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                2
+              ],
+              "estimated_work": 2192562,
+              "moment_tables_built": 4,
+              "moment_cache_hits": 2,
+              "subset_batches": 2,
+              "moment_batches_built": 4,
+              "status": "ok"
+            }
+          ],
+          "subset_terms_processed": 105,
+          "signature_subset_visits": 99414,
+          "max_jet_order": 2,
+          "schedule_mode": "hermite"
+        }
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0010989580769091845,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0015953329857438803,
+          0.0010989580769091845,
+          0.0010212500346824527
+        ],
+        "completed_repeats": 3,
+        "count": 17,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 16,
+          "boundary_variables": 16,
+          "local_assignment_counts": [
+            1784,
+            422
+          ],
+          "joint_signature_counts": [
+            1200,
+            420
+          ],
+          "group_variable_counts": [
+            17,
+            17
+          ],
+          "original_group_variable_counts": [
+            9,
+            9
+          ],
+          "free_variables": 0,
+          "active_local_variables": 34,
+          "join_pair_counts": [
+            10
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0005093750078231096,
+          "build_seconds": 0.0004395840223878622,
+          "contraction_seconds": 5.733396392315626e-05,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "ok",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.0014867499703541398,
+      "lagrange": 0.05404091696254909,
+      "hermite": 0.16174354206304997,
+      "sparse_contract": 0.0010989580769091845
+    },
+    "engine_counts": {
+      "dpll": 17,
+      "lagrange": 17,
+      "hermite": 17,
+      "sparse_contract": 17
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          1784,
+          422
+        ],
+        "source_signature_counts": [
+          36,
+          27
+        ],
+        "incoming_signature_counts": [
+          195,
+          170
+        ],
+        "free_variables": 0,
+        "boundary_links": 16,
+        "interpolation_nodes": 17,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 51,
+        "estimated_work": 354780,
+        "peak_frontier_rows": 1784,
+        "build_seconds": 0.001822250080294907,
+        "evaluation_seconds": 0.04872629407327622,
+        "conditioning_states": [
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          1784,
+          422
+        ],
+        "source_signature_counts": [
+          36,
+          27
+        ],
+        "incoming_signature_counts": [
+          195,
+          170
+        ],
+        "free_variables": 0,
+        "boundary_links": 16,
+        "interpolation_nodes": 6,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 18,
+        "estimated_work": 8723808,
+        "peak_frontier_rows": 1784,
+        "build_seconds": 0.0017076249932870269,
+        "evaluation_seconds": 0.15871699911076576,
+        "conditioning_states": [
+          [
+            36,
+            25
+          ],
+          [
+            34,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            25
+          ],
+          [
+            34,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            25
+          ],
+          [
+            34,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            7
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6300,
+            "conditioning_states_max": 900,
+            "conditioning_states": [
+              36,
+              25
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8091360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6426,
+            "conditioning_states_max": 918,
+            "conditioning_states": [
+              34,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8249472,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 4,
+            "node": 5,
+            "k": 2,
+            "q": 2,
+            "requested_subsets": 4,
+            "processed_subsets": 4,
+            "full_set_processed": true,
+            "conditioning_states_sum": 3888,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              2,
+              1
+            ],
+            "estimated_work": 6496416,
+            "moment_tables_built": 5,
+            "moment_cache_hits": 3,
+            "subset_batches": 3,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 5,
+            "node": 6,
+            "k": 2,
+            "q": 1,
+            "requested_subsets": 3,
+            "processed_subsets": 3,
+            "full_set_processed": false,
+            "conditioning_states_sum": 2916,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              2
+            ],
+            "estimated_work": 2192562,
+            "moment_tables_built": 4,
+            "moment_cache_hits": 2,
+            "subset_batches": 2,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6300,
+            "conditioning_states_max": 900,
+            "conditioning_states": [
+              36,
+              25
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8091360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6426,
+            "conditioning_states_max": 918,
+            "conditioning_states": [
+              34,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8249472,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 4,
+            "node": 5,
+            "k": 2,
+            "q": 2,
+            "requested_subsets": 4,
+            "processed_subsets": 4,
+            "full_set_processed": true,
+            "conditioning_states_sum": 3888,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              2,
+              1
+            ],
+            "estimated_work": 6496416,
+            "moment_tables_built": 5,
+            "moment_cache_hits": 3,
+            "subset_batches": 3,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 5,
+            "node": 6,
+            "k": 2,
+            "q": 1,
+            "requested_subsets": 3,
+            "processed_subsets": 3,
+            "full_set_processed": false,
+            "conditioning_states_sum": 2916,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              2
+            ],
+            "estimated_work": 2192562,
+            "moment_tables_built": 4,
+            "moment_cache_hits": 2,
+            "subset_batches": 2,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6300,
+            "conditioning_states_max": 900,
+            "conditioning_states": [
+              36,
+              25
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8091360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6426,
+            "conditioning_states_max": 918,
+            "conditioning_states": [
+              34,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8249472,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 4,
+            "node": 5,
+            "k": 2,
+            "q": 2,
+            "requested_subsets": 4,
+            "processed_subsets": 4,
+            "full_set_processed": true,
+            "conditioning_states_sum": 3888,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              2,
+              1
+            ],
+            "estimated_work": 6496416,
+            "moment_tables_built": 5,
+            "moment_cache_hits": 3,
+            "subset_batches": 3,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 5,
+            "node": 6,
+            "k": 2,
+            "q": 1,
+            "requested_subsets": 3,
+            "processed_subsets": 3,
+            "full_set_processed": false,
+            "conditioning_states_sum": 2916,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              2
+            ],
+            "estimated_work": 2192562,
+            "moment_tables_built": 4,
+            "moment_cache_hits": 2,
+            "subset_batches": 2,
+            "moment_batches_built": 4,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 105,
+        "signature_subset_visits": 99414,
+        "max_jet_order": 2,
+        "schedule_mode": "hermite"
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 16,
+        "boundary_variables": 16,
+        "local_assignment_counts": [
+          1784,
+          422
+        ],
+        "joint_signature_counts": [
+          1200,
+          420
+        ],
+        "group_variable_counts": [
+          17,
+          17
+        ],
+        "original_group_variable_counts": [
+          9,
+          9
+        ],
+        "free_variables": 0,
+        "active_local_variables": 34,
+        "join_pair_counts": [
+          10
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0005093750078231096,
+        "build_seconds": 0.0004395840223878622,
+        "contraction_seconds": 5.733396392315626e-05,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 36.348355836641915,
+      "hermite": 108.79000860146182,
+      "sparse_contract": 0.739168050326186
+    },
+    "boundary_links": 16,
+    "local_assignment_counts": [
+      1784,
+      422
+    ],
+    "joint_signature_counts": [
+      1200,
+      420
+    ],
+    "join_pair_counts": [
+      10
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0005093750078231096,
+      "build_seconds": 0.0004395840223878622,
+      "contraction_seconds": 5.733396392315626e-05
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 18,
+        "clauses": 72,
+        "literal_occurrences": 216,
+        "dimension": 16,
+        "block_count": 5,
+        "raw_measurement_rows": 5,
+        "measurement_rows": 5,
+        "degree_upper_bound": 216,
+        "jet_order_upper_bound": 108,
+        "interpolation_matrix_entries_upper_bound": 47089,
+        "interpolation_work_upper_bound": 10218313,
+        "mobius_inner_terms_per_node_upper_bound": 387420489,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              10,
+              8
+            ],
+            "local_assignment_rows": [
+              1024,
+              256
+            ],
+            "group_split_measurement_rows": 9,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 1953125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              9,
+              9
+            ],
+            "local_assignment_rows": [
+              512,
+              512
+            ],
+            "group_split_measurement_rows": 10,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 9765625
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  },
+  {
+    "engine": "v3",
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "n": 22,
+    "m": 88,
+    "count": 24,
+    "reference_count": 24,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.00378779205493629,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.00378779205493629,
+          0.004571332945488393,
+          0.0035835420712828636
+        ],
+        "completed_repeats": 3,
+        "count": 24,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.29894620901905,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.29015970800537616,
+          0.29894620901905,
+          0.30140670796390623
+        ],
+        "completed_repeats": 3,
+        "count": 24,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            1739,
+            7704
+          ],
+          "source_signature_counts": [
+            70,
+            60
+          ],
+          "incoming_signature_counts": [
+            243,
+            832
+          ],
+          "free_variables": 0,
+          "boundary_links": 19,
+          "interpolation_nodes": 20,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 60,
+          "estimated_work": 4515000,
+          "peak_frontier_rows": 7704,
+          "build_seconds": 0.002542832982726395,
+          "evaluation_seconds": 0.29184621199965477,
+          "conditioning_states": [
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              70,
+              60
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              9
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 1.3066059579141438,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          1.3594245000276715,
+          1.3066059579141438,
+          1.2950959999579936
+        ],
+        "completed_repeats": 3,
+        "count": 24,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            1739,
+            7704
+          ],
+          "source_signature_counts": [
+            70,
+            60
+          ],
+          "incoming_signature_counts": [
+            243,
+            832
+          ],
+          "free_variables": 0,
+          "boundary_links": 19,
+          "interpolation_nodes": 6,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 18,
+          "estimated_work": 281777190,
+          "peak_frontier_rows": 7704,
+          "build_seconds": 0.0029308750526979566,
+          "evaluation_seconds": 1.3019253328675404,
+          "conditioning_states": [
+            [
+              54,
+              60
+            ],
+            [
+              70,
+              53
+            ],
+            [
+              70,
+              56
+            ],
+            [
+              70,
+              58
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              64,
+              60
+            ],
+            [
+              54,
+              60
+            ],
+            [
+              70,
+              53
+            ],
+            [
+              70,
+              56
+            ],
+            [
+              70,
+              58
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              64,
+              60
+            ],
+            [
+              54,
+              60
+            ],
+            [
+              70,
+              53
+            ],
+            [
+              70,
+              56
+            ],
+            [
+              70,
+              58
+            ],
+            [
+              70,
+              60
+            ],
+            [
+              64,
+              60
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              6,
+              9
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              8,
+              8
+            ]
+          ],
+          "node_evaluations": [
+            {
+              "prime": 998244353,
+              "node_index": 0,
+              "node": 1,
+              "k": 4,
+              "q": 3,
+              "requested_subsets": 15,
+              "processed_subsets": 15,
+              "full_set_processed": false,
+              "conditioning_states_sum": 48600,
+              "conditioning_states_max": 3240,
+              "conditioning_states": [
+                54,
+                60
+              ],
+              "residual_active_bits": [
+                6,
+                9
+              ],
+              "subsets_by_order": [
+                1,
+                4,
+                6,
+                4
+              ],
+              "estimated_work": 281777190,
+              "moment_tables_built": 16,
+              "moment_cache_hits": 14,
+              "subset_batches": 4,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 1,
+              "node": 2,
+              "k": 3,
+              "q": 3,
+              "requested_subsets": 8,
+              "processed_subsets": 8,
+              "full_set_processed": true,
+              "conditioning_states_sum": 29680,
+              "conditioning_states_max": 3710,
+              "conditioning_states": [
+                70,
+                53
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3,
+                1
+              ],
+              "estimated_work": 224888360,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 10,
+              "subset_batches": 4,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 2,
+              "node": 3,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 27440,
+              "conditioning_states_max": 3920,
+              "conditioning_states": [
+                70,
+                56
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 102300960,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 3,
+              "node": 4,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 28420,
+              "conditioning_states_max": 4060,
+              "conditioning_states": [
+                70,
+                58
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 105916320,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 4,
+              "node": 5,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 29400,
+              "conditioning_states_max": 4200,
+              "conditioning_states": [
+                70,
+                60
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 109531680,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 5,
+              "node": 6,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 26880,
+              "conditioning_states_max": 3840,
+              "conditioning_states": [
+                64,
+                60
+              ],
+              "residual_active_bits": [
+                8,
+                8
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 100235040,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 0,
+              "node": 1,
+              "k": 4,
+              "q": 3,
+              "requested_subsets": 15,
+              "processed_subsets": 15,
+              "full_set_processed": false,
+              "conditioning_states_sum": 48600,
+              "conditioning_states_max": 3240,
+              "conditioning_states": [
+                54,
+                60
+              ],
+              "residual_active_bits": [
+                6,
+                9
+              ],
+              "subsets_by_order": [
+                1,
+                4,
+                6,
+                4
+              ],
+              "estimated_work": 281777190,
+              "moment_tables_built": 16,
+              "moment_cache_hits": 14,
+              "subset_batches": 4,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 1,
+              "node": 2,
+              "k": 3,
+              "q": 3,
+              "requested_subsets": 8,
+              "processed_subsets": 8,
+              "full_set_processed": true,
+              "conditioning_states_sum": 29680,
+              "conditioning_states_max": 3710,
+              "conditioning_states": [
+                70,
+                53
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3,
+                1
+              ],
+              "estimated_work": 224888360,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 10,
+              "subset_batches": 4,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 2,
+              "node": 3,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 27440,
+              "conditioning_states_max": 3920,
+              "conditioning_states": [
+                70,
+                56
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 102300960,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 3,
+              "node": 4,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 28420,
+              "conditioning_states_max": 4060,
+              "conditioning_states": [
+                70,
+                58
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 105916320,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 4,
+              "node": 5,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 29400,
+              "conditioning_states_max": 4200,
+              "conditioning_states": [
+                70,
+                60
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 109531680,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 5,
+              "node": 6,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 26880,
+              "conditioning_states_max": 3840,
+              "conditioning_states": [
+                64,
+                60
+              ],
+              "residual_active_bits": [
+                8,
+                8
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 100235040,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 0,
+              "node": 1,
+              "k": 4,
+              "q": 3,
+              "requested_subsets": 15,
+              "processed_subsets": 15,
+              "full_set_processed": false,
+              "conditioning_states_sum": 48600,
+              "conditioning_states_max": 3240,
+              "conditioning_states": [
+                54,
+                60
+              ],
+              "residual_active_bits": [
+                6,
+                9
+              ],
+              "subsets_by_order": [
+                1,
+                4,
+                6,
+                4
+              ],
+              "estimated_work": 281777190,
+              "moment_tables_built": 16,
+              "moment_cache_hits": 14,
+              "subset_batches": 4,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 1,
+              "node": 2,
+              "k": 3,
+              "q": 3,
+              "requested_subsets": 8,
+              "processed_subsets": 8,
+              "full_set_processed": true,
+              "conditioning_states_sum": 29680,
+              "conditioning_states_max": 3710,
+              "conditioning_states": [
+                70,
+                53
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3,
+                1
+              ],
+              "estimated_work": 224888360,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 10,
+              "subset_batches": 4,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 2,
+              "node": 3,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 27440,
+              "conditioning_states_max": 3920,
+              "conditioning_states": [
+                70,
+                56
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 102300960,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 3,
+              "node": 4,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 28420,
+              "conditioning_states_max": 4060,
+              "conditioning_states": [
+                70,
+                58
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 105916320,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 4,
+              "node": 5,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 29400,
+              "conditioning_states_max": 4200,
+              "conditioning_states": [
+                70,
+                60
+              ],
+              "residual_active_bits": [
+                9,
+                7
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 109531680,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 5,
+              "node": 6,
+              "k": 3,
+              "q": 2,
+              "requested_subsets": 7,
+              "processed_subsets": 7,
+              "full_set_processed": false,
+              "conditioning_states_sum": 26880,
+              "conditioning_states_max": 3840,
+              "conditioning_states": [
+                64,
+                60
+              ],
+              "residual_active_bits": [
+                8,
+                8
+              ],
+              "subsets_by_order": [
+                1,
+                3,
+                3
+              ],
+              "estimated_work": 100235040,
+              "moment_tables_built": 6,
+              "moment_cache_hits": 8,
+              "subset_batches": 3,
+              "moment_batches_built": 5,
+              "status": "ok"
+            }
+          ],
+          "subset_terms_processed": 153,
+          "signature_subset_visits": 571260,
+          "max_jet_order": 3,
+          "schedule_mode": "hermite"
+        }
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.001640042057260871,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0019760410068556666,
+          0.0015959589509293437,
+          0.001640042057260871
+        ],
+        "completed_repeats": 3,
+        "count": 24,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 19,
+          "boundary_variables": 19,
+          "local_assignment_counts": [
+            1739,
+            7704
+          ],
+          "joint_signature_counts": [
+            1543,
+            5420
+          ],
+          "group_variable_counts": [
+            20,
+            21
+          ],
+          "original_group_variable_counts": [
+            11,
+            11
+          ],
+          "free_variables": 0,
+          "active_local_variables": 41,
+          "join_pair_counts": [
+            17
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0006322499830275774,
+          "build_seconds": 0.0007438749307766557,
+          "contraction_seconds": 0.00014712498523294926,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "ok",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.00378779205493629,
+      "lagrange": 0.29894620901905,
+      "hermite": 1.3066059579141438,
+      "sparse_contract": 0.001640042057260871
+    },
+    "engine_counts": {
+      "dpll": 24,
+      "lagrange": 24,
+      "hermite": 24,
+      "sparse_contract": 24
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          1739,
+          7704
+        ],
+        "source_signature_counts": [
+          70,
+          60
+        ],
+        "incoming_signature_counts": [
+          243,
+          832
+        ],
+        "free_variables": 0,
+        "boundary_links": 19,
+        "interpolation_nodes": 20,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 60,
+        "estimated_work": 4515000,
+        "peak_frontier_rows": 7704,
+        "build_seconds": 0.002542832982726395,
+        "evaluation_seconds": 0.29184621199965477,
+        "conditioning_states": [
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            9
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          1739,
+          7704
+        ],
+        "source_signature_counts": [
+          70,
+          60
+        ],
+        "incoming_signature_counts": [
+          243,
+          832
+        ],
+        "free_variables": 0,
+        "boundary_links": 19,
+        "interpolation_nodes": 6,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 18,
+        "estimated_work": 281777190,
+        "peak_frontier_rows": 7704,
+        "build_seconds": 0.0029308750526979566,
+        "evaluation_seconds": 1.3019253328675404,
+        "conditioning_states": [
+          [
+            54,
+            60
+          ],
+          [
+            70,
+            53
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            70,
+            58
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            64,
+            60
+          ],
+          [
+            54,
+            60
+          ],
+          [
+            70,
+            53
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            70,
+            58
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            64,
+            60
+          ],
+          [
+            54,
+            60
+          ],
+          [
+            70,
+            53
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            70,
+            58
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            64,
+            60
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            8
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 48600,
+            "conditioning_states_max": 3240,
+            "conditioning_states": [
+              54,
+              60
+            ],
+            "residual_active_bits": [
+              6,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 281777190,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 3,
+            "requested_subsets": 8,
+            "processed_subsets": 8,
+            "full_set_processed": true,
+            "conditioning_states_sum": 29680,
+            "conditioning_states_max": 3710,
+            "conditioning_states": [
+              70,
+              53
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3,
+              1
+            ],
+            "estimated_work": 224888360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 10,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 27440,
+            "conditioning_states_max": 3920,
+            "conditioning_states": [
+              70,
+              56
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 102300960,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 28420,
+            "conditioning_states_max": 4060,
+            "conditioning_states": [
+              70,
+              58
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 105916320,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 4,
+            "node": 5,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 29400,
+            "conditioning_states_max": 4200,
+            "conditioning_states": [
+              70,
+              60
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 109531680,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 5,
+            "node": 6,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 26880,
+            "conditioning_states_max": 3840,
+            "conditioning_states": [
+              64,
+              60
+            ],
+            "residual_active_bits": [
+              8,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 100235040,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 48600,
+            "conditioning_states_max": 3240,
+            "conditioning_states": [
+              54,
+              60
+            ],
+            "residual_active_bits": [
+              6,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 281777190,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 3,
+            "requested_subsets": 8,
+            "processed_subsets": 8,
+            "full_set_processed": true,
+            "conditioning_states_sum": 29680,
+            "conditioning_states_max": 3710,
+            "conditioning_states": [
+              70,
+              53
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3,
+              1
+            ],
+            "estimated_work": 224888360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 10,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 27440,
+            "conditioning_states_max": 3920,
+            "conditioning_states": [
+              70,
+              56
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 102300960,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 28420,
+            "conditioning_states_max": 4060,
+            "conditioning_states": [
+              70,
+              58
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 105916320,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 4,
+            "node": 5,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 29400,
+            "conditioning_states_max": 4200,
+            "conditioning_states": [
+              70,
+              60
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 109531680,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 5,
+            "node": 6,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 26880,
+            "conditioning_states_max": 3840,
+            "conditioning_states": [
+              64,
+              60
+            ],
+            "residual_active_bits": [
+              8,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 100235040,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 48600,
+            "conditioning_states_max": 3240,
+            "conditioning_states": [
+              54,
+              60
+            ],
+            "residual_active_bits": [
+              6,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 281777190,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 3,
+            "requested_subsets": 8,
+            "processed_subsets": 8,
+            "full_set_processed": true,
+            "conditioning_states_sum": 29680,
+            "conditioning_states_max": 3710,
+            "conditioning_states": [
+              70,
+              53
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3,
+              1
+            ],
+            "estimated_work": 224888360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 10,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 27440,
+            "conditioning_states_max": 3920,
+            "conditioning_states": [
+              70,
+              56
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 102300960,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 28420,
+            "conditioning_states_max": 4060,
+            "conditioning_states": [
+              70,
+              58
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 105916320,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 4,
+            "node": 5,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 29400,
+            "conditioning_states_max": 4200,
+            "conditioning_states": [
+              70,
+              60
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 109531680,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 5,
+            "node": 6,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 26880,
+            "conditioning_states_max": 3840,
+            "conditioning_states": [
+              64,
+              60
+            ],
+            "residual_active_bits": [
+              8,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 100235040,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 153,
+        "signature_subset_visits": 571260,
+        "max_jet_order": 3,
+        "schedule_mode": "hermite"
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 19,
+        "boundary_variables": 19,
+        "local_assignment_counts": [
+          1739,
+          7704
+        ],
+        "joint_signature_counts": [
+          1543,
+          5420
+        ],
+        "group_variable_counts": [
+          20,
+          21
+        ],
+        "original_group_variable_counts": [
+          11,
+          11
+        ],
+        "free_variables": 0,
+        "active_local_variables": 41,
+        "join_pair_counts": [
+          17
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0006322499830275774,
+        "build_seconds": 0.0007438749307766557,
+        "contraction_seconds": 0.00014712498523294926,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 78.92360633405421,
+      "hermite": 344.95187142371276,
+      "sparse_contract": 0.43298101729833643
+    },
+    "boundary_links": 19,
+    "local_assignment_counts": [
+      1739,
+      7704
+    ],
+    "joint_signature_counts": [
+      1543,
+      5420
+    ],
+    "join_pair_counts": [
+      17
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0006322499830275774,
+      "build_seconds": 0.0007438749307766557,
+      "contraction_seconds": 0.00014712498523294926
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 22,
+        "clauses": 88,
+        "literal_occurrences": 264,
+        "dimension": 16,
+        "block_count": 6,
+        "raw_measurement_rows": 6,
+        "measurement_rows": 6,
+        "degree_upper_bound": 264,
+        "jet_order_upper_bound": 132,
+        "interpolation_matrix_entries_upper_bound": 70225,
+        "interpolation_work_upper_bound": 18609625,
+        "mobius_inner_terms_per_node_upper_bound": 31381059609,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              12,
+              10
+            ],
+            "local_assignment_rows": [
+              4096,
+              1024
+            ],
+            "group_split_measurement_rows": 11,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 48828125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              11,
+              11
+            ],
+            "local_assignment_rows": [
+              2048,
+              2048
+            ],
+            "group_split_measurement_rows": 11,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 48828125
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  },
+  {
+    "engine": "v3",
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "n": 26,
+    "m": 104,
+    "count": 101,
+    "reference_count": 101,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.004660625010728836,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.004642333020456135,
+          0.004660625010728836,
+          0.0049142499919980764
+        ],
+        "completed_repeats": 3,
+        "count": 101,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 4.783768582972698,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          4.783768582972698,
+          4.831572583061643,
+          4.778733624960296
+        ],
+        "completed_repeats": 3,
+        "count": 101,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            12336,
+            52272
+          ],
+          "source_signature_counts": [
+            26,
+            560
+          ],
+          "incoming_signature_counts": [
+            2088,
+            1898
+          ],
+          "free_variables": 0,
+          "boundary_links": 24,
+          "interpolation_nodes": 25,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 75,
+          "estimated_work": 58036160,
+          "peak_frontier_rows": 52272,
+          "build_seconds": 0.007687042001634836,
+          "evaluation_seconds": 4.767976333620027,
+          "conditioning_states": [
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ],
+            [
+              26,
+              560
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              10,
+              13
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              11,
+              13
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "resource_limit",
+        "reason": "node 0 estimates 9341739264 jet operations; max_jet_work is 2000000000",
+        "seconds": null,
+        "failed_attempt_seconds": 0.009717707987874746,
+        "samples_seconds": [],
+        "completed_repeats": 0,
+        "count": null,
+        "verified": false,
+        "stats": null
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0030968330102041364,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0036112089874222875,
+          0.0030968330102041364,
+          0.0027395420474931598
+        ],
+        "completed_repeats": 3,
+        "count": 101,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 24,
+          "boundary_variables": 24,
+          "local_assignment_counts": [
+            12336,
+            52272
+          ],
+          "joint_signature_counts": [
+            7680,
+            52272
+          ],
+          "group_variable_counts": [
+            26,
+            24
+          ],
+          "original_group_variable_counts": [
+            13,
+            13
+          ],
+          "free_variables": 0,
+          "active_local_variables": 50,
+          "join_pair_counts": [
+            52
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0009071669774129987,
+          "build_seconds": 0.0016908330144360662,
+          "contraction_seconds": 0.000337666948325932,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "resource_limit",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.004660625010728836,
+      "lagrange": 4.783768582972698,
+      "sparse_contract": 0.0030968330102041364
+    },
+    "engine_counts": {
+      "dpll": 101,
+      "lagrange": 101,
+      "sparse_contract": 101
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          12336,
+          52272
+        ],
+        "source_signature_counts": [
+          26,
+          560
+        ],
+        "incoming_signature_counts": [
+          2088,
+          1898
+        ],
+        "free_variables": 0,
+        "boundary_links": 24,
+        "interpolation_nodes": 25,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 75,
+        "estimated_work": 58036160,
+        "peak_frontier_rows": 52272,
+        "build_seconds": 0.007687042001634836,
+        "evaluation_seconds": 4.767976333620027,
+        "conditioning_states": [
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ]
+        ]
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 24,
+        "boundary_variables": 24,
+        "local_assignment_counts": [
+          12336,
+          52272
+        ],
+        "joint_signature_counts": [
+          7680,
+          52272
+        ],
+        "group_variable_counts": [
+          26,
+          24
+        ],
+        "original_group_variable_counts": [
+          13,
+          13
+        ],
+        "free_variables": 0,
+        "active_local_variables": 50,
+        "join_pair_counts": [
+          52
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0009071669774129987,
+        "build_seconds": 0.0016908330144360662,
+        "contraction_seconds": 0.000337666948325932,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 1026.4221154803022,
+      "sparse_contract": 0.6644673199571249
+    },
+    "boundary_links": 24,
+    "local_assignment_counts": [
+      12336,
+      52272
+    ],
+    "joint_signature_counts": [
+      7680,
+      52272
+    ],
+    "join_pair_counts": [
+      52
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0009071669774129987,
+      "build_seconds": 0.0016908330144360662,
+      "contraction_seconds": 0.000337666948325932
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 26,
+        "clauses": 104,
+        "literal_occurrences": 312,
+        "dimension": 16,
+        "block_count": 7,
+        "raw_measurement_rows": 7,
+        "measurement_rows": 7,
+        "degree_upper_bound": 312,
+        "jet_order_upper_bound": 156,
+        "interpolation_matrix_entries_upper_bound": 97969,
+        "interpolation_work_upper_bound": 30664297,
+        "mobius_inner_terms_per_node_upper_bound": 2541865828329,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              14,
+              12
+            ],
+            "local_assignment_rows": [
+              16384,
+              4096
+            ],
+            "group_split_measurement_rows": 13,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 1220703125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              13,
+              13
+            ],
+            "local_assignment_rows": [
+              8192,
+              8192
+            ],
+            "group_split_measurement_rows": 14,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 6103515625
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  },
+  {
+    "engine": "v3",
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "n": 30,
+    "m": 120,
+    "count": 933,
+    "reference_count": 933,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.010244540986604989,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.010315540945157409,
+          0.010244540986604989,
+          0.009454624960198998
+        ],
+        "completed_repeats": 3,
+        "count": 933,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "resource_limit",
+        "reason": "two-group contraction estimates 3364491200 operations; max_work is 2000000000",
+        "seconds": null,
+        "failed_attempt_seconds": 0.07152787502855062,
+        "samples_seconds": [],
+        "completed_repeats": 0,
+        "count": null,
+        "verified": false,
+        "stats": null
+      },
+      "hermite": {
+        "status": "resource_limit",
+        "reason": "node 0 estimates 715506546496 jet operations; max_jet_work is 2000000000",
+        "seconds": null,
+        "failed_attempt_seconds": 0.0508352080360055,
+        "samples_seconds": [],
+        "completed_repeats": 0,
+        "count": null,
+        "verified": false,
+        "stats": null
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.014635917032137513,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.014775000046938658,
+          0.014635917032137513,
+          0.014379375032149255
+        ],
+        "completed_repeats": 3,
+        "count": 933,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 27,
+          "boundary_variables": 27,
+          "local_assignment_counts": [
+            544896,
+            102680
+          ],
+          "joint_signature_counts": [
+            442784,
+            65408
+          ],
+          "group_variable_counts": [
+            29,
+            28
+          ],
+          "original_group_variable_counts": [
+            15,
+            15
+          ],
+          "free_variables": 0,
+          "active_local_variables": 57,
+          "join_pair_counts": [
+            639
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0010600840905681252,
+          "build_seconds": 0.011096792062744498,
+          "contraction_seconds": 0.0022549580316990614,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "resource_limit",
+      "hermite": "resource_limit",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.010244540986604989,
+      "sparse_contract": 0.014635917032137513
+    },
+    "engine_counts": {
+      "dpll": 933,
+      "sparse_contract": 933
+    },
+    "engine_stats": {
+      "dpll": {},
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 27,
+        "boundary_variables": 27,
+        "local_assignment_counts": [
+          544896,
+          102680
+        ],
+        "joint_signature_counts": [
+          442784,
+          65408
+        ],
+        "group_variable_counts": [
+          29,
+          28
+        ],
+        "original_group_variable_counts": [
+          15,
+          15
+        ],
+        "free_variables": 0,
+        "active_local_variables": 57,
+        "join_pair_counts": [
+          639
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0010600840905681252,
+        "build_seconds": 0.011096792062744498,
+        "contraction_seconds": 0.0022549580316990614,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "sparse_contract": 1.4286552273327195
+    },
+    "boundary_links": 27,
+    "local_assignment_counts": [
+      544896,
+      102680
+    ],
+    "joint_signature_counts": [
+      442784,
+      65408
+    ],
+    "join_pair_counts": [
+      639
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0010600840905681252,
+      "build_seconds": 0.011096792062744498,
+      "contraction_seconds": 0.0022549580316990614
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 30,
+        "clauses": 120,
+        "literal_occurrences": 360,
+        "dimension": 16,
+        "block_count": 8,
+        "raw_measurement_rows": 8,
+        "measurement_rows": 8,
+        "degree_upper_bound": 360,
+        "jet_order_upper_bound": 180,
+        "interpolation_matrix_entries_upper_bound": 130321,
+        "interpolation_work_upper_bound": 47045881,
+        "mobius_inner_terms_per_node_upper_bound": 205891132094649,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              16,
+              14
+            ],
+            "local_assignment_rows": [
+              65536,
+              16384
+            ],
+            "group_split_measurement_rows": 15,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 30517578125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              15,
+              15
+            ],
+            "local_assignment_rows": [
+              32768,
+              32768
+            ],
+            "group_split_measurement_rows": 16,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 152587890625
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  }
+]

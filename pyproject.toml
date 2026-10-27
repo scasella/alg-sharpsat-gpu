@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alg-sharpsat-gpu"
+version = "0.3.1"
+description = "Executable audit of the Oct 2026 ETH refutation mechanism and sparse boundary-contraction #SAT micro-engine"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+dependencies = [
+  "torch>=2.2",
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "networkx>=3.2",
+  "pytest>=8",
+  "hypothesis>=6",
+]
+
+[project.scripts]
+alg-sharpsat-bench = "alg_sharpsat.benchmarks:main"
+alg-sharpsat-benchmark = "alg_sharpsat.benchmarks:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+markers = [
+  "g1: deterministic OR-gate counting bijection",
+  "g2: implication-cycle counting bijection",
+  "g3: finite-field boundary identities",
+  "g4: polynomial degree, factorization, and interpolation",
+  "g5: end-to-end exact differential counting",
+  "g6: benchmark harness smoke test",
+  "g7: confluent Hermite identity for Hasse coefficients",
+  "g8: exact Taylor jet model counting",
+  "g9: measured Lagrange versus Hermite state and runtime comparison",
+  "g10: sparse boundary contraction exactness",
+  "g11: executable SWAP spectral and Boolean Mobius identities",
+  "g12: v3 measured engine comparisons and crossover estimates",
+]

@@ -1,0 +1,7457 @@
+[
+  {
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "engine": "both",
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 12000000000
+    },
+    "n": 18,
+    "m": 72,
+    "boundary_links": 16,
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 1073741824,
+      "max_local_assignments": 4000000
+    },
+    "preprocessing_num_vars": 18,
+    "preprocessing_group_variable_counts": [
+      17,
+      17
+    ],
+    "binary_link_states": 65536,
+    "measurement_states": 625,
+    "nominal_ratio": 104.8576,
+    "conditioning_states_max": 972,
+    "conditioning_states_sum": 49572,
+    "residual_bits_max": 16,
+    "residual_bits_sum": 768,
+    "tensor_seconds": 0.20673254190478474,
+    "dpll_seconds": 0.0014549579937011003,
+    "tensor_over_dpll": 142.0883233741351,
+    "evaluations_per_second": 333.7645798975349,
+    "count": 17,
+    "reference_count": 17,
+    "device": "cpu",
+    "torch_threads": 1,
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "stats": {
+      "device": "cpu",
+      "device_fallbacks": [
+        "CUDA is unavailable",
+        "MPS is unavailable"
+      ],
+      "local_assignment_counts": [
+        1784,
+        422
+      ],
+      "source_signature_counts": [
+        36,
+        27
+      ],
+      "incoming_signature_counts": [
+        195,
+        170
+      ],
+      "free_variables": 0,
+      "boundary_links": 16,
+      "interpolation_nodes": 17,
+      "primes": [
+        998244353,
+        1004535809,
+        469762049
+      ],
+      "evaluations": 51,
+      "estimated_work": 354780,
+      "peak_frontier_rows": 1784,
+      "build_seconds": 0.0017610409995540977,
+      "evaluation_seconds": 0.04659858485683799,
+      "conditioning_states": [
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ],
+        [
+          36,
+          27
+        ]
+      ],
+      "residual_active_bits": [
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ]
+      ]
+    },
+    "engine_counts": {
+      "lagrange": 17,
+      "hermite": 17
+    },
+    "engine_seconds": {
+      "lagrange": 0.05708687496371567,
+      "hermite": 0.14964566694106907
+    },
+    "engine_stats": {
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [
+          "CUDA is unavailable",
+          "MPS is unavailable"
+        ],
+        "local_assignment_counts": [
+          1784,
+          422
+        ],
+        "source_signature_counts": [
+          36,
+          27
+        ],
+        "incoming_signature_counts": [
+          195,
+          170
+        ],
+        "free_variables": 0,
+        "boundary_links": 16,
+        "interpolation_nodes": 17,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 51,
+        "estimated_work": 354780,
+        "peak_frontier_rows": 1784,
+        "build_seconds": 0.0017610409995540977,
+        "evaluation_seconds": 0.04659858485683799,
+        "conditioning_states": [
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            8
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [
+          "CUDA is unavailable",
+          "MPS is unavailable"
+        ],
+        "local_assignment_counts": [
+          1784,
+          422
+        ],
+        "source_signature_counts": [
+          36,
+          27
+        ],
+        "incoming_signature_counts": [
+          195,
+          170
+        ],
+        "free_variables": 0,
+        "boundary_links": 16,
+        "interpolation_nodes": 6,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 18,
+        "estimated_work": 8723808,
+        "peak_frontier_rows": 1784,
+        "build_seconds": 0.001487000030465424,
+        "evaluation_seconds": 0.14618391799740493,
+        "conditioning_states": [
+          [
+            36,
+            25
+          ],
+          [
+            34,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            25
+          ],
+          [
+            34,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            25
+          ],
+          [
+            34,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            36,
+            27
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            7
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6300,
+            "conditioning_states_max": 900,
+            "conditioning_states": [
+              36,
+              25
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8091360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6426,
+            "conditioning_states_max": 918,
+            "conditioning_states": [
+              34,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8249472,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 4,
+            "node": 5,
+            "k": 2,
+            "q": 2,
+            "requested_subsets": 4,
+            "processed_subsets": 4,
+            "full_set_processed": true,
+            "conditioning_states_sum": 3888,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              2,
+              1
+            ],
+            "estimated_work": 6496416,
+            "moment_tables_built": 5,
+            "moment_cache_hits": 3,
+            "subset_batches": 3,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 5,
+            "node": 6,
+            "k": 2,
+            "q": 1,
+            "requested_subsets": 3,
+            "processed_subsets": 3,
+            "full_set_processed": false,
+            "conditioning_states_sum": 2916,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              2
+            ],
+            "estimated_work": 2192562,
+            "moment_tables_built": 4,
+            "moment_cache_hits": 2,
+            "subset_batches": 2,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6300,
+            "conditioning_states_max": 900,
+            "conditioning_states": [
+              36,
+              25
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8091360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6426,
+            "conditioning_states_max": 918,
+            "conditioning_states": [
+              34,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8249472,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 4,
+            "node": 5,
+            "k": 2,
+            "q": 2,
+            "requested_subsets": 4,
+            "processed_subsets": 4,
+            "full_set_processed": true,
+            "conditioning_states_sum": 3888,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              2,
+              1
+            ],
+            "estimated_work": 6496416,
+            "moment_tables_built": 5,
+            "moment_cache_hits": 3,
+            "subset_batches": 3,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 5,
+            "node": 6,
+            "k": 2,
+            "q": 1,
+            "requested_subsets": 3,
+            "processed_subsets": 3,
+            "full_set_processed": false,
+            "conditioning_states_sum": 2916,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              2
+            ],
+            "estimated_work": 2192562,
+            "moment_tables_built": 4,
+            "moment_cache_hits": 2,
+            "subset_batches": 2,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6300,
+            "conditioning_states_max": 900,
+            "conditioning_states": [
+              36,
+              25
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8091360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6426,
+            "conditioning_states_max": 918,
+            "conditioning_states": [
+              34,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8249472,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 6804,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              6
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 8723808,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 4,
+            "node": 5,
+            "k": 2,
+            "q": 2,
+            "requested_subsets": 4,
+            "processed_subsets": 4,
+            "full_set_processed": true,
+            "conditioning_states_sum": 3888,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              6,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              2,
+              1
+            ],
+            "estimated_work": 6496416,
+            "moment_tables_built": 5,
+            "moment_cache_hits": 3,
+            "subset_batches": 3,
+            "moment_batches_built": 4,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 5,
+            "node": 6,
+            "k": 2,
+            "q": 1,
+            "requested_subsets": 3,
+            "processed_subsets": 3,
+            "full_set_processed": false,
+            "conditioning_states_sum": 2916,
+            "conditioning_states_max": 972,
+            "conditioning_states": [
+              36,
+              27
+            ],
+            "residual_active_bits": [
+              7,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              2
+            ],
+            "estimated_work": 2192562,
+            "moment_tables_built": 4,
+            "moment_cache_hits": 2,
+            "subset_batches": 2,
+            "moment_batches_built": 4,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 105,
+        "signature_subset_visits": 99414,
+        "max_jet_order": 2,
+        "schedule_mode": "hermite"
+      }
+    },
+    "lagrange_conditioning_states_sum": 49572,
+    "preprocessing_local_assignment_counts": {
+      "lagrange": [
+        1784,
+        422
+      ],
+      "hermite": [
+        1784,
+        422
+      ]
+    },
+    "preprocessing_signature_cells": {
+      "lagrange": 11610,
+      "hermite": 11610
+    },
+    "preprocessing_source_signature_counts": {
+      "lagrange": [
+        36,
+        27
+      ],
+      "hermite": [
+        36,
+        27
+      ]
+    },
+    "preprocessing_incoming_signature_counts": {
+      "lagrange": [
+        195,
+        170
+      ],
+      "hermite": [
+        195,
+        170
+      ]
+    },
+    "hermite_node_evaluations": [
+      {
+        "prime": 998244353,
+        "node_index": 0,
+        "node": 1,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6300,
+        "conditioning_states_max": 900,
+        "conditioning_states": [
+          36,
+          25
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8091360,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 1,
+        "node": 2,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6426,
+        "conditioning_states_max": 918,
+        "conditioning_states": [
+          34,
+          27
+        ],
+        "residual_active_bits": [
+          6,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8249472,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 2,
+        "node": 3,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6804,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8723808,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 3,
+        "node": 4,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6804,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8723808,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 4,
+        "node": 5,
+        "k": 2,
+        "q": 2,
+        "requested_subsets": 4,
+        "processed_subsets": 4,
+        "full_set_processed": true,
+        "conditioning_states_sum": 3888,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          6,
+          8
+        ],
+        "subsets_by_order": [
+          1,
+          2,
+          1
+        ],
+        "estimated_work": 6496416,
+        "moment_tables_built": 5,
+        "moment_cache_hits": 3,
+        "subset_batches": 3,
+        "moment_batches_built": 4,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 5,
+        "node": 6,
+        "k": 2,
+        "q": 1,
+        "requested_subsets": 3,
+        "processed_subsets": 3,
+        "full_set_processed": false,
+        "conditioning_states_sum": 2916,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          2
+        ],
+        "estimated_work": 2192562,
+        "moment_tables_built": 4,
+        "moment_cache_hits": 2,
+        "subset_batches": 2,
+        "moment_batches_built": 4,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 0,
+        "node": 1,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6300,
+        "conditioning_states_max": 900,
+        "conditioning_states": [
+          36,
+          25
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8091360,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 1,
+        "node": 2,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6426,
+        "conditioning_states_max": 918,
+        "conditioning_states": [
+          34,
+          27
+        ],
+        "residual_active_bits": [
+          6,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8249472,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 2,
+        "node": 3,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6804,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8723808,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 3,
+        "node": 4,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6804,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8723808,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 4,
+        "node": 5,
+        "k": 2,
+        "q": 2,
+        "requested_subsets": 4,
+        "processed_subsets": 4,
+        "full_set_processed": true,
+        "conditioning_states_sum": 3888,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          6,
+          8
+        ],
+        "subsets_by_order": [
+          1,
+          2,
+          1
+        ],
+        "estimated_work": 6496416,
+        "moment_tables_built": 5,
+        "moment_cache_hits": 3,
+        "subset_batches": 3,
+        "moment_batches_built": 4,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 5,
+        "node": 6,
+        "k": 2,
+        "q": 1,
+        "requested_subsets": 3,
+        "processed_subsets": 3,
+        "full_set_processed": false,
+        "conditioning_states_sum": 2916,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          2
+        ],
+        "estimated_work": 2192562,
+        "moment_tables_built": 4,
+        "moment_cache_hits": 2,
+        "subset_batches": 2,
+        "moment_batches_built": 4,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 0,
+        "node": 1,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6300,
+        "conditioning_states_max": 900,
+        "conditioning_states": [
+          36,
+          25
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8091360,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 1,
+        "node": 2,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6426,
+        "conditioning_states_max": 918,
+        "conditioning_states": [
+          34,
+          27
+        ],
+        "residual_active_bits": [
+          6,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8249472,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 2,
+        "node": 3,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6804,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8723808,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 3,
+        "node": 4,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 6804,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          6
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 8723808,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 4,
+        "node": 5,
+        "k": 2,
+        "q": 2,
+        "requested_subsets": 4,
+        "processed_subsets": 4,
+        "full_set_processed": true,
+        "conditioning_states_sum": 3888,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          6,
+          8
+        ],
+        "subsets_by_order": [
+          1,
+          2,
+          1
+        ],
+        "estimated_work": 6496416,
+        "moment_tables_built": 5,
+        "moment_cache_hits": 3,
+        "subset_batches": 3,
+        "moment_batches_built": 4,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 5,
+        "node": 6,
+        "k": 2,
+        "q": 1,
+        "requested_subsets": 3,
+        "processed_subsets": 3,
+        "full_set_processed": false,
+        "conditioning_states_sum": 2916,
+        "conditioning_states_max": 972,
+        "conditioning_states": [
+          36,
+          27
+        ],
+        "residual_active_bits": [
+          7,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          2
+        ],
+        "estimated_work": 2192562,
+        "moment_tables_built": 4,
+        "moment_cache_hits": 2,
+        "subset_batches": 2,
+        "moment_batches_built": 4,
+        "status": "ok"
+      }
+    ],
+    "hermite_subset_conditioning_states_sum": 99414,
+    "hermite_subset_conditioning_states_max": 972,
+    "hermite_processed_subsets": 105,
+    "hermite_full_set_evaluations": 3,
+    "hermite_over_lagrange_signature_work": 2.005446623093682
+  },
+  {
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "engine": "both",
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 12000000000
+    },
+    "n": 22,
+    "m": 88,
+    "boundary_links": 19,
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 1073741824,
+      "max_local_assignments": 4000000
+    },
+    "preprocessing_num_vars": 22,
+    "preprocessing_group_variable_counts": [
+      20,
+      21
+    ],
+    "binary_link_states": 524288,
+    "measurement_states": 3750,
+    "nominal_ratio": 139.81013333333334,
+    "conditioning_states_max": 4200,
+    "conditioning_states_sum": 252000,
+    "residual_bits_max": 19,
+    "residual_bits_sum": 1083,
+    "tensor_seconds": 1.4693551670061424,
+    "dpll_seconds": 0.0038581659318879247,
+    "tensor_over_dpll": 380.8429168019582,
+    "evaluations_per_second": 53.08451064212573,
+    "count": 24,
+    "reference_count": 24,
+    "device": "cpu",
+    "torch_threads": 1,
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "stats": {
+      "device": "cpu",
+      "device_fallbacks": [
+        "CUDA is unavailable",
+        "MPS is unavailable"
+      ],
+      "local_assignment_counts": [
+        1739,
+        7704
+      ],
+      "source_signature_counts": [
+        70,
+        60
+      ],
+      "incoming_signature_counts": [
+        243,
+        832
+      ],
+      "free_variables": 0,
+      "boundary_links": 19,
+      "interpolation_nodes": 20,
+      "primes": [
+        998244353,
+        1004535809,
+        469762049
+      ],
+      "evaluations": 60,
+      "estimated_work": 4515000,
+      "peak_frontier_rows": 7704,
+      "build_seconds": 0.002433834015391767,
+      "evaluation_seconds": 0.26592133136000484,
+      "conditioning_states": [
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ],
+        [
+          70,
+          60
+        ]
+      ],
+      "residual_active_bits": [
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ]
+      ]
+    },
+    "engine_counts": {
+      "lagrange": 24,
+      "hermite": 24
+    },
+    "engine_seconds": {
+      "lagrange": 0.27210295805707574,
+      "hermite": 1.1972522089490667
+    },
+    "engine_stats": {
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [
+          "CUDA is unavailable",
+          "MPS is unavailable"
+        ],
+        "local_assignment_counts": [
+          1739,
+          7704
+        ],
+        "source_signature_counts": [
+          70,
+          60
+        ],
+        "incoming_signature_counts": [
+          243,
+          832
+        ],
+        "free_variables": 0,
+        "boundary_links": 19,
+        "interpolation_nodes": 20,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 60,
+        "estimated_work": 4515000,
+        "peak_frontier_rows": 7704,
+        "build_seconds": 0.002433834015391767,
+        "evaluation_seconds": 0.26592133136000484,
+        "conditioning_states": [
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            70,
+            60
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            8
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            10,
+            9
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [
+          "CUDA is unavailable",
+          "MPS is unavailable"
+        ],
+        "local_assignment_counts": [
+          1739,
+          7704
+        ],
+        "source_signature_counts": [
+          70,
+          60
+        ],
+        "incoming_signature_counts": [
+          243,
+          832
+        ],
+        "free_variables": 0,
+        "boundary_links": 19,
+        "interpolation_nodes": 6,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 18,
+        "estimated_work": 281777190,
+        "peak_frontier_rows": 7704,
+        "build_seconds": 0.0023405420361086726,
+        "evaluation_seconds": 1.1923807506682351,
+        "conditioning_states": [
+          [
+            54,
+            60
+          ],
+          [
+            70,
+            53
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            70,
+            58
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            64,
+            60
+          ],
+          [
+            54,
+            60
+          ],
+          [
+            70,
+            53
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            70,
+            58
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            64,
+            60
+          ],
+          [
+            54,
+            60
+          ],
+          [
+            70,
+            53
+          ],
+          [
+            70,
+            56
+          ],
+          [
+            70,
+            58
+          ],
+          [
+            70,
+            60
+          ],
+          [
+            64,
+            60
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            8
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            8
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 48600,
+            "conditioning_states_max": 3240,
+            "conditioning_states": [
+              54,
+              60
+            ],
+            "residual_active_bits": [
+              6,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 281777190,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 3,
+            "requested_subsets": 8,
+            "processed_subsets": 8,
+            "full_set_processed": true,
+            "conditioning_states_sum": 29680,
+            "conditioning_states_max": 3710,
+            "conditioning_states": [
+              70,
+              53
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3,
+              1
+            ],
+            "estimated_work": 224888360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 10,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 27440,
+            "conditioning_states_max": 3920,
+            "conditioning_states": [
+              70,
+              56
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 102300960,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 28420,
+            "conditioning_states_max": 4060,
+            "conditioning_states": [
+              70,
+              58
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 105916320,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 4,
+            "node": 5,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 29400,
+            "conditioning_states_max": 4200,
+            "conditioning_states": [
+              70,
+              60
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 109531680,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 5,
+            "node": 6,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 26880,
+            "conditioning_states_max": 3840,
+            "conditioning_states": [
+              64,
+              60
+            ],
+            "residual_active_bits": [
+              8,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 100235040,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 48600,
+            "conditioning_states_max": 3240,
+            "conditioning_states": [
+              54,
+              60
+            ],
+            "residual_active_bits": [
+              6,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 281777190,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 3,
+            "requested_subsets": 8,
+            "processed_subsets": 8,
+            "full_set_processed": true,
+            "conditioning_states_sum": 29680,
+            "conditioning_states_max": 3710,
+            "conditioning_states": [
+              70,
+              53
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3,
+              1
+            ],
+            "estimated_work": 224888360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 10,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 27440,
+            "conditioning_states_max": 3920,
+            "conditioning_states": [
+              70,
+              56
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 102300960,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 28420,
+            "conditioning_states_max": 4060,
+            "conditioning_states": [
+              70,
+              58
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 105916320,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 4,
+            "node": 5,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 29400,
+            "conditioning_states_max": 4200,
+            "conditioning_states": [
+              70,
+              60
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 109531680,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 5,
+            "node": 6,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 26880,
+            "conditioning_states_max": 3840,
+            "conditioning_states": [
+              64,
+              60
+            ],
+            "residual_active_bits": [
+              8,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 100235040,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 48600,
+            "conditioning_states_max": 3240,
+            "conditioning_states": [
+              54,
+              60
+            ],
+            "residual_active_bits": [
+              6,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 281777190,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 3,
+            "q": 3,
+            "requested_subsets": 8,
+            "processed_subsets": 8,
+            "full_set_processed": true,
+            "conditioning_states_sum": 29680,
+            "conditioning_states_max": 3710,
+            "conditioning_states": [
+              70,
+              53
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3,
+              1
+            ],
+            "estimated_work": 224888360,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 10,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 27440,
+            "conditioning_states_max": 3920,
+            "conditioning_states": [
+              70,
+              56
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 102300960,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 28420,
+            "conditioning_states_max": 4060,
+            "conditioning_states": [
+              70,
+              58
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 105916320,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 4,
+            "node": 5,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 29400,
+            "conditioning_states_max": 4200,
+            "conditioning_states": [
+              70,
+              60
+            ],
+            "residual_active_bits": [
+              9,
+              7
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 109531680,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 5,
+            "node": 6,
+            "k": 3,
+            "q": 2,
+            "requested_subsets": 7,
+            "processed_subsets": 7,
+            "full_set_processed": false,
+            "conditioning_states_sum": 26880,
+            "conditioning_states_max": 3840,
+            "conditioning_states": [
+              64,
+              60
+            ],
+            "residual_active_bits": [
+              8,
+              8
+            ],
+            "subsets_by_order": [
+              1,
+              3,
+              3
+            ],
+            "estimated_work": 100235040,
+            "moment_tables_built": 6,
+            "moment_cache_hits": 8,
+            "subset_batches": 3,
+            "moment_batches_built": 5,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 153,
+        "signature_subset_visits": 571260,
+        "max_jet_order": 3,
+        "schedule_mode": "hermite"
+      }
+    },
+    "lagrange_conditioning_states_sum": 252000,
+    "preprocessing_local_assignment_counts": {
+      "lagrange": [
+        1739,
+        7704
+      ],
+      "hermite": [
+        1739,
+        7704
+      ]
+    },
+    "preprocessing_signature_cells": {
+      "lagrange": 66930,
+      "hermite": 66930
+    },
+    "preprocessing_source_signature_counts": {
+      "lagrange": [
+        70,
+        60
+      ],
+      "hermite": [
+        70,
+        60
+      ]
+    },
+    "preprocessing_incoming_signature_counts": {
+      "lagrange": [
+        243,
+        832
+      ],
+      "hermite": [
+        243,
+        832
+      ]
+    },
+    "hermite_node_evaluations": [
+      {
+        "prime": 998244353,
+        "node_index": 0,
+        "node": 1,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 48600,
+        "conditioning_states_max": 3240,
+        "conditioning_states": [
+          54,
+          60
+        ],
+        "residual_active_bits": [
+          6,
+          9
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 281777190,
+        "moment_tables_built": 16,
+        "moment_cache_hits": 14,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 1,
+        "node": 2,
+        "k": 3,
+        "q": 3,
+        "requested_subsets": 8,
+        "processed_subsets": 8,
+        "full_set_processed": true,
+        "conditioning_states_sum": 29680,
+        "conditioning_states_max": 3710,
+        "conditioning_states": [
+          70,
+          53
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3,
+          1
+        ],
+        "estimated_work": 224888360,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 10,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 2,
+        "node": 3,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 27440,
+        "conditioning_states_max": 3920,
+        "conditioning_states": [
+          70,
+          56
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 102300960,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 3,
+        "node": 4,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 28420,
+        "conditioning_states_max": 4060,
+        "conditioning_states": [
+          70,
+          58
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 105916320,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 4,
+        "node": 5,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 29400,
+        "conditioning_states_max": 4200,
+        "conditioning_states": [
+          70,
+          60
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 109531680,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 5,
+        "node": 6,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 26880,
+        "conditioning_states_max": 3840,
+        "conditioning_states": [
+          64,
+          60
+        ],
+        "residual_active_bits": [
+          8,
+          8
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 100235040,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 0,
+        "node": 1,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 48600,
+        "conditioning_states_max": 3240,
+        "conditioning_states": [
+          54,
+          60
+        ],
+        "residual_active_bits": [
+          6,
+          9
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 281777190,
+        "moment_tables_built": 16,
+        "moment_cache_hits": 14,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 1,
+        "node": 2,
+        "k": 3,
+        "q": 3,
+        "requested_subsets": 8,
+        "processed_subsets": 8,
+        "full_set_processed": true,
+        "conditioning_states_sum": 29680,
+        "conditioning_states_max": 3710,
+        "conditioning_states": [
+          70,
+          53
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3,
+          1
+        ],
+        "estimated_work": 224888360,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 10,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 2,
+        "node": 3,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 27440,
+        "conditioning_states_max": 3920,
+        "conditioning_states": [
+          70,
+          56
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 102300960,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 3,
+        "node": 4,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 28420,
+        "conditioning_states_max": 4060,
+        "conditioning_states": [
+          70,
+          58
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 105916320,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 4,
+        "node": 5,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 29400,
+        "conditioning_states_max": 4200,
+        "conditioning_states": [
+          70,
+          60
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 109531680,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 5,
+        "node": 6,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 26880,
+        "conditioning_states_max": 3840,
+        "conditioning_states": [
+          64,
+          60
+        ],
+        "residual_active_bits": [
+          8,
+          8
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 100235040,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 0,
+        "node": 1,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 48600,
+        "conditioning_states_max": 3240,
+        "conditioning_states": [
+          54,
+          60
+        ],
+        "residual_active_bits": [
+          6,
+          9
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 281777190,
+        "moment_tables_built": 16,
+        "moment_cache_hits": 14,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 1,
+        "node": 2,
+        "k": 3,
+        "q": 3,
+        "requested_subsets": 8,
+        "processed_subsets": 8,
+        "full_set_processed": true,
+        "conditioning_states_sum": 29680,
+        "conditioning_states_max": 3710,
+        "conditioning_states": [
+          70,
+          53
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3,
+          1
+        ],
+        "estimated_work": 224888360,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 10,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 2,
+        "node": 3,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 27440,
+        "conditioning_states_max": 3920,
+        "conditioning_states": [
+          70,
+          56
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 102300960,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 3,
+        "node": 4,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 28420,
+        "conditioning_states_max": 4060,
+        "conditioning_states": [
+          70,
+          58
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 105916320,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 4,
+        "node": 5,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 29400,
+        "conditioning_states_max": 4200,
+        "conditioning_states": [
+          70,
+          60
+        ],
+        "residual_active_bits": [
+          9,
+          7
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 109531680,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 5,
+        "node": 6,
+        "k": 3,
+        "q": 2,
+        "requested_subsets": 7,
+        "processed_subsets": 7,
+        "full_set_processed": false,
+        "conditioning_states_sum": 26880,
+        "conditioning_states_max": 3840,
+        "conditioning_states": [
+          64,
+          60
+        ],
+        "residual_active_bits": [
+          8,
+          8
+        ],
+        "subsets_by_order": [
+          1,
+          3,
+          3
+        ],
+        "estimated_work": 100235040,
+        "moment_tables_built": 6,
+        "moment_cache_hits": 8,
+        "subset_batches": 3,
+        "moment_batches_built": 5,
+        "status": "ok"
+      }
+    ],
+    "hermite_subset_conditioning_states_sum": 571260,
+    "hermite_subset_conditioning_states_max": 4200,
+    "hermite_processed_subsets": 153,
+    "hermite_full_set_evaluations": 3,
+    "hermite_over_lagrange_signature_work": 2.2669047619047618
+  },
+  {
+    "family": "bipartite",
+    "seed": 0,
+    "planted": true,
+    "engine": "both",
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 12000000000
+    },
+    "n": 26,
+    "m": 104,
+    "boundary_links": 24,
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 1073741824,
+      "max_local_assignments": 4000000
+    },
+    "preprocessing_num_vars": 26,
+    "preprocessing_group_variable_counts": [
+      26,
+      24
+    ],
+    "binary_link_states": 16777216,
+    "measurement_states": 25000,
+    "nominal_ratio": 671.08864,
+    "conditioning_states_max": 14560,
+    "conditioning_states_sum": 1092000,
+    "residual_bits_max": 24,
+    "residual_bits_sum": 1728,
+    "tensor_seconds": 41.34375166706741,
+    "dpll_seconds": 0.0043260829988867044,
+    "tensor_over_dpll": 9556.855861921053,
+    "evaluations_per_second": 2.249433015874069,
+    "count": 101,
+    "reference_count": 101,
+    "device": "cpu",
+    "torch_threads": 1,
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "stats": {
+      "device": "cpu",
+      "device_fallbacks": [
+        "CUDA is unavailable",
+        "MPS is unavailable"
+      ],
+      "local_assignment_counts": [
+        12336,
+        52272
+      ],
+      "source_signature_counts": [
+        26,
+        560
+      ],
+      "incoming_signature_counts": [
+        2088,
+        1898
+      ],
+      "free_variables": 0,
+      "boundary_links": 24,
+      "interpolation_nodes": 25,
+      "primes": [
+        998244353,
+        1004535809,
+        469762049
+      ],
+      "evaluations": 75,
+      "estimated_work": 58036160,
+      "peak_frontier_rows": 52272,
+      "build_seconds": 0.0068549999268725514,
+      "evaluation_seconds": 4.383661914151162,
+      "conditioning_states": [
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ],
+        [
+          26,
+          560
+        ]
+      ],
+      "residual_active_bits": [
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          13
+        ]
+      ]
+    },
+    "engine_counts": {
+      "lagrange": 101,
+      "hermite": 101
+    },
+    "engine_seconds": {
+      "lagrange": 4.397359917056747,
+      "hermite": 36.94639175001066
+    },
+    "engine_stats": {
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [
+          "CUDA is unavailable",
+          "MPS is unavailable"
+        ],
+        "local_assignment_counts": [
+          12336,
+          52272
+        ],
+        "source_signature_counts": [
+          26,
+          560
+        ],
+        "incoming_signature_counts": [
+          2088,
+          1898
+        ],
+        "free_variables": 0,
+        "boundary_links": 24,
+        "interpolation_nodes": 25,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 75,
+        "estimated_work": 58036160,
+        "peak_frontier_rows": 52272,
+        "build_seconds": 0.0068549999268725514,
+        "evaluation_seconds": 4.383661914151162,
+        "conditioning_states": [
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            560
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            13
+          ],
+          [
+            11,
+            12
+          ],
+          [
+            11,
+            13
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [
+          "CUDA is unavailable",
+          "MPS is unavailable"
+        ],
+        "local_assignment_counts": [
+          12336,
+          52272
+        ],
+        "source_signature_counts": [
+          26,
+          560
+        ],
+        "incoming_signature_counts": [
+          2088,
+          1898
+        ],
+        "free_variables": 0,
+        "boundary_links": 24,
+        "interpolation_nodes": 6,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 18,
+        "estimated_work": 9341739264,
+        "peak_frontier_rows": 52272,
+        "build_seconds": 0.00652483303565532,
+        "evaluation_seconds": 36.93544228980318,
+        "conditioning_states": [
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            403
+          ],
+          [
+            26,
+            516
+          ],
+          [
+            26,
+            492
+          ],
+          [
+            26,
+            555
+          ],
+          [
+            23,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            403
+          ],
+          [
+            26,
+            516
+          ],
+          [
+            26,
+            492
+          ],
+          [
+            26,
+            555
+          ],
+          [
+            23,
+            560
+          ],
+          [
+            26,
+            560
+          ],
+          [
+            26,
+            403
+          ],
+          [
+            26,
+            516
+          ],
+          [
+            26,
+            492
+          ],
+          [
+            26,
+            555
+          ],
+          [
+            23,
+            560
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            8,
+            12
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            8,
+            12
+          ],
+          [
+            10,
+            10
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            8,
+            12
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 4,
+            "requested_subsets": 16,
+            "processed_subsets": 16,
+            "full_set_processed": true,
+            "conditioning_states_sum": 232960,
+            "conditioning_states_max": 14560,
+            "conditioning_states": [
+              26,
+              560
+            ],
+            "residual_active_bits": [
+              8,
+              12
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4,
+              1
+            ],
+            "estimated_work": 9341739264,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 22,
+            "subset_batches": 5,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 157170,
+            "conditioning_states_max": 10478,
+            "conditioning_states": [
+              26,
+              403
+            ],
+            "residual_active_bits": [
+              10,
+              10
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 3390101104,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 20,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 201240,
+            "conditioning_states_max": 13416,
+            "conditioning_states": [
+              26,
+              516
+            ],
+            "residual_active_bits": [
+              9,
+              11
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4327205584,
+            "moment_tables_built": 8,
+            "moment_cache_hits": 22,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 191880,
+            "conditioning_states_max": 12792,
+            "conditioning_states": [
+              26,
+              492
+            ],
+            "residual_active_bits": [
+              11,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4128174544,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 4,
+            "node": 5,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 216450,
+            "conditioning_states_max": 14430,
+            "conditioning_states": [
+              26,
+              555
+            ],
+            "residual_active_bits": [
+              9,
+              11
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4650631024,
+            "moment_tables_built": 8,
+            "moment_cache_hits": 22,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 5,
+            "node": 6,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 193200,
+            "conditioning_states_max": 12880,
+            "conditioning_states": [
+              23,
+              560
+            ],
+            "residual_active_bits": [
+              8,
+              12
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4156243024,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 20,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 4,
+            "requested_subsets": 16,
+            "processed_subsets": 16,
+            "full_set_processed": true,
+            "conditioning_states_sum": 232960,
+            "conditioning_states_max": 14560,
+            "conditioning_states": [
+              26,
+              560
+            ],
+            "residual_active_bits": [
+              8,
+              12
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4,
+              1
+            ],
+            "estimated_work": 9341739264,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 22,
+            "subset_batches": 5,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 157170,
+            "conditioning_states_max": 10478,
+            "conditioning_states": [
+              26,
+              403
+            ],
+            "residual_active_bits": [
+              10,
+              10
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 3390101104,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 20,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 201240,
+            "conditioning_states_max": 13416,
+            "conditioning_states": [
+              26,
+              516
+            ],
+            "residual_active_bits": [
+              9,
+              11
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4327205584,
+            "moment_tables_built": 8,
+            "moment_cache_hits": 22,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 191880,
+            "conditioning_states_max": 12792,
+            "conditioning_states": [
+              26,
+              492
+            ],
+            "residual_active_bits": [
+              11,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4128174544,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 4,
+            "node": 5,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 216450,
+            "conditioning_states_max": 14430,
+            "conditioning_states": [
+              26,
+              555
+            ],
+            "residual_active_bits": [
+              9,
+              11
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4650631024,
+            "moment_tables_built": 8,
+            "moment_cache_hits": 22,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 5,
+            "node": 6,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 193200,
+            "conditioning_states_max": 12880,
+            "conditioning_states": [
+              23,
+              560
+            ],
+            "residual_active_bits": [
+              8,
+              12
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4156243024,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 20,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 4,
+            "q": 4,
+            "requested_subsets": 16,
+            "processed_subsets": 16,
+            "full_set_processed": true,
+            "conditioning_states_sum": 232960,
+            "conditioning_states_max": 14560,
+            "conditioning_states": [
+              26,
+              560
+            ],
+            "residual_active_bits": [
+              8,
+              12
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4,
+              1
+            ],
+            "estimated_work": 9341739264,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 22,
+            "subset_batches": 5,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 157170,
+            "conditioning_states_max": 10478,
+            "conditioning_states": [
+              26,
+              403
+            ],
+            "residual_active_bits": [
+              10,
+              10
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 3390101104,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 20,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 201240,
+            "conditioning_states_max": 13416,
+            "conditioning_states": [
+              26,
+              516
+            ],
+            "residual_active_bits": [
+              9,
+              11
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4327205584,
+            "moment_tables_built": 8,
+            "moment_cache_hits": 22,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 191880,
+            "conditioning_states_max": 12792,
+            "conditioning_states": [
+              26,
+              492
+            ],
+            "residual_active_bits": [
+              11,
+              9
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4128174544,
+            "moment_tables_built": 16,
+            "moment_cache_hits": 14,
+            "subset_batches": 4,
+            "moment_batches_built": 5,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 4,
+            "node": 5,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 216450,
+            "conditioning_states_max": 14430,
+            "conditioning_states": [
+              26,
+              555
+            ],
+            "residual_active_bits": [
+              9,
+              11
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4650631024,
+            "moment_tables_built": 8,
+            "moment_cache_hits": 22,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 5,
+            "node": 6,
+            "k": 4,
+            "q": 3,
+            "requested_subsets": 15,
+            "processed_subsets": 15,
+            "full_set_processed": false,
+            "conditioning_states_sum": 193200,
+            "conditioning_states_max": 12880,
+            "conditioning_states": [
+              23,
+              560
+            ],
+            "residual_active_bits": [
+              8,
+              12
+            ],
+            "subsets_by_order": [
+              1,
+              4,
+              6,
+              4
+            ],
+            "estimated_work": 4156243024,
+            "moment_tables_built": 10,
+            "moment_cache_hits": 20,
+            "subset_batches": 4,
+            "moment_batches_built": 6,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 273,
+        "signature_subset_visits": 3578700,
+        "max_jet_order": 4,
+        "schedule_mode": "hermite"
+      }
+    },
+    "lagrange_conditioning_states_sum": 1092000,
+    "preprocessing_local_assignment_counts": {
+      "lagrange": [
+        12336,
+        52272
+      ],
+      "hermite": [
+        12336,
+        52272
+      ]
+    },
+    "preprocessing_signature_cells": {
+      "lagrange": 1117168,
+      "hermite": 1117168
+    },
+    "preprocessing_source_signature_counts": {
+      "lagrange": [
+        26,
+        560
+      ],
+      "hermite": [
+        26,
+        560
+      ]
+    },
+    "preprocessing_incoming_signature_counts": {
+      "lagrange": [
+        2088,
+        1898
+      ],
+      "hermite": [
+        2088,
+        1898
+      ]
+    },
+    "hermite_node_evaluations": [
+      {
+        "prime": 998244353,
+        "node_index": 0,
+        "node": 1,
+        "k": 4,
+        "q": 4,
+        "requested_subsets": 16,
+        "processed_subsets": 16,
+        "full_set_processed": true,
+        "conditioning_states_sum": 232960,
+        "conditioning_states_max": 14560,
+        "conditioning_states": [
+          26,
+          560
+        ],
+        "residual_active_bits": [
+          8,
+          12
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4,
+          1
+        ],
+        "estimated_work": 9341739264,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 22,
+        "subset_batches": 5,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 1,
+        "node": 2,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 157170,
+        "conditioning_states_max": 10478,
+        "conditioning_states": [
+          26,
+          403
+        ],
+        "residual_active_bits": [
+          10,
+          10
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 3390101104,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 20,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 2,
+        "node": 3,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 201240,
+        "conditioning_states_max": 13416,
+        "conditioning_states": [
+          26,
+          516
+        ],
+        "residual_active_bits": [
+          9,
+          11
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4327205584,
+        "moment_tables_built": 8,
+        "moment_cache_hits": 22,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 3,
+        "node": 4,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 191880,
+        "conditioning_states_max": 12792,
+        "conditioning_states": [
+          26,
+          492
+        ],
+        "residual_active_bits": [
+          11,
+          9
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4128174544,
+        "moment_tables_built": 16,
+        "moment_cache_hits": 14,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 4,
+        "node": 5,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 216450,
+        "conditioning_states_max": 14430,
+        "conditioning_states": [
+          26,
+          555
+        ],
+        "residual_active_bits": [
+          9,
+          11
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4650631024,
+        "moment_tables_built": 8,
+        "moment_cache_hits": 22,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 998244353,
+        "node_index": 5,
+        "node": 6,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 193200,
+        "conditioning_states_max": 12880,
+        "conditioning_states": [
+          23,
+          560
+        ],
+        "residual_active_bits": [
+          8,
+          12
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4156243024,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 20,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 0,
+        "node": 1,
+        "k": 4,
+        "q": 4,
+        "requested_subsets": 16,
+        "processed_subsets": 16,
+        "full_set_processed": true,
+        "conditioning_states_sum": 232960,
+        "conditioning_states_max": 14560,
+        "conditioning_states": [
+          26,
+          560
+        ],
+        "residual_active_bits": [
+          8,
+          12
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4,
+          1
+        ],
+        "estimated_work": 9341739264,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 22,
+        "subset_batches": 5,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 1,
+        "node": 2,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 157170,
+        "conditioning_states_max": 10478,
+        "conditioning_states": [
+          26,
+          403
+        ],
+        "residual_active_bits": [
+          10,
+          10
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 3390101104,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 20,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 2,
+        "node": 3,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 201240,
+        "conditioning_states_max": 13416,
+        "conditioning_states": [
+          26,
+          516
+        ],
+        "residual_active_bits": [
+          9,
+          11
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4327205584,
+        "moment_tables_built": 8,
+        "moment_cache_hits": 22,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 3,
+        "node": 4,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 191880,
+        "conditioning_states_max": 12792,
+        "conditioning_states": [
+          26,
+          492
+        ],
+        "residual_active_bits": [
+          11,
+          9
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4128174544,
+        "moment_tables_built": 16,
+        "moment_cache_hits": 14,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 4,
+        "node": 5,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 216450,
+        "conditioning_states_max": 14430,
+        "conditioning_states": [
+          26,
+          555
+        ],
+        "residual_active_bits": [
+          9,
+          11
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4650631024,
+        "moment_tables_built": 8,
+        "moment_cache_hits": 22,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 1004535809,
+        "node_index": 5,
+        "node": 6,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 193200,
+        "conditioning_states_max": 12880,
+        "conditioning_states": [
+          23,
+          560
+        ],
+        "residual_active_bits": [
+          8,
+          12
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4156243024,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 20,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 0,
+        "node": 1,
+        "k": 4,
+        "q": 4,
+        "requested_subsets": 16,
+        "processed_subsets": 16,
+        "full_set_processed": true,
+        "conditioning_states_sum": 232960,
+        "conditioning_states_max": 14560,
+        "conditioning_states": [
+          26,
+          560
+        ],
+        "residual_active_bits": [
+          8,
+          12
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4,
+          1
+        ],
+        "estimated_work": 9341739264,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 22,
+        "subset_batches": 5,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 1,
+        "node": 2,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 157170,
+        "conditioning_states_max": 10478,
+        "conditioning_states": [
+          26,
+          403
+        ],
+        "residual_active_bits": [
+          10,
+          10
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 3390101104,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 20,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 2,
+        "node": 3,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 201240,
+        "conditioning_states_max": 13416,
+        "conditioning_states": [
+          26,
+          516
+        ],
+        "residual_active_bits": [
+          9,
+          11
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4327205584,
+        "moment_tables_built": 8,
+        "moment_cache_hits": 22,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 3,
+        "node": 4,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 191880,
+        "conditioning_states_max": 12792,
+        "conditioning_states": [
+          26,
+          492
+        ],
+        "residual_active_bits": [
+          11,
+          9
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4128174544,
+        "moment_tables_built": 16,
+        "moment_cache_hits": 14,
+        "subset_batches": 4,
+        "moment_batches_built": 5,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 4,
+        "node": 5,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 216450,
+        "conditioning_states_max": 14430,
+        "conditioning_states": [
+          26,
+          555
+        ],
+        "residual_active_bits": [
+          9,
+          11
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4650631024,
+        "moment_tables_built": 8,
+        "moment_cache_hits": 22,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      },
+      {
+        "prime": 469762049,
+        "node_index": 5,
+        "node": 6,
+        "k": 4,
+        "q": 3,
+        "requested_subsets": 15,
+        "processed_subsets": 15,
+        "full_set_processed": false,
+        "conditioning_states_sum": 193200,
+        "conditioning_states_max": 12880,
+        "conditioning_states": [
+          23,
+          560
+        ],
+        "residual_active_bits": [
+          8,
+          12
+        ],
+        "subsets_by_order": [
+          1,
+          4,
+          6,
+          4
+        ],
+        "estimated_work": 4156243024,
+        "moment_tables_built": 10,
+        "moment_cache_hits": 20,
+        "subset_batches": 4,
+        "moment_batches_built": 6,
+        "status": "ok"
+      }
+    ],
+    "hermite_subset_conditioning_states_sum": 3578700,
+    "hermite_subset_conditioning_states_max": 14560,
+    "hermite_processed_subsets": 273,
+    "hermite_full_set_evaluations": 3,
+    "hermite_over_lagrange_signature_work": 3.277197802197802
+  }
+]

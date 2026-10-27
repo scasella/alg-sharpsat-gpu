@@ -1,0 +1,4 @@
+family,seed,planted,n,m,boundary_links,binary_link_states,measurement_states,nominal_ratio,conditioning_states_max,conditioning_states_sum,residual_bits_max,residual_bits_sum,tensor_seconds,dpll_seconds,tensor_over_dpll,count,reference_count,device,torch_threads
+bipartite,0,True,18,72,16,65536,625,104.8576,972,49572,16,768,0.0851922919973731,0.0016206660075113177,52.56622376389182,17,17,cpu,1
+bipartite,0,True,22,88,19,524288,3750,139.81013333333334,4200,252000,19,1083,0.29329691699240357,0.003856208990328014,76.05835620632568,24,24,cpu,1
+bipartite,0,True,26,104,24,16777216,25000,671.08864,14560,1092000,24,1728,4.844038582989015,0.004950624890625477,978.4701305408345,101,101,cpu,1

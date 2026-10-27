@@ -1,0 +1,267 @@
+{
+  "dimacs": "p cnf 3 2\n1 2 0\n-2 3 0\n",
+  "count": 4,
+  "runtime_scope": "this three-variable fixture only; no extrapolated crossover",
+  "timing_statistic": "median",
+  "repeats": 5,
+  "engine_runs": {
+    "dpll": {
+      "status": "ok",
+      "reason": null,
+      "seconds": 8.833943866193295e-06,
+      "failed_attempt_seconds": null,
+      "samples_seconds": [
+        1.9125058315694332e-05,
+        1.1625001206994057e-05,
+        8.833943866193295e-06,
+        7.875030860304832e-06,
+        7.916940376162529e-06
+      ],
+      "completed_repeats": 5,
+      "count": 4,
+      "verified": true,
+      "stats": {}
+    },
+    "swap_mobius": {
+      "status": "ok",
+      "reason": null,
+      "seconds": 0.002593624987639487,
+      "failed_attempt_seconds": null,
+      "samples_seconds": [
+        0.0031315000960603356,
+        0.0024861249839887023,
+        0.0024923329474404454,
+        0.0026904999976977706,
+        0.002593624987639487
+      ],
+      "completed_repeats": 5,
+      "count": 4,
+      "verified": true,
+      "stats": {
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "dimension": 16,
+        "measurement_rows": 1,
+        "variables": 3,
+        "polynomial_terms": 0,
+        "degree_bound": 4,
+        "nodes": [
+          1,
+          2
+        ],
+        "orders": [
+          2,
+          1
+        ],
+        "embedding": [],
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "node_evaluations": [
+          {
+            "node": 1,
+            "q": 2,
+            "prime": 998244353,
+            "status": "ok",
+            "local_assignment_visits": 84,
+            "arithmetic_work": 742,
+            "inner_evaluations": 19,
+            "forced_subsets": 7,
+            "measurement_tuples": 28,
+            "local_group_sizes": [
+              2,
+              1
+            ],
+            "group_assignment_visits": [
+              56,
+              28
+            ],
+            "local_assignment_rows": [
+              4,
+              2
+            ]
+          },
+          {
+            "node": 2,
+            "q": 1,
+            "prime": 998244353,
+            "status": "ok",
+            "local_assignment_visits": 40,
+            "arithmetic_work": 252,
+            "inner_evaluations": 7,
+            "forced_subsets": 4,
+            "measurement_tuples": 12,
+            "local_group_sizes": [
+              2,
+              1
+            ],
+            "group_assignment_visits": [
+              20,
+              20
+            ],
+            "local_assignment_rows": [
+              4,
+              2
+            ]
+          },
+          {
+            "node": 1,
+            "q": 2,
+            "prime": 1004535809,
+            "status": "ok",
+            "local_assignment_visits": 84,
+            "arithmetic_work": 742,
+            "inner_evaluations": 19,
+            "forced_subsets": 7,
+            "measurement_tuples": 28,
+            "local_group_sizes": [
+              2,
+              1
+            ],
+            "group_assignment_visits": [
+              56,
+              28
+            ],
+            "local_assignment_rows": [
+              4,
+              2
+            ]
+          },
+          {
+            "node": 2,
+            "q": 1,
+            "prime": 1004535809,
+            "status": "ok",
+            "local_assignment_visits": 40,
+            "arithmetic_work": 252,
+            "inner_evaluations": 7,
+            "forced_subsets": 4,
+            "measurement_tuples": 12,
+            "local_group_sizes": [
+              2,
+              1
+            ],
+            "group_assignment_visits": [
+              20,
+              20
+            ],
+            "local_assignment_rows": [
+              4,
+              2
+            ]
+          },
+          {
+            "node": 1,
+            "q": 2,
+            "prime": 469762049,
+            "status": "ok",
+            "local_assignment_visits": 84,
+            "arithmetic_work": 742,
+            "inner_evaluations": 19,
+            "forced_subsets": 7,
+            "measurement_tuples": 28,
+            "local_group_sizes": [
+              2,
+              1
+            ],
+            "group_assignment_visits": [
+              56,
+              28
+            ],
+            "local_assignment_rows": [
+              4,
+              2
+            ]
+          },
+          {
+            "node": 2,
+            "q": 1,
+            "prime": 469762049,
+            "status": "ok",
+            "local_assignment_visits": 40,
+            "arithmetic_work": 252,
+            "inner_evaluations": 7,
+            "forced_subsets": 4,
+            "measurement_tuples": 12,
+            "local_group_sizes": [
+              2,
+              1
+            ],
+            "group_assignment_visits": [
+              20,
+              20
+            ],
+            "local_assignment_rows": [
+              4,
+              2
+            ]
+          }
+        ],
+        "local_assignment_visits": 372,
+        "inner_evaluations": 78,
+        "build_seconds": 1.5666941180825233e-05,
+        "evaluation_seconds": 0.0025507500395178795,
+        "block_count": 1,
+        "clause_count": 2,
+        "occurrence_count": 4,
+        "raw_measurement_rows": 1,
+        "representation": "occurrence_coherent_clause_factors"
+      }
+    }
+  },
+  "cost_estimate": {
+    "representation": "occurrence_coherent_clause_factors",
+    "d": 2,
+    "L": 2,
+    "b": 1,
+    "variables": 3,
+    "clauses": 2,
+    "literal_occurrences": 4,
+    "dimension": 16,
+    "block_count": 1,
+    "raw_measurement_rows": 1,
+    "measurement_rows": 1,
+    "degree_upper_bound": 4,
+    "jet_order_upper_bound": 2,
+    "interpolation_matrix_entries_upper_bound": 25,
+    "interpolation_work_upper_bound": 125,
+    "mobius_inner_terms_per_node_upper_bound": 19,
+    "node_costs": [
+      {
+        "node": 1,
+        "group_sizes": [
+          2,
+          1
+        ],
+        "local_assignment_rows": [
+          4,
+          2
+        ],
+        "group_split_measurement_rows": 1,
+        "measurement_l1_max": 1,
+        "measurement_grid_tuples_upper_bound": 3
+      },
+      {
+        "node": 2,
+        "group_sizes": [
+          2,
+          1
+        ],
+        "local_assignment_rows": [
+          4,
+          2
+        ],
+        "group_split_measurement_rows": 1,
+        "measurement_l1_max": 1,
+        "measurement_grid_tuples_upper_bound": 3
+      }
+    ],
+    "executable_under_default_limit": true,
+    "asymptotic_parameter_guarantees_applied": false,
+    "crossover_established": false,
+    "status": "combinatorial estimate only; no runtime crossover established"
+  }
+}

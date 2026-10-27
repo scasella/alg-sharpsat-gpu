@@ -1,0 +1,6238 @@
+[
+  {
+    "engine": "v3",
+    "family": "coupled",
+    "seed": 0,
+    "planted": true,
+    "n": 18,
+    "m": 76,
+    "count": 48,
+    "reference_count": 48,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0025454999413341284,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.002919958089478314,
+          0.0025454999413341284,
+          0.002491833991371095
+        ],
+        "completed_repeats": 3,
+        "count": 48,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.004838375025428832,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.030048583052121103,
+          0.004838375025428832,
+          0.004818208049982786
+        ],
+        "completed_repeats": 3,
+        "count": 48,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            28,
+            30
+          ],
+          "source_signature_counts": [
+            3,
+            3
+          ],
+          "incoming_signature_counts": [
+            4,
+            4
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 5,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 15,
+          "estimated_work": 72,
+          "peak_frontier_rows": 30,
+          "build_seconds": 0.0013380409218370914,
+          "evaluation_seconds": 0.002404916798695922,
+          "conditioning_states": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.005839584046043456,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.00831720803398639,
+          0.005355459055863321,
+          0.005839584046043456
+        ],
+        "completed_repeats": 3,
+        "count": 48,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            28,
+            30
+          ],
+          "source_signature_counts": [
+            3,
+            3
+          ],
+          "incoming_signature_counts": [
+            4,
+            4
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 4,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 12,
+          "estimated_work": 477,
+          "peak_frontier_rows": 30,
+          "build_seconds": 0.001448625000193715,
+          "evaluation_seconds": 0.0035765841603279114,
+          "conditioning_states": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              3
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "node_evaluations": [
+            {
+              "prime": 998244353,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 18,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 477,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 18,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 477,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 18,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 477,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 9,
+              "conditioning_states_max": 9,
+              "conditioning_states": [
+                3,
+                3
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 105,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            }
+          ],
+          "subset_terms_processed": 15,
+          "signature_subset_visits": 135,
+          "max_jet_order": 1,
+          "schedule_mode": "hermite"
+        }
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0009651669533923268,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0033253749134019017,
+          0.0009651669533923268,
+          0.0009037080453708768
+        ],
+        "completed_repeats": 3,
+        "count": 48,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 4,
+          "boundary_variables": 4,
+          "local_assignment_counts": [
+            28,
+            30
+          ],
+          "joint_signature_counts": [
+            10,
+            12
+          ],
+          "group_variable_counts": [
+            11,
+            11
+          ],
+          "original_group_variable_counts": [
+            9,
+            9
+          ],
+          "free_variables": 0,
+          "active_local_variables": 22,
+          "join_pair_counts": [
+            7
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.00044895894825458527,
+          "build_seconds": 0.00035500002559274435,
+          "contraction_seconds": 4.3166917748749256e-05,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "ok",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.0025454999413341284,
+      "lagrange": 0.004838375025428832,
+      "hermite": 0.005839584046043456,
+      "sparse_contract": 0.0009651669533923268
+    },
+    "engine_counts": {
+      "dpll": 48,
+      "lagrange": 48,
+      "hermite": 48,
+      "sparse_contract": 48
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          28,
+          30
+        ],
+        "source_signature_counts": [
+          3,
+          3
+        ],
+        "incoming_signature_counts": [
+          4,
+          4
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 5,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 15,
+        "estimated_work": 72,
+        "peak_frontier_rows": 30,
+        "build_seconds": 0.0013380409218370914,
+        "evaluation_seconds": 0.002404916798695922,
+        "conditioning_states": [
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          28,
+          30
+        ],
+        "source_signature_counts": [
+          3,
+          3
+        ],
+        "incoming_signature_counts": [
+          4,
+          4
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 4,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 12,
+        "estimated_work": 477,
+        "peak_frontier_rows": 30,
+        "build_seconds": 0.001448625000193715,
+        "evaluation_seconds": 0.0035765841603279114,
+        "conditioning_states": [
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 18,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 477,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 18,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 477,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 18,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 477,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 9,
+            "conditioning_states_max": 9,
+            "conditioning_states": [
+              3,
+              3
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 105,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 15,
+        "signature_subset_visits": 135,
+        "max_jet_order": 1,
+        "schedule_mode": "hermite"
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          28,
+          30
+        ],
+        "joint_signature_counts": [
+          10,
+          12
+        ],
+        "group_variable_counts": [
+          11,
+          11
+        ],
+        "original_group_variable_counts": [
+          9,
+          9
+        ],
+        "free_variables": 0,
+        "active_local_variables": 22,
+        "join_pair_counts": [
+          7
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.00044895894825458527,
+        "build_seconds": 0.00035500002559274435,
+        "contraction_seconds": 4.3166917748749256e-05,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 1.9007562902920276,
+      "hermite": 2.29408139093606,
+      "sparse_contract": 0.3791659696077112
+    },
+    "boundary_links": 4,
+    "local_assignment_counts": [
+      28,
+      30
+    ],
+    "joint_signature_counts": [
+      10,
+      12
+    ],
+    "join_pair_counts": [
+      7
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.00044895894825458527,
+      "build_seconds": 0.00035500002559274435,
+      "contraction_seconds": 4.3166917748749256e-05
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 18,
+        "clauses": 76,
+        "literal_occurrences": 228,
+        "dimension": 16,
+        "block_count": 5,
+        "raw_measurement_rows": 5,
+        "measurement_rows": 5,
+        "degree_upper_bound": 228,
+        "jet_order_upper_bound": 114,
+        "interpolation_matrix_entries_upper_bound": 52441,
+        "interpolation_work_upper_bound": 12008989,
+        "mobius_inner_terms_per_node_upper_bound": 387420489,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              10,
+              8
+            ],
+            "local_assignment_rows": [
+              1024,
+              256
+            ],
+            "group_split_measurement_rows": 9,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 1953125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              9,
+              9
+            ],
+            "local_assignment_rows": [
+              512,
+              512
+            ],
+            "group_split_measurement_rows": 9,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 1953125
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  },
+  {
+    "engine": "v3",
+    "family": "coupled",
+    "seed": 0,
+    "planted": true,
+    "n": 22,
+    "m": 92,
+    "count": 156,
+    "reference_count": 156,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.003538583987392485,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.003538583987392485,
+          0.004181708907708526,
+          0.0034249169984832406
+        ],
+        "completed_repeats": 3,
+        "count": 156,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.005041541997343302,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.005041541997343302,
+          0.005084499949589372,
+          0.004629750037565827
+        ],
+        "completed_repeats": 3,
+        "count": 156,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            88,
+            28
+          ],
+          "source_signature_counts": [
+            2,
+            5
+          ],
+          "incoming_signature_counts": [
+            8,
+            2
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 5,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 15,
+          "estimated_work": 100,
+          "peak_frontier_rows": 88,
+          "build_seconds": 0.001648374949581921,
+          "evaluation_seconds": 0.0023290429962798953,
+          "conditioning_states": [
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.005850916961207986,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.006134999915957451,
+          0.005850916961207986,
+          0.005600790958851576
+        ],
+        "completed_repeats": 3,
+        "count": 156,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            88,
+            28
+          ],
+          "source_signature_counts": [
+            2,
+            5
+          ],
+          "incoming_signature_counts": [
+            8,
+            2
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 4,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 12,
+          "estimated_work": 628,
+          "peak_frontier_rows": 88,
+          "build_seconds": 0.0015864999732002616,
+          "evaluation_seconds": 0.003329624654725194,
+          "conditioning_states": [
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              5
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "node_evaluations": [
+            {
+              "prime": 998244353,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 20,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 628,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 20,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 628,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 20,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 628,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 10,
+              "conditioning_states_max": 10,
+              "conditioning_states": [
+                2,
+                5
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 136,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            }
+          ],
+          "subset_terms_processed": 15,
+          "signature_subset_visits": 150,
+          "max_jet_order": 1,
+          "schedule_mode": "hermite"
+        }
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.001069915946573019,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0013584160478785634,
+          0.001069915946573019,
+          0.0010268749902024865
+        ],
+        "completed_repeats": 3,
+        "count": 156,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 4,
+          "boundary_variables": 4,
+          "local_assignment_counts": [
+            88,
+            28
+          ],
+          "joint_signature_counts": [
+            16,
+            10
+          ],
+          "group_variable_counts": [
+            14,
+            12
+          ],
+          "original_group_variable_counts": [
+            11,
+            11
+          ],
+          "free_variables": 0,
+          "active_local_variables": 26,
+          "join_pair_counts": [
+            10
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0005287498934194446,
+          "build_seconds": 0.00041674997191876173,
+          "contraction_seconds": 3.845791798084974e-05,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "ok",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.003538583987392485,
+      "lagrange": 0.005041541997343302,
+      "hermite": 0.005850916961207986,
+      "sparse_contract": 0.001069915946573019
+    },
+    "engine_counts": {
+      "dpll": 156,
+      "lagrange": 156,
+      "hermite": 156,
+      "sparse_contract": 156
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          88,
+          28
+        ],
+        "source_signature_counts": [
+          2,
+          5
+        ],
+        "incoming_signature_counts": [
+          8,
+          2
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 5,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 15,
+        "estimated_work": 100,
+        "peak_frontier_rows": 88,
+        "build_seconds": 0.001648374949581921,
+        "evaluation_seconds": 0.0023290429962798953,
+        "conditioning_states": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          88,
+          28
+        ],
+        "source_signature_counts": [
+          2,
+          5
+        ],
+        "incoming_signature_counts": [
+          8,
+          2
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 4,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 12,
+        "estimated_work": 628,
+        "peak_frontier_rows": 88,
+        "build_seconds": 0.0015864999732002616,
+        "evaluation_seconds": 0.003329624654725194,
+        "conditioning_states": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 20,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 628,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 20,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 628,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 20,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 628,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 10,
+            "conditioning_states_max": 10,
+            "conditioning_states": [
+              2,
+              5
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 136,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 15,
+        "signature_subset_visits": 150,
+        "max_jet_order": 1,
+        "schedule_mode": "hermite"
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          88,
+          28
+        ],
+        "joint_signature_counts": [
+          16,
+          10
+        ],
+        "group_variable_counts": [
+          14,
+          12
+        ],
+        "original_group_variable_counts": [
+          11,
+          11
+        ],
+        "free_variables": 0,
+        "active_local_variables": 26,
+        "join_pair_counts": [
+          10
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0005287498934194446,
+        "build_seconds": 0.00041674997191876173,
+        "contraction_seconds": 3.845791798084974e-05,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 1.4247343048252241,
+      "hermite": 1.6534627924768899,
+      "sparse_contract": 0.30235708701135555
+    },
+    "boundary_links": 4,
+    "local_assignment_counts": [
+      88,
+      28
+    ],
+    "joint_signature_counts": [
+      16,
+      10
+    ],
+    "join_pair_counts": [
+      10
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0005287498934194446,
+      "build_seconds": 0.00041674997191876173,
+      "contraction_seconds": 3.845791798084974e-05
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 22,
+        "clauses": 92,
+        "literal_occurrences": 276,
+        "dimension": 16,
+        "block_count": 6,
+        "raw_measurement_rows": 6,
+        "measurement_rows": 6,
+        "degree_upper_bound": 276,
+        "jet_order_upper_bound": 138,
+        "interpolation_matrix_entries_upper_bound": 76729,
+        "interpolation_work_upper_bound": 21253933,
+        "mobius_inner_terms_per_node_upper_bound": 31381059609,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              12,
+              10
+            ],
+            "local_assignment_rows": [
+              4096,
+              1024
+            ],
+            "group_split_measurement_rows": 11,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 48828125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              11,
+              11
+            ],
+            "local_assignment_rows": [
+              2048,
+              2048
+            ],
+            "group_split_measurement_rows": 12,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 244140625
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  },
+  {
+    "engine": "v3",
+    "family": "coupled",
+    "seed": 0,
+    "planted": true,
+    "n": 26,
+    "m": 108,
+    "count": 37,
+    "reference_count": 37,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.006311625009402633,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.006602208944968879,
+          0.006311625009402633,
+          0.006228292011655867
+        ],
+        "completed_repeats": 3,
+        "count": 37,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.00514849997125566,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.005294249975122511,
+          0.00514849997125566,
+          0.004709874978289008
+        ],
+        "completed_repeats": 3,
+        "count": 37,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            14,
+            34
+          ],
+          "source_signature_counts": [
+            2,
+            2
+          ],
+          "incoming_signature_counts": [
+            4,
+            4
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 5,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 15,
+          "estimated_work": 32,
+          "peak_frontier_rows": 35,
+          "build_seconds": 0.0018226660322397947,
+          "evaluation_seconds": 0.0022034149151295424,
+          "conditioning_states": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.005948042031377554,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.00643291708547622,
+          0.0059136670315638185,
+          0.005948042031377554
+        ],
+        "completed_repeats": 3,
+        "count": 37,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            14,
+            34
+          ],
+          "source_signature_counts": [
+            2,
+            2
+          ],
+          "incoming_signature_counts": [
+            4,
+            4
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 4,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 12,
+          "estimated_work": 228,
+          "peak_frontier_rows": 35,
+          "build_seconds": 0.0018258750205859542,
+          "evaluation_seconds": 0.002974292845465243,
+          "conditioning_states": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "node_evaluations": [
+            {
+              "prime": 998244353,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 8,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 228,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 8,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 228,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 8,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 228,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                1,
+                2
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 4,
+              "conditioning_states_max": 4,
+              "conditioning_states": [
+                2,
+                2
+              ],
+              "residual_active_bits": [
+                2,
+                1
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 52,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            }
+          ],
+          "subset_terms_processed": 15,
+          "signature_subset_visits": 60,
+          "max_jet_order": 1,
+          "schedule_mode": "hermite"
+        }
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0015092500252649188,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0016514579765498638,
+          0.0015092500252649188,
+          0.001214709016494453
+        ],
+        "completed_repeats": 3,
+        "count": 37,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 4,
+          "boundary_variables": 4,
+          "local_assignment_counts": [
+            14,
+            34
+          ],
+          "joint_signature_counts": [
+            8,
+            8
+          ],
+          "group_variable_counts": [
+            15,
+            15
+          ],
+          "original_group_variable_counts": [
+            13,
+            13
+          ],
+          "free_variables": 0,
+          "active_local_variables": 30,
+          "join_pair_counts": [
+            4
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0008014580234885216,
+          "build_seconds": 0.0004918340127915144,
+          "contraction_seconds": 5.666702054440975e-05,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "ok",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.006311625009402633,
+      "lagrange": 0.00514849997125566,
+      "hermite": 0.005948042031377554,
+      "sparse_contract": 0.0015092500252649188
+    },
+    "engine_counts": {
+      "dpll": 37,
+      "lagrange": 37,
+      "hermite": 37,
+      "sparse_contract": 37
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          14,
+          34
+        ],
+        "source_signature_counts": [
+          2,
+          2
+        ],
+        "incoming_signature_counts": [
+          4,
+          4
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 5,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 15,
+        "estimated_work": 32,
+        "peak_frontier_rows": 35,
+        "build_seconds": 0.0018226660322397947,
+        "evaluation_seconds": 0.0022034149151295424,
+        "conditioning_states": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          14,
+          34
+        ],
+        "source_signature_counts": [
+          2,
+          2
+        ],
+        "incoming_signature_counts": [
+          4,
+          4
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 4,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 12,
+        "estimated_work": 228,
+        "peak_frontier_rows": 35,
+        "build_seconds": 0.0018258750205859542,
+        "evaluation_seconds": 0.002974292845465243,
+        "conditioning_states": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 8,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 228,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 8,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 228,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 8,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 228,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              1,
+              2
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 4,
+            "conditioning_states_max": 4,
+            "conditioning_states": [
+              2,
+              2
+            ],
+            "residual_active_bits": [
+              2,
+              1
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 52,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 15,
+        "signature_subset_visits": 60,
+        "max_jet_order": 1,
+        "schedule_mode": "hermite"
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          14,
+          34
+        ],
+        "joint_signature_counts": [
+          8,
+          8
+        ],
+        "group_variable_counts": [
+          15,
+          15
+        ],
+        "original_group_variable_counts": [
+          13,
+          13
+        ],
+        "free_variables": 0,
+        "active_local_variables": 30,
+        "join_pair_counts": [
+          4
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0008014580234885216,
+        "build_seconds": 0.0004918340127915144,
+        "contraction_seconds": 5.666702054440975e-05,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 0.8157170243139876,
+      "hermite": 0.9423947117448458,
+      "sparse_contract": 0.23912225821663044
+    },
+    "boundary_links": 4,
+    "local_assignment_counts": [
+      14,
+      34
+    ],
+    "joint_signature_counts": [
+      8,
+      8
+    ],
+    "join_pair_counts": [
+      4
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0008014580234885216,
+      "build_seconds": 0.0004918340127915144,
+      "contraction_seconds": 5.666702054440975e-05
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 26,
+        "clauses": 108,
+        "literal_occurrences": 324,
+        "dimension": 16,
+        "block_count": 7,
+        "raw_measurement_rows": 7,
+        "measurement_rows": 7,
+        "degree_upper_bound": 324,
+        "jet_order_upper_bound": 162,
+        "interpolation_matrix_entries_upper_bound": 105625,
+        "interpolation_work_upper_bound": 34328125,
+        "mobius_inner_terms_per_node_upper_bound": 2541865828329,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              14,
+              12
+            ],
+            "local_assignment_rows": [
+              16384,
+              4096
+            ],
+            "group_split_measurement_rows": 13,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 1220703125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              13,
+              13
+            ],
+            "local_assignment_rows": [
+              8192,
+              8192
+            ],
+            "group_split_measurement_rows": 14,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 6103515625
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  },
+  {
+    "engine": "v3",
+    "family": "coupled",
+    "seed": 0,
+    "planted": true,
+    "n": 30,
+    "m": 124,
+    "count": 253,
+    "reference_count": 253,
+    "repeats": 3,
+    "timing_statistic": "median",
+    "timing_scope": "end-to-end: preprocessing, build, contraction; accelerator synchronized",
+    "torch_threads": 1,
+    "device": "cpu",
+    "partition_configuration": {
+      "num_groups": 2,
+      "block_size": 4
+    },
+    "jet_configuration": {
+      "num_nodes": 6,
+      "mode": "hermite",
+      "orders": null,
+      "max_subset_terms": 1000000,
+      "max_jet_work": 2000000000
+    },
+    "engine_options": {
+      "max_work": 2000000000,
+      "max_memory_bytes": 536870912,
+      "max_local_assignments": 4000000,
+      "max_join_pairs": 8000000
+    },
+    "engine_runs": {
+      "dpll": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.010409540962427855,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.011149291996844113,
+          0.010409540962427855,
+          0.010198624921031296
+        ],
+        "completed_repeats": 3,
+        "count": 253,
+        "verified": true,
+        "stats": {}
+      },
+      "lagrange": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.005384500022046268,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0056538330391049385,
+          0.005384500022046268,
+          0.004978459095582366
+        ],
+        "completed_repeats": 3,
+        "count": 253,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            368,
+            11
+          ],
+          "source_signature_counts": [
+            1,
+            3
+          ],
+          "incoming_signature_counts": [
+            16,
+            1
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 5,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 15,
+          "estimated_work": 51,
+          "peak_frontier_rows": 368,
+          "build_seconds": 0.00212191604077816,
+          "evaluation_seconds": 0.0021561250323429704,
+          "conditioning_states": [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ]
+          ]
+        }
+      },
+      "hermite": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.006063750013709068,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.0058408749755471945,
+          0.006369417067617178,
+          0.006063750013709068
+        ],
+        "completed_repeats": 3,
+        "count": 253,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "local_assignment_counts": [
+            368,
+            11
+          ],
+          "source_signature_counts": [
+            1,
+            3
+          ],
+          "incoming_signature_counts": [
+            16,
+            1
+          ],
+          "free_variables": 0,
+          "boundary_links": 4,
+          "interpolation_nodes": 4,
+          "primes": [
+            998244353,
+            1004535809,
+            469762049
+          ],
+          "evaluations": 12,
+          "estimated_work": 327,
+          "peak_frontier_rows": 368,
+          "build_seconds": 0.0021482089068740606,
+          "evaluation_seconds": 0.002759124035947025,
+          "conditioning_states": [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "residual_active_bits": [
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "node_evaluations": [
+            {
+              "prime": 998244353,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 6,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 327,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 998244353,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 6,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 327,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 1004535809,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 0,
+              "node": 1,
+              "k": 1,
+              "q": 1,
+              "requested_subsets": 2,
+              "processed_subsets": 2,
+              "full_set_processed": true,
+              "conditioning_states_sum": 6,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1,
+                1
+              ],
+              "estimated_work": 327,
+              "moment_tables_built": 3,
+              "moment_cache_hits": 1,
+              "subset_batches": 2,
+              "moment_batches_built": 3,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 1,
+              "node": 2,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 2,
+              "node": 3,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            },
+            {
+              "prime": 469762049,
+              "node_index": 3,
+              "node": 4,
+              "k": 1,
+              "q": 0,
+              "requested_subsets": 1,
+              "processed_subsets": 1,
+              "full_set_processed": false,
+              "conditioning_states_sum": 3,
+              "conditioning_states_max": 3,
+              "conditioning_states": [
+                1,
+                3
+              ],
+              "residual_active_bits": [
+                0,
+                3
+              ],
+              "subsets_by_order": [
+                1
+              ],
+              "estimated_work": 73,
+              "moment_tables_built": 2,
+              "moment_cache_hits": 0,
+              "subset_batches": 1,
+              "moment_batches_built": 2,
+              "status": "ok"
+            }
+          ],
+          "subset_terms_processed": 15,
+          "signature_subset_visits": 45,
+          "max_jet_order": 1,
+          "schedule_mode": "hermite"
+        }
+      },
+      "sparse_contract": {
+        "status": "ok",
+        "reason": null,
+        "seconds": 0.0014395000180229545,
+        "failed_attempt_seconds": null,
+        "samples_seconds": [
+          0.001777875004336238,
+          0.0014395000180229545,
+          0.0013802079483866692
+        ],
+        "completed_repeats": 3,
+        "count": 253,
+        "verified": true,
+        "stats": {
+          "device": "cpu",
+          "device_fallbacks": [],
+          "boundary_links": 4,
+          "boundary_variables": 4,
+          "local_assignment_counts": [
+            368,
+            11
+          ],
+          "joint_signature_counts": [
+            16,
+            3
+          ],
+          "group_variable_counts": [
+            19,
+            15
+          ],
+          "original_group_variable_counts": [
+            15,
+            15
+          ],
+          "free_variables": 0,
+          "active_local_variables": 34,
+          "join_pair_counts": [
+            3
+          ],
+          "intermediate_rows": [
+            1
+          ],
+          "peak_intermediate_rows": 1,
+          "preprocessing_seconds": 0.0007230420596897602,
+          "build_seconds": 0.0005927499150857329,
+          "contraction_seconds": 3.90420900657773e-05,
+          "primes": [],
+          "arithmetic": "bounded_int64",
+          "selected_engine": "sparse_contract",
+          "selection_reason": "explicit sparse contraction"
+        }
+      }
+    },
+    "engine_status": {
+      "dpll": "ok",
+      "lagrange": "ok",
+      "hermite": "ok",
+      "sparse_contract": "ok"
+    },
+    "engine_seconds": {
+      "dpll": 0.010409540962427855,
+      "lagrange": 0.005384500022046268,
+      "hermite": 0.006063750013709068,
+      "sparse_contract": 0.0014395000180229545
+    },
+    "engine_counts": {
+      "dpll": 253,
+      "lagrange": 253,
+      "hermite": 253,
+      "sparse_contract": 253
+    },
+    "engine_stats": {
+      "dpll": {},
+      "lagrange": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          368,
+          11
+        ],
+        "source_signature_counts": [
+          1,
+          3
+        ],
+        "incoming_signature_counts": [
+          16,
+          1
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 5,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 15,
+        "estimated_work": 51,
+        "peak_frontier_rows": 368,
+        "build_seconds": 0.00212191604077816,
+        "evaluation_seconds": 0.0021561250323429704,
+        "conditioning_states": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      },
+      "hermite": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "local_assignment_counts": [
+          368,
+          11
+        ],
+        "source_signature_counts": [
+          1,
+          3
+        ],
+        "incoming_signature_counts": [
+          16,
+          1
+        ],
+        "free_variables": 0,
+        "boundary_links": 4,
+        "interpolation_nodes": 4,
+        "primes": [
+          998244353,
+          1004535809,
+          469762049
+        ],
+        "evaluations": 12,
+        "estimated_work": 327,
+        "peak_frontier_rows": 368,
+        "build_seconds": 0.0021482089068740606,
+        "evaluation_seconds": 0.002759124035947025,
+        "conditioning_states": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "residual_active_bits": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "node_evaluations": [
+          {
+            "prime": 998244353,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 6,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 327,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 998244353,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 6,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 327,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 1004535809,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 0,
+            "node": 1,
+            "k": 1,
+            "q": 1,
+            "requested_subsets": 2,
+            "processed_subsets": 2,
+            "full_set_processed": true,
+            "conditioning_states_sum": 6,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1,
+              1
+            ],
+            "estimated_work": 327,
+            "moment_tables_built": 3,
+            "moment_cache_hits": 1,
+            "subset_batches": 2,
+            "moment_batches_built": 3,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 1,
+            "node": 2,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 2,
+            "node": 3,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          },
+          {
+            "prime": 469762049,
+            "node_index": 3,
+            "node": 4,
+            "k": 1,
+            "q": 0,
+            "requested_subsets": 1,
+            "processed_subsets": 1,
+            "full_set_processed": false,
+            "conditioning_states_sum": 3,
+            "conditioning_states_max": 3,
+            "conditioning_states": [
+              1,
+              3
+            ],
+            "residual_active_bits": [
+              0,
+              3
+            ],
+            "subsets_by_order": [
+              1
+            ],
+            "estimated_work": 73,
+            "moment_tables_built": 2,
+            "moment_cache_hits": 0,
+            "subset_batches": 1,
+            "moment_batches_built": 2,
+            "status": "ok"
+          }
+        ],
+        "subset_terms_processed": 15,
+        "signature_subset_visits": 45,
+        "max_jet_order": 1,
+        "schedule_mode": "hermite"
+      },
+      "sparse_contract": {
+        "device": "cpu",
+        "device_fallbacks": [],
+        "boundary_links": 4,
+        "boundary_variables": 4,
+        "local_assignment_counts": [
+          368,
+          11
+        ],
+        "joint_signature_counts": [
+          16,
+          3
+        ],
+        "group_variable_counts": [
+          19,
+          15
+        ],
+        "original_group_variable_counts": [
+          15,
+          15
+        ],
+        "free_variables": 0,
+        "active_local_variables": 34,
+        "join_pair_counts": [
+          3
+        ],
+        "intermediate_rows": [
+          1
+        ],
+        "peak_intermediate_rows": 1,
+        "preprocessing_seconds": 0.0007230420596897602,
+        "build_seconds": 0.0005927499150857329,
+        "contraction_seconds": 3.90420900657773e-05,
+        "primes": [],
+        "arithmetic": "bounded_int64",
+        "selected_engine": "sparse_contract",
+        "selection_reason": "explicit sparse contraction"
+      }
+    },
+    "engine_over_dpll": {
+      "dpll": 1.0,
+      "lagrange": 0.5172658469264932,
+      "hermite": 0.5825184833409598,
+      "sparse_contract": 0.13828659911312888
+    },
+    "boundary_links": 4,
+    "local_assignment_counts": [
+      368,
+      11
+    ],
+    "joint_signature_counts": [
+      16,
+      3
+    ],
+    "join_pair_counts": [
+      3
+    ],
+    "peak_intermediate_rows": 1,
+    "sparse_phase_seconds": {
+      "preprocessing_seconds": 0.0007230420596897602,
+      "build_seconds": 0.0005927499150857329,
+      "contraction_seconds": 3.90420900657773e-05
+    },
+    "selected_engine": "sparse_contract",
+    "swap_mobius": {
+      "cost_estimate": {
+        "representation": "occurrence_coherent_clause_factors",
+        "d": 2,
+        "L": 2,
+        "b": 1,
+        "variables": 30,
+        "clauses": 124,
+        "literal_occurrences": 372,
+        "dimension": 16,
+        "block_count": 8,
+        "raw_measurement_rows": 8,
+        "measurement_rows": 8,
+        "degree_upper_bound": 372,
+        "jet_order_upper_bound": 186,
+        "interpolation_matrix_entries_upper_bound": 139129,
+        "interpolation_work_upper_bound": 51895117,
+        "mobius_inner_terms_per_node_upper_bound": 205891132094649,
+        "node_costs": [
+          {
+            "node": 1,
+            "group_sizes": [
+              16,
+              14
+            ],
+            "local_assignment_rows": [
+              65536,
+              16384
+            ],
+            "group_split_measurement_rows": 15,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 30517578125
+          },
+          {
+            "node": 2,
+            "group_sizes": [
+              15,
+              15
+            ],
+            "local_assignment_rows": [
+              32768,
+              32768
+            ],
+            "group_split_measurement_rows": 16,
+            "measurement_l1_max": 2,
+            "measurement_grid_tuples_upper_bound": 152587890625
+          }
+        ],
+        "executable_under_default_limit": false,
+        "asymptotic_parameter_guarantees_applied": false,
+        "crossover_established": false,
+        "status": "combinatorial estimate only; no runtime crossover established"
+      },
+      "runtime_scope": "miniature input only (n<=6); no extrapolated runtime",
+      "runtime": {
+        "status": "not_run",
+        "reason": "input exceeds miniature n<=6 limit",
+        "seconds": null,
+        "count": null,
+        "verified": false
+      }
+    },
+    "versions": {
+      "python": "3.13.11",
+      "torch": "2.10.0",
+      "system": "Darwin",
+      "machine": "arm64"
+    }
+  }
+]
