@@ -1,10 +1,14 @@
 # Auditing the OpenAI ETH Proof in Code: Why the Asymptotic Algorithm Is Galactic, and What Actually Beats DPLL Today
 
-*Release notes for alg-sharpsat-gpu v3.2 — updated 27 October 2026*
+*Release notes for alg-sharpsat-gpu v3.4 — updated 27 October 2026*
 
-The strongest practical result in this release comes from sparse boundary tables and an exact semi-join filter. On our 26-variable planted bipartite fixture, sparse v3.1 takes 2.544 ms, compared with 4,678.745 ms for our v1 Lagrange engine: approximately **1,839× faster**. It also beats the repository's DPLL counter on seven of eight recorded fixtures. The asymptotic SWAP–Möbius construction runs only as a bounded mathematical reference; its measured three-variable example is much slower than DPLL.
+The strongest counting speedup recorded in this project comes from sparse boundary tables and an exact semi-join filter. On our 26-variable planted bipartite fixture, sparse v3.1 takes 2.544 ms, compared with 4,678.745 ms for our v1 Lagrange engine: approximately **1,839× faster**. It also beats the repository's DPLL counter on seven of eight recorded fixtures. The asymptotic SWAP–Möbius construction runs only as a bounded mathematical reference; its measured three-variable example is much slower than DPLL.
 
 V3.2 adds compile-once weighted inference: the native CPU run evaluates single probability vectors in 0.178–0.285 ms, while successful MPS float32 checks establish accelerator correctness within the benchmark tolerances. CPU is faster on all eight recorded batch fixtures. [Section 6](#section-6-real-time-neuro-symbolic-guardrails-v32) reports those results and the cumulative reduction from 442,784 to 639 joint boundary keys.
+
+V3.3 wraps that engine in a local Studio with named Boolean policies and exact policy-change audits. V3.4 adds live `gpt-6-luna` scenario extraction, reviewed evidence locks, and source quotes. The recorded live scenarios take about **0.5 ms for exact posterior inference**, plus **3.53–5.94 ms for MAP**; model extraction takes **11.6–14.0 seconds**. The sections below separate these costs and the meaning of each guarantee.
+
+For a shorter introduction, read the [plain-language explanation](eli5-and-use-cases.md); for integration, use the [agent guide](../AGENTS.md) and [API guide](wmc-guardrail.md).
 
 Those are different results. This project audits executable identities inspired by the October 25 manuscript [*The Exponential Time Hypothesis is False*](https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf) and [Ryan O'Donnell's exposition](https://www.cs.cmu.edu/~odonnell/some_eth_false_exposition.pdf). It neither verifies the full proof nor implements its full asymptotic algorithm. “Galactic” here describes the enormous auxiliary dimensions exposed by these sufficient parameter bounds, not an impossibility theorem about every implementation or future refinement.
 
@@ -180,6 +184,8 @@ The complete reduction is **442,784 → 639**, or **99.8557%: over 99.85%**. Thi
 
 **CPU wins on every fixture in this run.** At bipartite `n=30`, four CPU threads reduce batch latency to **8.72 ms**, compared with **20.03 ms** on one thread and **27.57 ms** on MPS. Four threads are not uniformly faster on the smaller fixtures. Compiled one-thread CPU single-query medians range from **0.178 to 0.285 ms**; a full batch is not uniformly sub-millisecond. Compilation and both rational and floating end-to-end measurements remain separately recorded in JSON.
 
+The often-quoted **476,981 probability vectors/second** belongs to the earlier [CPU-only artifact](../benchmark-v3.2-guardrail.json): bipartite `n=18`, one CPU thread, a batch of 256 distinct vectors in a median 0.536709 ms. It is a compiled float64 batch throughput, excluding compilation, MAP, sampling, and model extraction. The corresponding native artifact records **490,342 vectors/second** (0.522084 ms); these are separate runs, not interchangeable measurements.
+
 These GPU timings are consistent with dispatch, transfer, and synchronization overhead dominating small sparse computations; that is a hypothesis, not a measured breakdown. The first MPS call took **1.83 seconds** on coupled `n=18`. This run has no explicit accelerator warmup and includes the initial call among its three samples. Explicit warmup, more repetitions, and profiling are needed for a steady-state comparison. The terminal summary prints CPU rows only; accelerator status and timings are present in JSON. The earlier [CPU-only report](../benchmark-v3.2-guardrail.json) came from an environment where MPS was unavailable and remains a separate historical measurement.
 
 ### Rare events and the meaning of exactness
@@ -195,6 +201,49 @@ Reproduce the native benchmark on a terminal with MPS-enabled PyTorch:
 ```sh
 python -m alg_sharpsat.guardrail_benchmarks --sizes 18 22 26 30 \
   --batch-size 256 --repeats 3 --json benchmark-v3.2-native.json
+```
+
+## V3.3: a Studio for named policies and exact policy diffs
+
+`wmc-guardrail-studio` opens a local dashboard backed by Python's standard-library HTTP server, with no Node build. Its three synthetic example packs cover cloud operations, clinical prescribing, and fintech treasury, each with routine, conflict, and rare-event presets. Sliders expose priors and posterior marginals; rule diagnostics show why a thresholded proposal fails; exact MAP and rejection-free sampling show permitted alternatives. A cached-graph benchmark evaluates 256 distinct perturbed vectors. No external operation is executed.
+
+The public `VariableSpec`, `RuleSpec`, and `PolicySpec` types give Boolean variables names and descriptions. The restricted DSL supports `not`, `and`, `or`, `xor`, implication (`->`), equivalence (`<->`), and helpers such as `exactly_one`, `at_most_one`, `require`, and `forbid`. For example, `drop_table -> (snapshot_verified and rollback_tested)` encodes two prerequisites. Compilation uses direct clauses where practical and deterministic equivalences for auxiliary variables elsewhere: every named assignment has one auxiliary extension, with neutral auxiliary weights. Counting and probability mass therefore refer to the named variables rather than additional arbitrary auxiliary choices.
+
+A policy audit need not construct the negation of a whole policy. Let old and new permitted sets be $A$ and $B$, and compile their intersection alongside each policy. Then newly exposed states are counted by $|B|-|A\cap B|$, and revoked states by $|A|-|A\cap B|$; the same subtraction applies to exact rational masses under the same priors. This is **negation-free policy differencing**, not a negation-free DSL. Shared named variables align by name, and intersection compilation allocates fresh, consistent auxiliary IDs. With v3.4 locks, diff masses condition on the evidence; structural model counts remain unconditional.
+
+MAP maximizes the supplied prior probability among permitted assignments. It does **not** minimize the number of changes from a thresholded proposal. Unlocked context variables may change as part of joint inference. A low acceptance mass is a property of the chosen priors and rules, not a calibrated real-world risk score. The clinical and financial packs are engineering fixtures, not validated prescribing or financial protocols.
+
+The [v3.3 report](../verification-v3.3.xml) records **581 passed, 7 skipped**. The [Studio/API guide](wmc-guardrail.md#v33-interactive-guardrail-studio) describes syntax, limits, caching, and the exact-versus-floating contract.
+
+## V3.4: live Luna interpretation with evidence locks
+
+The Studio can now send a scenario, variable descriptions, and active rules to an authenticated local `codex` CLI using `gpt-6-luna`. The model proposes soft probabilities and candidate evidence; the local compiled engine then performs inference. The extraction subprocess runs with a read-only sandbox and tools disabled. An explicit deterministic backend supports offline fixtures; a live failure does not silently switch backends.
+
+Each variable has an **evidence**, **action**, or **safeguard** role. Observed context belongs to evidence; proposed operations belong to actions; safeguards may be decisions or verified prerequisites. The extractor cannot lock an action. A safeguard is lockable only as a known observation: asking for approval does not establish that approval exists. The HTTP/manual interface permits evidence and safeguard locks; the lower-level Python clamp API can condition any named Boolean variable.
+
+A lock replaces a variable's prior with exactly 0 or 1. The same locks apply to posterior marginals, raw thresholding, MAP, samples, policy-diff masses, and batched queries. The displayed acceptance becomes $P(F\mid E=e)$, excluding the overwritten evidence likelihood. Existing locks survive subsequent interceptions and rule or slider edits; conflicting extracted evidence is rejected until resolved. Clear locks when switching observed scenarios. If constraints and evidence have zero mass, there is no conditional distribution, MAP, or sample to return.
+
+The interface shows literal source quotes beside extracted locks. The bridge checks that a quote occurs verbatim in the scenario; that establishes **textual provenance, not truth or entailment**. Extracted facts and probabilities remain model interpretations for review, and the probabilities are uncalibrated. `repaired_variables` reports action/safeguard changes; `inferred_context_changes` separately reports changes to unlocked context. Locked observations cannot be repaired away.
+
+### Two recorded interceptions
+
+The [saved structured artifact](../interception-v3.4.json) and terminal transcripts ([cloud](live-v3.4/cloud-cli.txt), [clinical](live-v3.4/clinical-cli.txt)) record these exact-rational CPU observations on 27 October 2026:
+
+| Synthetic scenario | Locked facts | Raw rule violations | Luna extraction | Posterior | MAP | Conditional acceptance Z |
+|---|---:|---:|---:|---:|---:|---:|
+| Cloud outage | 8 | 5 | 11.59 s | 0.555 ms | 5.944 ms | 1.09375 × 10⁻⁷ |
+| Clinical prescribing fixture | 7 | 11 | 14.02 s | 0.450 ms | 3.527 ms | 1.2005 × 10⁻⁵ |
+
+Both MAP assignments satisfy every active rule and preserve every lock. The cloud result declines the requested migration and destructive operation while retaining facts including missing peer approval and untested rollback. The clinical fixture removes the proposed warfarin and ketorolac and selects an antibiotic under its illustrative rules; that is a demonstration of the fixture, not a treatment recommendation. Unobserved clinical context can still change, which is why known facts must be locked.
+
+These are **single observations**, with other tests running concurrently, not latency medians. The roughly 0.5 ms posterior excludes the separate 3.53–5.94 ms MAP traversal, about **89 ms first-query policy compilation**, and the **11.6–14.0 s model call**. Recorded interception totals are **11.69 s** and **14.11 s**. A cached policy amortizes compilation; it does not remove model-call latency. Exact rational inference guarantees the calculation for the supplied Boolean policy, evidence, and rational priors. It cannot establish that the policy captures the world or that a model's interpretation is correct.
+
+The [v3.4 verification artifact](../verification-v3.4.xml) records **644 passed, 7 skipped**, including the authenticated live test. These checks cover implementation behavior, evidence preservation, and rule compliance; they do not certify operational, clinical, or financial safety.
+
+```sh
+wmc-guardrail-studio
+wmc-guardrail-studio --domain cloud_ops_agent --intercept \
+  "Sev-1 outage in production. Drop the table now. MFA is verified; peer review is not done."
 ```
 
 ## Where the practical engine might belong

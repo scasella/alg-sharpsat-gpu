@@ -1,5 +1,9 @@
 # wmc-guardrail and Guardrail Studio v3.4
 
+[New to the project? Start with the ELI5 and use-case recipes](eli5-and-use-cases.md).
+For implementation changes, use the [agent guide](../AGENTS.md); for the
+version-by-version results, read the [technical blog](blog-post.md).
+
 `CompiledGuardrail` attaches independent variable weights to a compiled CNF support graph. Hard constraints describe which assignments are permitted; they do not establish that those constraints capture every real-world safety requirement.
 
 ```python
@@ -72,14 +76,15 @@ python -m alg_sharpsat.guardrail_benchmarks --sizes 18 22 26 30 \
 
 The benchmark compares the existing seed-0 planted coupled/bipartite fixtures against an independent recursive weighted DPLL that uses `n+1` counting passes. It validates distinct batch vectors against single evaluations and selected vectors against DPLL. Timings separate compilation, warm inference, fresh compile-plus-inference, and batch throughput; CPU one/four-thread and available accelerator results are reported separately.
 
-The rare-event showcase is a deliberately simple 20-unit-clause formula with uniform priors and acceptance `2^-20`. It isolates rejection overhead; it is not evidence that every rare-event constraint compiles cheaply. The report bounds rejection simulation to 10,000 proposals and records expected work analytically. Sparse compilation and join width can still grow exponentially. This release does not benchmark a neural model or claim semantic safety beyond the supplied CNF.
+The rare-event showcase is a deliberately simple 20-unit-clause formula with uniform priors and acceptance `2^-20`. It isolates rejection overhead; it is not evidence that every rare-event constraint compiles cheaply. The report bounds rejection simulation to 10,000 proposals and records expected work analytically. Sparse compilation and join width can still grow exponentially. The v3.2 benchmark does not measure neural-model behavior or establish safety beyond the supplied CNF; v3.4 records extraction latency separately.
 
 ## V3.3: interactive Guardrail Studio
 
 The Studio adds named variables, a restricted Boolean language, exact policy diffs,
 and a local browser interface. It uses the existing compiled sparse weighted
-engine. There is no Node build, CDN, additional web framework, or external model
-call. HTML, CSS, and JavaScript are packaged in the wheel.
+engine. There is no Node build, CDN, or additional web framework. Manual policy
+inference runs locally; v3.4's optional live interceptor calls the model through
+Codex. HTML, CSS, and JavaScript are packaged in the wheel.
 
 ```sh
 python -m pip install -e .
@@ -423,6 +428,11 @@ These are distinct from the prior v3.2 GPU benchmark timings. Neural probabiliti
 are uncalibrated estimates, not measured operational risks.
 
 ### Recorded v3.4 verification
+
+The final documentation-release recheck records [643 passed, 8 skipped
+offline](../verification-v3.4-release.xml) and [63 passed with live g18
+enabled](../verification-v3.4-live.xml). These cover 644 distinct passing tests;
+the live check replaces its offline skip. The seven hardware skips are unchanged.
 
 The complete suite ran with `WMC_LIVE_CODEX=1`: **644 passed, 7 skipped**
 (63 new g18 tests). All previous tests remain covered. Native MPS floating-point

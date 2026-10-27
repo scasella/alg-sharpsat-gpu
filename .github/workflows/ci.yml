@@ -27,6 +27,8 @@ jobs:
           python -m pip install -e .
       - name: Run full test suite
         run: pytest -q
+      - name: Audit documentation and release artifacts
+        run: python scripts/check_repository.py --check-snippets
       - name: Smoke test benchmark CLI
         run: python -m alg_sharpsat.benchmarks --engine v3 --family coupled --sizes 18 --repeats 1
       - name: Smoke test weighted guardrail CLI

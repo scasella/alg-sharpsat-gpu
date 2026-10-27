@@ -12,6 +12,10 @@ rejection-free conditional sampling. V3.3 adds a local interactive Studio,
 named policy DSL, and exact policy blast-radius auditing. V3.4 adds live
 Codex Luna scenario extraction and evidence locks across inference.
 
+**Start here:** [ELI5 explanation and four runnable use cases](docs/eli5-and-use-cases.md).
+For integration, read the [API and Studio guide](docs/wmc-guardrail.md).
+Coding agents should start with [AGENTS.md](AGENTS.md) ([Claude entry point](CLAUDE.md)).
+
 > **V3.4 interception:** Describe a scenario, extract candidate facts with the
 > authenticated local `codex exec -m gpt-6-luna` CLI, and compute an evidence-clamped
 > MAP action. [Live interception guide](docs/wmc-guardrail.md#v34-live-interception-and-evidence-locks).
@@ -38,6 +42,12 @@ Codex Luna scenario extraction and evidence locks across inference.
 > - **stage4 Executable SWAP–Möbius Reference:** exact miniature locality,
 >   spectral, Möbius, and Hermite checks expose the finite-size overhead; they
 >   do not establish the full manuscript's asymptotic theorem.
+> - **v3.2–v3.4 Guardrail Studio:** compile-once weighted inference, named rules,
+>   exact policy diffs, and live scenario extraction with evidence locks. The
+>   recorded bipartite funnel removes 99.8557% of Group 0 joint keys cumulatively;
+>   the historical CPU batch reaches 476,981 vectors/s. Live posterior inference
+>   takes 0.45–0.56 ms in two recorded examples, with separate MAP, compilation,
+>   and 11.6–14.0 s model-call costs. See the [measured results](docs/blog-post.md).
 
 This is an experimental micro-engine. The supplied suppression schedule does
 **not** establish subexponential running time or a practical speedup over DPLL.
@@ -64,6 +74,31 @@ XML reports retain test results and timings; machine-specific repository paths
 have been replaced with relative paths for publication.
 The workspace's `.venv` was created with `--system-site-packages` to reuse the
 already installed dependencies; a fresh installation can use the commands above.
+
+### Documentation and release checks
+
+```sh
+python scripts/check_repository.py --check-snippets
+python -m pytest -q
+# Optional authenticated model check; sends a synthetic scenario through Codex:
+WMC_LIVE_CODEX=1 python -m pytest -q -m g18
+```
+
+The repository checker validates local Markdown files and heading links, runs
+the four standalone use-case recipes on request, parses JSON/XML artifacts,
+and checks common credential patterns, machine-specific home paths, and ignored
+cache directories. External URLs and Git history are outside this check.
+GitHub Actions runs the offline suite, documentation audit, and CLI smoke tests
+on Python 3.11 and 3.12. Live extraction requires a separately authenticated
+`codex` CLI; ordinary CI uses deterministic extraction and subprocess mocks.
+
+The final v3.4 release recheck recorded **643 passed, 8 skipped offline**
+([report](verification-v3.4-release.xml)), then **63 passed** with authenticated
+g18 enabled ([report](verification-v3.4-live.xml)). Together they validate
+**644 distinct passing tests**: the live test replaces one offline skip, while
+seven CUDA/exact-integer MPS checks remain unavailable. Native MPS floating
+inference passed. The original [full live-enabled report](verification-v3.4.xml)
+is retained alongside these fresh results.
 
 ```python
 from alg_sharpsat import parse_dimacs, gpu_algebraic_sharp_sat
@@ -168,7 +203,7 @@ Both recorded MAP tuples satisfy every active rule and preserve every clamp.
 These are single observations on 2026-10-27, with other tests running concurrently,
 not latency medians or calibrated risk estimates. First-query compilation was
 about 89 ms per policy; it is excluded from the posterior and MAP columns.
-The local model-extraction call dominates end-to-end latency.
+The Codex model call dominates end-to-end latency.
 
 
 ## V3.3: wmc-guardrail-studio — named policies and live decisions
