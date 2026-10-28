@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from bisect import bisect_right
 from fractions import Fraction
-from math import exp
+from math import exp, log
 import random
 
 import numpy as np
@@ -96,6 +96,9 @@ def map_inference(
     """
     w, denominator, exact = _prepare(compiled, inputs, weights, input_kind, mode)
     _inference_budget(compiled, w, exact)
+    found = _float_guided_map(compiled, w, denominator, exact)
+    if found is not None:
+        return found
     up, back = [], []
     for node in compiled.nodes:
         values = (
@@ -147,6 +150,43 @@ def map_inference(
         with np.errstate(over="ignore", under="ignore"):
             result_weight = float(np.exp(score))
     return tuple(map(int, assignment)), result_weight
+
+
+def _float_guided_map(compiled, w, denominator, exact):
+    """Max-product in float64 when every choice on the path wins by a margin.
+
+    A winning margin above the rounding bound makes the float argmax the exact
+    argmax, so the result equals the integer pass below. Ties and near ties
+    return None and are resolved by that pass, which keeps first-choice ties.
+    """
+    if exact:
+        scores = np.array(
+            [[log(a) if a else -np.inf, log(b) if b else -np.inf] for a, b in w]
+        ).reshape(len(w), 2)
+    else:
+        scores = np.asarray(w, dtype=np.float64).reshape(len(w), 2)
+    plan = compiled._fast()
+    choices = plan.map_search(scores)
+    if not isinstance(choices, dict):
+        return None
+    assignment = np.zeros(compiled.original_num_vars, dtype=np.int8)
+    for index, row in choices.items():
+        item = plan.items[index]
+        assignment[item["vars"]] = item["bits"][row]
+    for var in compiled.free_vars:
+        assignment[var] = int(w[var][1] > w[var][0])
+    if exact:
+        score = 1
+        for var, bit in enumerate(assignment.tolist()):
+            score *= w[var][bit]
+        if score <= 0:
+            raise ValueError(ZERO_MASS)
+        return tuple(assignment.tolist()), Fraction(score, denominator)
+    score = float(scores[np.arange(len(assignment)), assignment].sum())
+    if not np.isfinite(score):
+        raise ValueError(ZERO_MASS)
+    with np.errstate(over="ignore", under="ignore"):
+        return tuple(assignment.tolist()), float(np.exp(score))
 
 
 def sample_conditional(

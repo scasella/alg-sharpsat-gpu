@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "alg-sharpsat-gpu"
-version = "0.3.4"
+version = "0.3.5"
 description = "Executable audit of the Oct 2026 ETH refutation mechanism and sparse boundary-contraction #SAT micro-engine"
 readme = "README.md"
 license = {text = "MIT"}
@@ -13,7 +13,6 @@ dependencies = [
   "torch>=2.2",
   "numpy>=1.26",
   "scipy>=1.11",
-  "networkx>=3.2",
   "pytest>=8",
   "hypothesis>=6",
 ]
@@ -35,6 +34,8 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra"
 markers = [
+  "g19: cost-based plan selection, linear-domain float64 and float-guided exact MAP",
+  "g20: bridge-cut inclusion-exclusion counting",
   "g18: live extraction and role-aware evidence clamping",
   "g16: symbolic policy DSL, domains, and exact policy diff",
   "g17: interactive guardrail studio REST and CLI integration",

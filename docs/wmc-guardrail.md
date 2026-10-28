@@ -1,4 +1,4 @@
-# wmc-guardrail and Guardrail Studio v3.4
+# wmc-guardrail and Guardrail Studio v3.5
 
 [New to the project? Start with the ELI5 and use-case recipes](eli5-and-use-cases.md).
 For implementation changes, use the [agent guide](../AGENTS.md); for the
@@ -36,7 +36,7 @@ assert projected.map_assignment == action
 
 ## Inputs and results
 
-- `compile_guardrail(cnf, num_groups=2, semi_join_pushdown=True, max_width=None, max_degree=None, ...)` builds structure on CPU. Optional width reduction and degree splitting preserve unique extensions. Sparse resource options such as `max_local_assignments`, `max_join_pairs`, `max_memory_bytes`, and `max_work` apply; guards raise `ResourceLimitError`, never invoke a reference solver.
+- `compile_guardrail(cnf, num_groups="auto", semi_join_pushdown=True, max_width=None, max_degree=None, ...)` builds structure on CPU. The default selects a partition by estimated query cost ([plan selection](#plan-selection)); an integer fixes the number of groups. Optional width reduction and degree splitting preserve unique extensions. Sparse resource options such as `max_local_assignments`, `max_join_pairs`, `max_memory_bytes`, and `max_work` apply; guards raise `ResourceLimitError`, never invoke a reference solver.
 - `compiled.evaluate(probs, mode=...)` accepts `(n,)` probabilities or floating batches `(K,n)`. Use `weights=` for explicit `(n,2)` or `(K,n,2)` false/true weights. This distinguishes a two-variable probability batch from a weight matrix. Exact rational evaluation accepts one vector per call.
 - `WMCResult` exposes `partition_function`, `posterior_marginals`, `log_partition`, `acceptance_prob`, and `kl_divergence_nats`. It also unpacks as `(Z, marginals)`.
 - `wmc_sharp_sat(cnf, weights)` returns the partition function and defaults to rational arithmetic. `exact_marginals(cnf, probs, mode="float64")` returns `WMCResult`; select `mode="exact_rational"` for rational values. The compiled convenience method `compiled.exact_marginals(probs)` defaults to rational arithmetic.
@@ -54,17 +54,34 @@ Compilation retains v3.1's owned-variable frontier solving and unweighted source
 
 The upward pass sums weighted local rows by key and contracts the tree. The reverse pass propagates each output's cavity weight to both children, multiplied by the other child's upward value. Each leaf then weights its rows by that cavity and obtains all owned-variable moments together. There are no per-variable recompilations or `n+1` solver calls, and no global satisfying-assignment table. Exact modular inference runs this same upward/downward pass for each required prime.
 
+### Plan selection
+
+With `num_groups="auto"`, compilation first builds the two-group plan. Its
+`plan_cost` estimates float work per query: leaf rows times their weighted
+variables, join pairs, signatures and a fixed per-node dispatch charge. Plans
+costing more than `AUTO_EXPLORE_COST` also compile 6 and 4 groups. The
+candidate set is fixed, not timed, so the same formula always gets the same
+plan. Candidates may not enumerate or join more than twice the baseline's
+tables; those that would stop with a resource limit. The cheapest completed
+plan is kept. After backward pruning every retained row extends to a model, so
+a partitioned plan never does more row work than the direct model table; the
+one-group table is tried only when its smaller node count makes it cheaper.
+`compiled.stats.plan_selection` lists each candidate's status, cost and compile
+time. Every candidate encodes the same support, so exact results do not depend
+on the choice; seeded samples and first-choice MAP ties may differ between
+plans, as they do between explicit group counts.
+
 `compiled.raw_sparse_stats` records frontier construction; `compiled.stats` also reports compile seconds, phase-1 counts, master supports, and retained assignment counts. `compiled.leaves` and `compiled.nodes` expose the compact plan for inspection; treat them as immutable. Device index/assignment tensors are cached on first use. After rational evaluation, `compiled.last_evaluation` reports the integer bound, arithmetic backend, primes, and pass count.
 
 ## Numerical guarantees and devices
 
 **`exact_rational`:** accepts `Fraction`, `Decimal`, integers, and `(numerator, denominator)` rational scalars. Decimal representations of ordinary float inputs are converted to fractions; provide `Fraction` for explicit semantics. Each variable's weights share an integer scale. A proven nonnegative intermediate bound selects signed-int64 operations or enough 30-bit CRT primes to exceed that bound; reductions are chunked to avoid overflow. Z and marginals are exact Fractions. Logarithms and KL remain floating approximations, since logarithms are generally irrational.
 
-**`float64`:** CPU batched inference uses stable per-key log-sum-exp for upward and cavity messages. Posterior row matrix multiplication computes all moments; unusually tiny row masses use a log-domain marginal fallback to retain representable subnormal results. Z itself may underflow to zero or overflow to infinity; use `log_partition`. This is finite-precision inference, not rational exactness. Queries may be chunked to fit the configured workspace.
+**`float64`:** CPU inference first uses a linear-domain pass. Each leaf's row log-weights come from one matrix product with the query batch and are shifted by their per-query maximum before `exp`, so every row lies in `[exp(-R), 1]` for that leaf's log range R. Segment sums use sparse indicator products (one query uses `bincount`), and one matrix product per leaf yields all owned-variable moments. While the summed leaf ranges stay within `SAFE_RANGE` (600 nats) and the plan's row-count product stays below `exp(600)`, no product or sum can underflow or overflow. Other queries use the stable per-key log-sum-exp path, whose unusually tiny row masses use a log-domain marginal fallback to retain representable subnormal results. Z itself may underflow to zero or overflow to infinity; use `log_partition`. This is finite-precision inference, not rational exactness. Queries may be chunked to fit the configured workspace.
 
 **`float32`:** batched CPU, MPS, or CUDA evaluation uses the same stabilized algorithm at float32 precision. Use `mode="float32", device="mps"` or the `mode="mps"` alias. `device="auto"` probes CUDA, MPS, then CPU; explicit unsupported requests fail. These probes check floating scatter/reduction and matrix operations independently of v1's modular int64 requirements. Float64 requests require CPU. Inputs are prepared on the host, so accelerator timings include transfers; native hardware support and a speedup are not assumed.
 
-MAP defaults to exact integer max-product and deterministic first-choice tie breaking. Exact sampling uses `randrange(total_integer_weight)` and cached conditional cumulative sums, followed by tree backtracking and independent free-variable draws. It has no rejection stage. Floating MAP/sampling modes instead use CPU log weights and finite-precision categorical arithmetic. MAP and sampling have message, traversal, and output resource guards.
+MAP defaults to exact integer max-product and deterministic first-choice tie breaking. A float64 max-product search runs first. If every comparison along the chosen path wins by more than its rounding bound, the float argmax is the exact argmax; the result is then the same assignment, with its exact weight computed from integer weights. Ties and near ties defer to the integer pass. Exact sampling uses `randrange(total_integer_weight)` and cached conditional cumulative sums, followed by tree backtracking and independent free-variable draws. It has no rejection stage. Floating MAP/sampling modes instead use CPU log weights and finite-precision categorical arithmetic. MAP and sampling have message, traversal, and output resource guards.
 
 ## Reproduction and scope
 

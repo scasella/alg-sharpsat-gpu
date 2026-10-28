@@ -1,4 +1,4 @@
-# alg-sharpsat-gpu v3.4
+# alg-sharpsat-gpu v3.5
 
 An exact Python/PyTorch prototype of the supplied cut-and-interpolate #SAT
 construction. It implements counting-preserving CNF transformations, local
@@ -10,12 +10,19 @@ proxy tuples using source groups’ feasible master assignments. V3.2 adds
 `wmc-guardrail`: compiled weighted counting, posterior marginals, MAP, and
 rejection-free conditional sampling. V3.3 adds a local interactive Studio,
 named policy DSL, and exact policy blast-radius auditing. V3.4 adds live
-Codex Luna scenario extraction and evidence locks across inference.
+Codex Luna scenario extraction and evidence locks across inference. V3.5 adds
+cost-based guardrail plan selection, a linear-domain float64 evaluator,
+float-guided exact MAP, and bridge-cut inclusion–exclusion counting.
 
 **Start here:** [ELI5 explanation and four runnable use cases](docs/eli5-and-use-cases.md).
 For integration, read the [API and Studio guide](docs/wmc-guardrail.md).
 Coding agents should start with [AGENTS.md](AGENTS.md) ([Claude entry point](CLAUDE.md)).
 
+> **V3.5 performance:** bridge-cut counting finishes the coupled fixtures
+> through n=300, and cost-based guardrail plans bring policy batches to about
+> 1 ms and exact MAP to about 0.1 ms. [What changed](#v35-cost-based-plans-fast-float64-and-bridge-cut-counting) ·
+> [External benchmark](docs/external-benchmark-v3.5.md).
+>
 > **V3.4 interception:** Describe a scenario, extract candidate facts with the
 > authenticated local `codex exec -m gpt-6-luna` CLI, and compute an evidence-clamped
 > MAP action. [Live interception guide](docs/wmc-guardrail.md#v34-live-interception-and-evidence-locks).
@@ -65,7 +72,8 @@ python -m alg_sharpsat.benchmarks
 ```
 
 Python 3.11 or later is required. Dependencies are declared in `pyproject.toml`.
-The current release tag is `v3.4.0`; the Python distribution version is `0.3.4`.
+This tree is v3.5.0; the Python distribution version is `0.3.5`. The previous
+release tag is `v3.4.0`.
 The original v3.1 release is retained as tag `v3.1.0`.
 The [v3.1 release verification report](verification-release.xml) records 437 passed
 tests and six skips for unavailable CUDA/MPS hardware. The GitHub Actions
@@ -153,13 +161,79 @@ assert auto_sharp_sat(formula, device="cpu") == 4
 assert swap_mobius_count(formula, d=2, L=2, b=1) == 4
 ```
 
-`auto_sharp_sat` selects sparse contraction for `B > 4` to avoid static
+`auto_sharp_sat` counts by [bridge-cut search](#v35-cost-based-plans-fast-float64-and-bridge-cut-counting)
+when the two-way spectral bisection is crossed by at most six clauses (the
+statistics record `selected_engine="bridge_cut"`). Otherwise it selects sparse
+contraction for `B > 4` to avoid static
 interpolation overhead; it also uses direct sparse contraction for smaller
 boundaries. The v1 and v2 entry points retain their explicit interpolation paths.
 
 `Literal.var` is zero-based (`0..num_vars-1`). DIMACS uses its standard signed,
 one-based identifiers. Declared unused variables contribute a factor of two.
 The empty formula has `2**num_vars` models; an empty clause has none.
+
+## V3.5: cost-based plans, fast float64 and bridge-cut counting
+
+V3.5 targets four bottlenecks found by the [external benchmark](docs/external-benchmark-v3.5.md)
+against GANAK, SharpSAT-TD, PySDD and PySAT RC2.
+
+**Bridge-cut counting.** [`stage3_bridge_cut.py`](src/alg_sharpsat/stage3_bridge_cut.py)
+handles formulas whose two-way spectral bisection is crossed by only a few
+clauses. It removes those bridge clauses and restores them exactly by
+inclusion–exclusion. Each side is counted once by a component-caching search
+on bit-parallel clause sets, returning a factor keyed by its bridge variables;
+every conditioned term is then a sum of factor entries. `auto_count_with_stats`
+selects it when at most `max_bridge_clauses=6` clauses cross the cut and records
+`selected_engine="bridge_cut"` with its telemetry. `sparse_count_with_stats`
+still contracts by default (`bridge_cut=False`); pass `"auto"` or `True` to opt in.
+
+```python
+from alg_sharpsat.benchmarks import coupled_3sat
+from alg_sharpsat.stage3_sparse_contract import auto_count_with_stats
+
+count, stats = auto_count_with_stats(coupled_3sat(100, seed=0), device="cpu")
+assert count == 91921712 and stats.selected_engine == "bridge_cut"
+assert stats.bridge_cut["inclusion_exclusion_terms"] == 16
+```
+
+**Cost-based guardrail plans.** `compile_guardrail` now defaults to
+`num_groups="auto"`: it compiles two groups and, for heavy plans, also six and
+four groups (and the direct model table when cheaper), keeping the plan with
+the lowest estimated per-query work. The candidate set is fixed, so the choice
+is deterministic; `stats.plan_selection` lists every candidate. On the three
+Studio policies it selects six or four groups, cutting leaf rows from
+1,300–12,500 to 400–600. An explicit integer keeps the previous behavior.
+
+**Fast float64 and MAP.** Float64 queries use a linear-domain pass with
+per-leaf matrix products and shifts, sparse segment sums, and a one-vector
+path; queries whose leaf log ranges exceed 600 nats use the log-domain path.
+Exact MAP first runs a float64 max-product search and accepts it only when
+every choice wins by more than its rounding bound; otherwise the exact
+integer pass decides. See the [guardrail guide](docs/wmc-guardrail.md#plan-selection).
+
+Measured on an Apple M4 Pro (CPU, one thread; medians over seeds):
+
+| Measurement | v3.4 | v3.5 | Comparator |
+|---|---:|---:|---:|
+| Coupled n=100 count | 44.2 ms | 10.2 ms | SharpSAT-TD 9.85 ms internal |
+| Coupled n=150 / 200 / 300 count | resource limit | 63 ms / 0.56 s / 11.3 s | SharpSAT-TD 40 ms / 0.56 s / 4.3 s |
+| Policy 256-query batch | 8.4–80 ms | 0.83–1.07 ms | PySDD loop 1.46–2.04 ms |
+| Policy exact MAP | 0.69–6.5 ms | 0.08–0.10 ms | RC2Stratified 0.26–0.29 ms |
+| Policy single query | 0.22–0.49 ms | 0.062–0.075 ms | PySDD 0.005–0.007 ms |
+| Policy compile | 0.9–1.8 ms | 3.7–5.0 ms | PySDD 11–14 ms |
+| Policy compile + exact query | 1.7–4.7 ms | 4.3–5.8 ms | GANAK one-shot − launch 8.5–27 ms |
+
+Every count matched every external tool (135/135), exact WMC matched GANAK
+and MAP weights matched RC2 on 58/58 instances, and float64 marginals were
+within 5.3e-15 of exact values. Single queries remain slower than PySDD, and
+plan selection makes policy compilation 2–4× slower. Bipartite and random
+formulas have no small cut and are unchanged; SharpSAT-TD is fastest on all
+of them. Bridge-cut counting at n=300 is slower than SharpSAT-TD and GANAK.
+
+Validation: **669 passed, 8 skipped** offline ([report](verification-v3.5.xml)).
+The skips are seven unavailable CUDA or exact-integer MPS checks and the
+opt-in live Codex test. New gates g19 and g20 cover plan selection, the
+float64 and MAP fast paths, and bridge-cut counting.
 
 ## V3.4: live interception with evidence locks
 

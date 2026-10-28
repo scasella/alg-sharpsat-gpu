@@ -14,8 +14,9 @@ import numpy as np
 import torch
 
 from .cnf import CNF
-from .stage1_sparsify import PartitionedCNF, partition_and_decouple_boundary, reduce_clause_width_deterministic, split_high_degree_variables
+from .stage1_sparsify import PartitionedCNF, _spectral_groups, partition_and_decouple_boundary, reduce_clause_width_deterministic, split_high_degree_variables
 from .stage2_algebraic import crt_reconstruct, primes_for_bound
+from .stage3_bridge_cut import bridge_cut_count, find_bridge_cut
 from .stage3_gpu_engine import ResourceLimitError, UnsupportedDeviceError, select_device
 
 
@@ -54,6 +55,8 @@ class SparseStats:
     arithmetic: str = "bounded_int64"
     selected_engine: str = "sparse_contract"
     selection_reason: str = "explicit sparse contraction"
+    bridge_cut: dict = field(default_factory=dict)
+    plan_selection: dict = field(default_factory=dict)
 
 
 class SparseCounter:
@@ -226,7 +229,12 @@ class SparseCounter:
         return self._finish(group, frontier)
 
     def _distinct(self, keys):
-        return np.unique(keys) if self.device.type == "cpu" else torch.unique(keys, sorted=True)
+        if self.device.type != "cpu":
+            return torch.unique(keys, sorted=True)
+        # Sort-based: NumPy's hash-based unique can degrade by ~40x on
+        # structured bitmask keys whose low bits are mostly zero.
+        keys = np.sort(keys)
+        return keys[np.r_[True, keys[1:] != keys[:-1]]] if len(keys) else keys
 
     def _semijoin_factors(self):
         # First obtain every source's support under its owned-only clauses.
@@ -454,18 +462,66 @@ class SparseCounter:
         return result
 
 
-def _partition(cnf: CNF, num_groups: int, block_size: int, max_degree: int | None, max_width: int):
+def _partition(cnf: CNF, num_groups: int, block_size: int, max_degree: int | None, max_width: int,
+               groups=None):
     transformed = reduce_clause_width_deterministic(cnf, max_width)
     if max_degree is not None:
         transformed = split_high_degree_variables(transformed, max_degree)
-    return partition_and_decouple_boundary(transformed, num_groups, block_size)
+    if transformed.num_vars != cnf.num_vars:
+        groups = None  # auxiliaries change the graph; partition it afresh
+    return partition_and_decouple_boundary(transformed, num_groups, block_size, groups=groups)
+
+
+_COUNTER_OPTIONS = {"max_local_assignments", "max_join_pairs", "max_memory_bytes",
+                    "assignment_chunk_size", "max_work", "semi_join_pushdown"}
 
 
 def sparse_count_with_stats(cnf: CNF, *, device: str = "auto", num_groups: int = 2,
                             block_size: int = 4, max_degree: int | None = None,
-                            max_width: int = 3, **options) -> tuple[int, SparseStats]:
+                            max_width: int = 3, bridge_cut: bool | str = False,
+                            max_bridge_clauses: int = 6, **options) -> tuple[int, SparseStats]:
+    """Count exactly by sparse contraction, or by bridge-cut search when requested.
+
+    ``bridge_cut=False`` (the default) always contracts. ``"auto"`` counts by
+    inclusion-exclusion whenever the two-way spectral bisection is crossed by at
+    most ``max_bridge_clauses`` clauses; on the coupled fixtures that was at
+    least as fast as contraction at every size from 18 to 100 variables.
+    ``True`` requires such a cut. Bridge-cut search runs on the CPU with Python integers and honors
+    ``max_work`` and ``max_memory_bytes``. The selected engine and reason are
+    recorded in the statistics.
+    """
+    if bridge_cut not in ("auto", True, False):
+        raise ValueError("bridge_cut must be 'auto', True or False")
+    if type(max_bridge_clauses) is not int or max_bridge_clauses < 0:
+        raise ValueError("max_bridge_clauses must be a nonnegative integer")
     start = perf_counter()
-    partitioned = _partition(cnf, num_groups, block_size, max_degree, max_width)
+    groups = None
+    if bridge_cut is not False and num_groups == 2 and max_degree is None and cnf.num_vars >= 2:
+        groups = _spectral_groups(cnf, 2)
+        cut = find_bridge_cut(cnf, max_bridge_clauses, groups)
+        if bridge_cut is True and cut is None:
+            raise ValueError(f"no two-way cut with at most {max_bridge_clauses} bridge clauses")
+        if cut is not None:
+            preprocessing = perf_counter() - start
+            unknown = set(options) - _COUNTER_OPTIONS
+            if unknown:
+                raise TypeError(f"unexpected sparse counting options: {sorted(unknown)}")
+            budgets = {k: options[k] for k in ("max_work", "max_memory_bytes") if k in options}
+            for name, value in budgets.items():
+                if type(value) is not int or value <= 0:
+                    raise ValueError(f"{name} must be a positive integer")
+            begin = perf_counter()
+            result, telemetry = bridge_cut_count(cut, **budgets)
+            stats = SparseStats("cpu", selected_engine="bridge_cut", arithmetic="python_int",
+                                selection_reason=(f"{len(cut.bridges)} bridge clauses <= {max_bridge_clauses}; "
+                                                  f"larger side {max(telemetry['side_variable_counts'])} variables"),
+                                semi_join_pushdown=False, bridge_cut=telemetry,
+                                group_variable_counts=telemetry["side_variable_counts"],
+                                original_group_variable_counts=telemetry["side_variable_counts"])
+            stats.preprocessing_seconds = preprocessing
+            stats.contraction_seconds = perf_counter() - begin
+            return result, stats
+    partitioned = _partition(cnf, num_groups, block_size, max_degree, max_width, groups)
     preprocessing = perf_counter() - start
     counter = SparseCounter(partitioned, device, **options)
     result = counter.count()
@@ -479,10 +535,13 @@ def contract_sharp_sat(cnf: CNF, **options) -> int:
 
 def auto_count_with_stats(cnf: CNF, **options):
     # Direct contraction is allowed for B<=4 as well. It avoids interpolation
-    # at either size; the reason is explicit in telemetry.
+    # at either size. A two-way cut of at most max_bridge_clauses clauses
+    # selects bridge-cut search instead; the reason is explicit in telemetry.
+    options.setdefault("bridge_cut", "auto")
     result, stats = sparse_count_with_stats(cnf, **options)
-    stats.selection_reason = ("B>4: avoid static interpolation overhead" if stats.boundary_links > 4
-                              else "B<=4: direct sparse contraction")
+    if stats.selected_engine == "sparse_contract":
+        stats.selection_reason = ("B>4: avoid static interpolation overhead" if stats.boundary_links > 4
+                                  else "B<=4: direct sparse contraction")
     return result, stats
 
 
