@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from decimal import Decimal
-from math import lcm, log
+from math import gcd, lcm, log
 from time import perf_counter
 from copy import deepcopy
 import numpy as np
@@ -30,6 +30,15 @@ class WMCResult:
     def __iter__(self):
         yield self.partition_function
         yield self.posterior_marginals
+
+
+_RESULT_FIELDS = (
+    "partition_function",
+    "posterior_marginals",
+    "log_partition",
+    "acceptance_prob",
+    "kl_divergence_nats",
+)
 
 
 @dataclass
@@ -102,6 +111,44 @@ def _fraction(x):
     return Fraction(str(x))
 
 
+# Cost-based plan selection. Plan cost approximates per-query float work:
+# leaf rows times their weighted variables, join pairs, signatures and a fixed
+# per-node dispatch charge. Plans above AUTO_EXPLORE_COST also compile the
+# AUTO_GROUP_CANDIDATES partitions. The candidate set is fixed rather than
+# timed, so the chosen plan, and with it seeded samples and MAP tie breaks,
+# does not depend on machine load. After backward pruning every leaf row
+# extends to a model, so a partitioned plan never has more row work than the
+# direct model table (one group); the table is tried when its estimated cost,
+# which saves per-node dispatch, is below the best plan's.
+AUTO_EXPLORE_COST = 16384
+AUTO_GROUP_CANDIDATES = (6, 4)
+_NODE_COST = 512
+
+
+def plan_cost(compiled) -> int:
+    """Estimated float work per query for a compiled plan."""
+    cost = 0
+    for node in compiled.nodes:
+        if node.left < 0:
+            cost += len(node.key_idx) * (len(node.original_vars) + 4)
+        else:
+            cost += 6 * len(node.pair_left)
+        cost += node.key_count + _NODE_COST
+    return cost
+
+
+def _model_count(compiled) -> float:
+    """Approximate model count of the owned variables (float upward pass)."""
+    up = []
+    for node in compiled.nodes:
+        if node.left < 0:
+            up.append(np.bincount(node.key_idx, minlength=node.key_count).astype(float))
+        else:
+            products = up[node.left][node.pair_left] * up[node.right][node.pair_right]
+            up.append(np.bincount(node.out_idx, products, node.key_count))
+    return float(up[compiled.root].sum())
+
+
 class CompiledGuardrail:
     """Immutable CNF support and cached sparse upward/downward contraction plan.
 
@@ -109,19 +156,32 @@ class CompiledGuardrail:
     variables; auxiliaries/proxies are neutral. ``raw_sparse_stats`` preserves
     construction counts; ``stats.retained_assignment_counts`` describes the
     support after backward pruning. Device caches are filled on first use.
+    ``num_groups="auto"`` compiles two groups and, for heavy plans, compares
+    further group counts by ``plan_cost``; ``stats.plan_selection`` records
+    every candidate, its status and compile time.
     """
 
     def __init__(
         self,
         cnf: CNF,
         *,
-        num_groups: int = 2,
+        num_groups: int | str = "auto",
         block_size: int = 4,
         max_degree: int | None = None,
         max_width: int | None = None,
         device: str = "auto",
         **options,
     ):
+        if num_groups == "auto":
+            self._select_plan(
+                cnf,
+                block_size=block_size,
+                max_degree=max_degree,
+                max_width=max_width,
+                device=device,
+                **options,
+            )
+            return
         started = perf_counter()
         self.original_num_vars = cnf.num_vars
         self.device = device
@@ -226,6 +286,8 @@ class CompiledGuardrail:
         self.stats.intermediate_rows = [n.key_count for n in self.nodes if n.left >= 0]
         self.stats.peak_intermediate_rows = max(self.stats.intermediate_rows, default=0)
         self.stats.selected_engine = "wmc_guardrail"
+        # Deterministic compile effort: local enumeration plus join pairs.
+        self._compile_work = max(c._local_work, default=0) + work
         self.raw_sparse_stats = deepcopy(self.stats)
         self._prune_unreachable()
         self._tensor_cache = {}
@@ -239,6 +301,99 @@ class CompiledGuardrail:
         self.stats.retained_join_pair_counts = [
             len(n.pair_left) for n in self.nodes if n.left >= 0
         ]
+        self.stats.plan_selection = {
+            "mode": "explicit",
+            "selected_num_groups": num_groups,
+            "cost": plan_cost(self),
+        }
+
+    def _select_plan(self, cnf, **options):
+        """Compile candidate partitions and adopt the cheapest plan."""
+        started = perf_counter()
+
+        def build(groups, **limits):
+            begin = perf_counter()
+            try:
+                plan = CompiledGuardrail(
+                    cnf, num_groups=groups, **{**options, **limits}
+                )
+            except ResourceLimitError as exc:
+                return None, {
+                    "num_groups": groups,
+                    "status": "resource_limit",
+                    "reason": str(exc),
+                    "compile_seconds": perf_counter() - begin,
+                }
+            return plan, {
+                "num_groups": groups,
+                "status": "ok",
+                "cost": plan_cost(plan),
+                "compile_seconds": perf_counter() - begin,
+            }
+
+        best, record = build(2)
+        if best is None:
+            raise ResourceLimitError(record["reason"])
+        candidates = [record]
+        best_cost = record["cost"]
+        if best_cost > AUTO_EXPLORE_COST:
+            # A candidate whose local tables, joins or compile effort outgrow
+            # twice the baseline's stops early instead of finishing.
+            limits = {
+                "max_work": min(
+                    options.get("max_work", 2_000_000_000),
+                    max(65536, 2 * best._compile_work),
+                ),
+                "max_local_assignments": min(
+                    options.get("max_local_assignments", 4_000_000),
+                    max(1024, 2 * max(best.stats.local_assignment_counts, default=0)),
+                ),
+                "max_join_pairs": min(
+                    options.get("max_join_pairs", 8_000_000),
+                    max(1024, 2 * max(best.stats.join_pair_counts, default=0)),
+                ),
+            }
+            owned = cnf.num_vars - len(best.free_vars)
+            models = _model_count(best)
+            if models * (owned + 5) + _NODE_COST < best_cost:
+                direct = dict(limits, max_local_assignments=min(
+                    limits["max_local_assignments"], int(4 * models) + 64))
+                plan, record = build(1, **direct)
+                candidates.append(record)
+                if plan is not None and record["cost"] < best_cost:
+                    best, best_cost = plan, record["cost"]
+            for groups in AUTO_GROUP_CANDIDATES:
+                if groups > cnf.num_vars:
+                    continue
+                plan, record = build(groups, **limits)
+                candidates.append(record)
+                if plan is not None and record["cost"] < best_cost:
+                    best, best_cost = plan, record["cost"]
+        self.__dict__.update(best.__dict__)
+        # Candidate limits applied to compilation only; evaluation keeps the
+        # caller's budgets.
+        self.max_memory_bytes = options.get("max_memory_bytes", 512 * 1024 * 1024)
+        self.max_work = options.get("max_work", 2_000_000_000)
+        self.compile_seconds = perf_counter() - started
+        self.stats.compile_seconds = self.compile_seconds
+        self.stats.preprocessing_seconds = (
+            self.compile_seconds - self.stats.build_seconds
+        )
+        self.stats.plan_selection = {
+            "mode": "auto",
+            "selected_num_groups": best.stats.plan_selection["selected_num_groups"],
+            "cost": best_cost,
+            "candidates": candidates,
+        }
+
+    def _fast(self):
+        """Sorted float64 evaluation arrays, built once on first use."""
+        plan = self.__dict__.get("_fast_plan")
+        if plan is None:
+            from ._guardrail_fast import FastPlan
+
+            plan = self._fast_plan = FastPlan(self)
+        return plan
 
     def _prune_unreachable(self):
         """Remove signatures and local rows which cannot reach the root support."""
@@ -348,7 +503,45 @@ class CompiledGuardrail:
             out[idx + (1,)] = p
         return out, batch
 
+    def _exact_pairs(self, inputs, weights, input_kind):
+        """Integer pairs for plain int/Fraction vectors, else None (general path)."""
+        exact = (int, Fraction)
+        n = self.original_num_vars
+        if weights is not None:
+            if inputs is not None or not isinstance(weights, (list, tuple)):
+                return None
+            if len(weights) != n or not all(
+                isinstance(pair, (list, tuple))
+                and len(pair) == 2
+                and type(pair[0]) in exact
+                and type(pair[1]) in exact
+                for pair in weights
+            ):
+                return None
+            rows = weights
+        elif input_kind == "probabilities" and isinstance(inputs, (list, tuple)):
+            if len(inputs) != n or not all(type(p) in exact for p in inputs):
+                return None
+            if any(not 0 <= p <= 1 for p in inputs):
+                raise ValueError("probabilities must be in [0,1]")
+            rows = [(1 - p, p) for p in inputs]
+        else:
+            return None
+        pairs, den = [], 1
+        for a, b in rows:
+            if a < 0 or b < 0:
+                raise ValueError("weights must be nonnegative")
+            na, da = (a, 1) if type(a) is int else (a.numerator, a.denominator)
+            nb, db = (b, 1) if type(b) is int else (b.numerator, b.denominator)
+            d = da * db // gcd(da, db)
+            pairs.append((na * (d // da), nb * (d // db)))
+            den *= d
+        return pairs, den
+
     def _prepare_exact(self, inputs=None, weights=None, input_kind="probabilities"):
+        fast = self._exact_pairs(inputs, weights, input_kind)
+        if fast is not None:
+            return fast
         arr, batch = self._inputs(inputs, weights, input_kind)
         if batch:
             raise ValueError("exact_rational currently accepts one weight vector")
@@ -532,6 +725,81 @@ class CompiledGuardrail:
         ]
         return WMCResult(*(value if batched else value[0] for value in values))
 
+    def _evaluate_fast(self, logs, batched, chunk):
+        """Linear-domain float64 evaluation; unsafe queries use the log path."""
+        plan = self._fast()
+        if not batched:
+            return self._evaluate_fast_one(plan, logs[0])
+        pieces = []
+        for start in range(0, len(logs), chunk):
+            piece = plan.evaluate(logs[start : start + chunk])
+            if piece is None:
+                return None
+            pieces.append(piece)
+        if len(pieces) == 1:
+            log_core, owned, safe = pieces[0]
+        else:
+            log_core, owned, safe = (np.concatenate(p) for p in zip(*pieces))
+        with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+            totals = np.logaddexp(logs[:, :, 0], logs[:, :, 1])
+            log_partition = log_core + totals[:, plan.free].sum(1)
+            marginal = np.full((len(logs), self.original_num_vars), np.nan)
+            marginal[:, plan.owned] = owned
+            if len(plan.free):
+                marginal[:, plan.free] = np.exp(
+                    logs[:, plan.free, 1] - totals[:, plan.free]
+                )
+            marginal[~np.isfinite(log_partition)] = np.nan
+            prior = totals.sum(1)
+            values = [
+                np.exp(log_partition),
+                marginal,
+                log_partition,
+                np.exp(log_partition - prior),
+                np.where(np.isfinite(log_partition), prior - log_partition, np.nan),
+            ]
+        unsafe = np.flatnonzero(~safe)
+        for start in range(0, len(unsafe), chunk):
+            rows = unsafe[start : start + chunk]
+            slow = self._evaluate_floating(
+                logs[rows], True, torch.device("cpu"), torch.float64
+            )
+            for value, name in zip(values, _RESULT_FIELDS):
+                value[rows] = getattr(slow, name).numpy()
+        tensors = [torch.from_numpy(value) for value in values]
+        return WMCResult(*(t if batched else t[0] for t in tensors))
+
+    def _evaluate_fast_one(self, plan, logs):
+        """One-vector form of ``_evaluate_fast`` with 1-D assembly."""
+        from ._guardrail_fast import SAFE_RANGE
+
+        if plan.log_rows > SAFE_RANGE:
+            return None
+        log_core, owned, safe = plan.evaluate_one(logs)
+        if not safe[0]:
+            return self._evaluate_floating(
+                logs[None], False, torch.device("cpu"), torch.float64
+            )
+        free = plan.free
+        with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+            totals = np.logaddexp(logs[:, 0], logs[:, 1])
+            log_partition = float(log_core[0] + totals[free].sum())
+            marginal = np.empty(self.original_num_vars)
+            marginal[plan.owned] = owned[0]
+            marginal[free] = np.exp(logs[free, 1] - totals[free])
+            prior = float(totals.sum())
+            if np.isfinite(log_partition):
+                scalars = np.exp([log_partition, log_partition - prior])
+                kl = prior - log_partition
+            else:
+                marginal[:] = np.nan
+                scalars = np.exp([log_partition, log_partition - prior])
+                kl = np.nan
+        values = torch.from_numpy(np.array([scalars[0], log_partition, scalars[1], kl]))
+        return WMCResult(
+            values[0], torch.from_numpy(marginal), values[1], values[2], values[3]
+        )
+
     def _floating_device(self, choice):
         """Probe the actual floating operators, independently of modular int64 support."""
         choices = ["cuda", "mps", "cpu"] if choice == "auto" else [choice]
@@ -604,24 +872,30 @@ class CompiledGuardrail:
         if len(logs) == 0:
             raise ValueError("batch must contain at least one weight vector")
         dtype = torch.float32 if mode == "float32" else torch.float64
-        rows = (
-            sum(
-                n.key_count * 3
-                + (
-                    len(n.pair_left) * 4
-                    if n.pair_left is not None
-                    else len(n.key_idx) * 3
+        rows = self.__dict__.get("_workspace_rows")
+        if rows is None:
+            rows = self._workspace_rows = (
+                sum(
+                    n.key_count * 3
+                    + (
+                        len(n.pair_left) * 4
+                        if n.pair_left is not None
+                        else len(n.key_idx) * 3
+                    )
+                    for n in self.nodes
                 )
-                for n in self.nodes
+                + self.original_num_vars * 4
             )
-            + self.original_num_vars * 4
-        )
         bytes_per = max(1, rows * (4 if mode == "float32" else 8))
         if bytes_per > self.max_memory_bytes:
             raise ResourceLimitError("evaluation workspace exceeds max_memory_bytes")
         if rows * len(logs) > self.max_work:
             raise ResourceLimitError("evaluation batch exceeds max_work")
         chunk = max(1, self.max_memory_bytes // bytes_per)
+        if mode == "float64":
+            fast = self._evaluate_fast(logs, batched, chunk)
+            if fast is not None:
+                return fast
         if not batched:
             return self._evaluate_floating(logs, False, target, dtype)
         pieces = [
@@ -629,16 +903,7 @@ class CompiledGuardrail:
             for i in range(0, len(logs), chunk)
         ]
         return WMCResult(
-            *(
-                torch.cat([getattr(p, name) for p in pieces], 0)
-                for name in (
-                    "partition_function",
-                    "posterior_marginals",
-                    "log_partition",
-                    "acceptance_prob",
-                    "kl_divergence_nats",
-                )
-            )
+            *(torch.cat([getattr(p, name) for p in pieces], 0) for name in _RESULT_FIELDS)
         )
 
     def map_inference(self, *args, **kwargs):

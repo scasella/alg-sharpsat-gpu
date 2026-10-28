@@ -30,10 +30,12 @@ Every file under `src/alg_sharpsat` has a distinct responsibility:
 | [stage2_design.py](src/alg_sharpsat/stage2_design.py) | Bounded occurrence replacements and restoration/locality certificates. |
 | [stage3_gpu_engine.py](src/alg_sharpsat/stage3_gpu_engine.py) | v1 tensor counter, device probes, bounded modular arithmetic and resource errors. |
 | [stage3_jet_engine.py](src/alg_sharpsat/stage3_jet_engine.py) | v2 local moment/subset Hasse jets and exact reconstruction. |
-| [stage3_sparse_contract.py](src/alg_sharpsat/stage3_sparse_contract.py) | v3 sparse key factors, source-support semijoins and boundary contraction. |
+| [stage3_sparse_contract.py](src/alg_sharpsat/stage3_sparse_contract.py) | v3 sparse key factors, source-support semijoins, boundary contraction and counting-strategy selection. |
+| [stage3_bridge_cut.py](src/alg_sharpsat/stage3_bridge_cut.py) | v3.5 two-way clause cuts, component-caching factor search and bridge inclusion–exclusion. |
 | [stage3_design_engine.py](src/alg_sharpsat/stage3_design_engine.py) | Bounded CPU occurrence-design/Möbius jet reference. |
 | [stage4_swap_mobius.py](src/alg_sharpsat/stage4_swap_mobius.py) | Exact miniature SWAP spectra, Boolean Möbius identities and counting reference. |
-| [stage5_wmc_guardrail.py](src/alg_sharpsat/stage5_wmc_guardrail.py) | Compile sparse support/join trees; weighted partition function, marginals and batch evaluation. |
+| [stage5_wmc_guardrail.py](src/alg_sharpsat/stage5_wmc_guardrail.py) | Compile sparse support/join trees with cost-based plan selection; weighted partition function, marginals and batch evaluation. |
+| [_guardrail_fast.py](src/alg_sharpsat/_guardrail_fast.py) | Private linear-domain float64 plan evaluation and float-guided MAP search. |
 | [_guardrail_exact.py](src/alg_sharpsat/_guardrail_exact.py) | Private bounded integer/modular upward/downward weighted passes and CRT. |
 | [_guardrail_inference.py](src/alg_sharpsat/_guardrail_inference.py) | Private MAP backtracking and rejection-free conditional sampling. |
 | [policy_dsl.py](src/alg_sharpsat/policy_dsl.py) | Named variables/rules, parser, deterministic CNF compilation, clamps and exact policy diff. |
@@ -55,6 +57,13 @@ Every file under `src/alg_sharpsat` has a distinct responsibility:
   Production counting paths must not silently
   replace their algorithm with DPLL, brute force, scalar interpolation, or a
   reference counter. Benchmarks may call independent references to verify results.
+- **Bridge cuts:** component search is a selected strategy, not a fallback.
+  `sparse_count_with_stats` contracts unless `bridge_cut` is `"auto"` or `True`;
+  `auto_count_with_stats` selects it before counting when the spectral bisection
+  has at most `max_bridge_clauses` crossing clauses. Record `selected_engine`,
+  the reason and `stats.bridge_cut`; honor `max_work` and `max_memory_bytes`.
+  Never retry with it after a contraction `ResourceLimitError`. Conditioned
+  inclusion–exclusion terms are sums of each side's boundary factor entries.
 - **Exact arithmetic:** reduce bounded accumulations before int64 overflow.
   Expand CRT coverage to the proven count/weight bound. The optional 15-bit limb
   backend relies on exact binary64 partial sums; preserve its chunk bounds and
@@ -73,6 +82,16 @@ Every file under `src/alg_sharpsat` has a distinct responsibility:
   bounded integer/CRT passes. Guardrail `float64` evaluation runs on CPU;
   `float32` supports capability-checked tensor devices and is approximate.
   Floating evaluation and exact counting have different guarantees.
+- **Plans and fast paths:** `num_groups="auto"` compiles two groups, then
+  compares a fixed candidate set by `plan_cost` and records every candidate in
+  `stats.plan_selection`. Keep the choice deterministic: no wall-clock budgets,
+  since seeded samples and MAP ties depend on the plan. Candidate limits bound
+  compilation only; the adopted plan keeps the caller's evaluation budgets. An
+  explicit integer keeps its exact meaning. Linear-domain float64 evaluation is valid only while the
+  summed per-leaf log ranges stay within `SAFE_RANGE` and the row-count product
+  bound holds; other queries must take the log-domain path. Float-guided MAP
+  must return the exact integer pass's answer: on any tie or near tie along the
+  chosen path it defers to that pass, which keeps first-choice ties.
 - **Policy diffs:** compile the conjunction of old and new rules in a fresh
   auxiliary namespace. Align probabilities by variable name even when variable
   order differs. Added mass/count is new minus intersection; removed is old
@@ -113,7 +132,7 @@ unmarked tests: a gate run does not replace the full suite.
 | g7 | [test_hermite_weights.py](tests/test_hermite_weights.py) | Confluent interpolation of Hasse coefficients. |
 | g8 | [test_hermite_jet.py](tests/test_hermite_jet.py) | Exact jets, independent coefficient expansions and resource bounds. |
 | g9 | [test_hermite_jet.py](tests/test_hermite_jet.py), [test_benchmarks.py](tests/test_benchmarks.py) | Measured Lagrange/Hermite work and runtime comparisons. |
-| g10 | [test_sparse_contract.py](tests/test_sparse_contract.py), [test_sparse_semijoin.py](tests/test_sparse_semijoin.py), [test_sparse_host_keys.py](tests/test_sparse_host_keys.py), [test_v3_source_identities.py](tests/test_v3_source_identities.py) | Exact sparse joins, hyperedges, host/high-bit keys, unweighted semijoins and source identities. |
+| g10 | [test_sparse_contract.py](tests/test_sparse_contract.py), [test_sparse_semijoin.py](tests/test_sparse_semijoin.py), [test_sparse_host_keys.py](tests/test_sparse_host_keys.py), [test_v3_source_identities.py](tests/test_v3_source_identities.py), [test_v35_fast_paths.py](tests/test_v35_fast_paths.py) | Exact sparse joins, hyperedges, host/high-bit keys, unweighted semijoins and source identities. |
 | g11 | [test_swap_mobius.py](tests/test_swap_mobius.py), [test_swap_occurrence.py](tests/test_swap_occurrence.py) | SWAP spectra/locality, Möbius and certified occurrence identities. |
 | g12 | [test_benchmarks_v3.py](tests/test_benchmarks_v3.py) | v3 statuses, comparisons and finite crossover estimates. |
 | g13 | [test_wmc_guardrail.py](tests/test_wmc_guardrail.py) | Exact rational weighted counting and all marginals. |
@@ -122,6 +141,8 @@ unmarked tests: a gate run does not replace the full suite.
 | g16 | [test_policy_dsl.py](tests/test_policy_dsl.py), [test_guardrail_domains.py](tests/test_guardrail_domains.py) | DSL/domain semantics, neutral auxiliaries and exact policy diffs. |
 | g17 | [test_guardrail_app.py](tests/test_guardrail_app.py) | Studio REST/CLI, validation and integration. |
 | g18 | [test_llm_intercept.py](tests/test_llm_intercept.py), [test_evidence_clamping.py](tests/test_evidence_clamping.py), [test_intercept_api.py](tests/test_intercept_api.py) | Extraction schema/provenance, role-aware boundary clamps and evidence preservation. |
+| g19 | [test_v35_fast_paths.py](tests/test_v35_fast_paths.py) | Cost-based plan selection, linear-domain float64 against the log-domain path and exact values, float-guided MAP against the exact pass. |
+| g20 | [test_v35_fast_paths.py](tests/test_v35_fast_paths.py) | Bridge-cut inclusion–exclusion against brute force, explicit selection, budgets and edge cases. |
 
 For arithmetic changes, also run [test_tensor_arithmetic.py](tests/test_tensor_arithmetic.py)
 and [test_jet_arithmetic.py](tests/test_jet_arithmetic.py), which contain unmarked
@@ -224,6 +245,13 @@ require rerunning the full benchmark matrix. For the recorded v3 matrix:
 python -m alg_sharpsat.benchmarks --engine v3 --family coupled --sizes 18 22 26 30 --device cpu --repeats 3 --json /tmp/alg-sharpsat-coupled.json
 python -m alg_sharpsat.benchmarks --engine v3 --family bipartite --sizes 18 22 26 30 --device cpu --repeats 3 --json /tmp/alg-sharpsat-bipartite.json
 ```
+
+The external comparison with GANAK, SharpSAT-TD, PySDD and PySAT RC2 lives in
+[scripts/external_bench](scripts/external_bench/common.py); those tools are
+not dependencies and must be obtained separately. Each script takes `TOOLS WORK
+[instance prefixes]` and writes JSON under WORK; `final_tables.py WORK
+[PREVIOUS_WORK]` prints the tables and gate checks recorded in
+[the v3.5 report](docs/external-benchmark-v3.5.md).
 
 The repository checker audits documentation links and release artifacts; its
 snippet option checks executable documentation examples. Inspect the wheel for

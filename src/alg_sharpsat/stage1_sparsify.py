@@ -10,8 +10,8 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass
 
-import networkx as nx
 import numpy as np
+from scipy.sparse.csgraph import connected_components
 
 from .cnf import CNF, Clause, Literal, _integer
 
@@ -178,36 +178,30 @@ class PartitionedCNF:
 def _spectral_groups(cnf: CNF, num_groups: int) -> tuple[tuple[int, ...], ...]:
     """Balanced recursive spectral bisection with deterministic disconnected fallback."""
     n = cnf.num_vars
-    graph = nx.Graph()
-    graph.add_nodes_from(range(n))
+    rows, cols = [], []
     for clause in cnf.clauses:
         variables = sorted({l.var for l in clause.literals})
         for i, a in enumerate(variables):
             for b in variables[i + 1:]:
-                graph.add_edge(a, b, weight=graph.get_edge_data(a, b, {}).get("weight", 0) + 1)
-    adjacency = nx.to_numpy_array(graph, nodelist=list(range(n)), dtype=float)
+                rows += (a, b)
+                cols += (b, a)
+    adjacency = np.zeros((n, n))
+    np.add.at(adjacency, (np.asarray(rows, dtype=int), np.asarray(cols, dtype=int)), 1.0)
     quotas = [n // num_groups + (i < n % num_groups) for i in range(num_groups)]
 
     def order(nodes):
         if len(nodes) <= 1:
             return nodes
         # Explicit components avoid arbitrary bases for a degenerate nullspace.
-        remaining = set(nodes)
-        components = []
-        while remaining:
-            stack = [min(remaining)]
-            remaining.remove(stack[0])
-            component = []
-            while stack:
-                node = stack.pop()
-                component.append(node)
-                neighbors = sorted(v for v in remaining if adjacency[node, v] > 0)
-                remaining.difference_update(neighbors)
-                stack.extend(reversed(neighbors))
-            components.append(sorted(component))
+        # They are listed by smallest member, each in increasing order.
+        index = np.asarray(nodes, dtype=int)
+        _, labels = connected_components(adjacency[np.ix_(index, index)] > 0, directed=False)
+        grouped = {}
+        for node, label in zip(nodes, labels.tolist()):
+            grouped.setdefault(label, []).append(node)
+        components = sorted((sorted(c) for c in grouped.values()), key=lambda c: c[0])
         if len(components) > 1:
             return [v for component in components for v in component]
-        index = np.asarray(nodes, dtype=int)
         subgraph = adjacency[np.ix_(index, index)]
         laplacian = np.diag(subgraph.sum(axis=1)) - subgraph
         _, vectors = np.linalg.eigh(laplacian)
@@ -228,7 +222,8 @@ def _spectral_groups(cnf: CNF, num_groups: int) -> tuple[tuple[int, ...], ...]:
     return tuple(bisect(list(range(n)), quotas))
 
 
-def partition_and_decouple_boundary(cnf: CNF, num_groups: int = 2, block_size: int = 4) -> PartitionedCNF:
+def partition_and_decouple_boundary(cnf: CNF, num_groups: int = 2, block_size: int = 4, *,
+                                    groups=None) -> PartitionedCNF:
     """Make local formulas, sharing one proxy per (master, destination group).
 
     Every declared input variable is retained. Each clause is owned by the
@@ -237,11 +232,16 @@ def partition_and_decouple_boundary(cnf: CNF, num_groups: int = 2, block_size: i
     Equality constraints are represented by boundary links, not local clauses.
     Blocks have one master group but may have several destinations or repeated
     masters; their population count therefore counts links with multiplicity.
+    ``groups`` reuses a spectral partition already computed for this formula.
     """
     cnf.validate()
     _integer(num_groups, "num_groups", 1)
     _integer(block_size, "block_size", 1)
-    groups = [list(v) for v in _spectral_groups(cnf, num_groups)]
+    if groups is None:
+        groups = _spectral_groups(cnf, num_groups)
+    elif len(groups) != num_groups or sorted(v for g in groups for v in g) != list(range(cnf.num_vars)):
+        raise ValueError("groups must partition every variable into num_groups groups")
+    groups = [list(v) for v in groups]
     owners = {v: i for i, variables in enumerate(groups) for v in variables}
     clauses: list[list[Clause]] = [[] for _ in groups]
     proxies: dict[tuple[int, int], int] = {}
