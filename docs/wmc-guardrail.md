@@ -1,4 +1,4 @@
-# wmc-guardrail and Guardrail Studio v3.5
+# wmc-guardrail and Guardrail Studio v3.5.1
 
 [New to the project? Start with the ELI5 and use-case recipes](eli5-and-use-cases.md).
 For implementation changes, use the [agent guide](../AGENTS.md); for the
@@ -71,13 +71,23 @@ time. Every candidate encodes the same support, so exact results do not depend
 on the choice; seeded samples and first-choice MAP ties may differ between
 plans, as they do between explicit group counts.
 
+Since v3.5.1 the candidates of one formula share their spectral bisection
+orders, clause variable sets and the CPU kernel probe, and each candidate keeps
+its leaf rows bit-packed: only the adopted plan decodes them into assignment
+matrices. The selection rule and its inputs are unchanged.
+[tests/data/plan_selection_v350.json](../tests/data/plan_selection_v350.json)
+records the v3.5.0 choice, candidate costs, retained rows and compile work for
+73 formulas, and the g21 tests require the compiler to reproduce them.
+
 `compiled.raw_sparse_stats` records frontier construction; `compiled.stats` also reports compile seconds, phase-1 counts, master supports, and retained assignment counts. `compiled.leaves` and `compiled.nodes` expose the compact plan for inspection; treat them as immutable. Device index/assignment tensors are cached on first use. After rational evaluation, `compiled.last_evaluation` reports the integer bound, arithmetic backend, primes, and pass count.
 
 ## Numerical guarantees and devices
 
 **`exact_rational`:** accepts `Fraction`, `Decimal`, integers, and `(numerator, denominator)` rational scalars. Decimal representations of ordinary float inputs are converted to fractions; provide `Fraction` for explicit semantics. Each variable's weights share an integer scale. A proven nonnegative intermediate bound selects signed-int64 operations or enough 30-bit CRT primes to exceed that bound; reductions are chunked to avoid overflow. Z and marginals are exact Fractions. Logarithms and KL remain floating approximations, since logarithms are generally irrational.
 
-**`float64`:** CPU inference first uses a linear-domain pass. Each leaf's row log-weights come from one matrix product with the query batch and are shifted by their per-query maximum before `exp`, so every row lies in `[exp(-R), 1]` for that leaf's log range R. Segment sums use sparse indicator products (one query uses `bincount`), and one matrix product per leaf yields all owned-variable moments. While the summed leaf ranges stay within `SAFE_RANGE` (600 nats) and the plan's row-count product stays below `exp(600)`, no product or sum can underflow or overflow. Other queries use the stable per-key log-sum-exp path, whose unusually tiny row masses use a log-domain marginal fallback to retain representable subnormal results. Z itself may underflow to zero or overflow to infinity; use `log_partition`. This is finite-precision inference, not rational exactness. Queries may be chunked to fit the configured workspace.
+**`float64`:** CPU inference first uses a linear-domain pass. Each leaf's row log-weights come from one matrix product with the query batch and are shifted by their per-query maximum before `exp`, so every row lies in `[exp(-R), 1]` for that leaf's log range R. Segment sums use sparse indicator products (a single query that does not take the fused path below uses `bincount`), and one matrix product per leaf yields all owned-variable moments. While the summed leaf ranges stay within `SAFE_RANGE` (600 nats) and the plan's row-count product stays below `exp(600)`, no product or sum can underflow or overflow. Other queries use the stable per-key log-sum-exp path, whose unusually tiny row masses use a log-domain marginal fallback to retain representable subnormal results. Z itself may underflow to zero or overflow to infinity; use `log_partition`. This is finite-precision inference, not rational exactness. Queries may be chunked to fit the configured workspace.
+
+**Single float64 queries (v3.5.1):** one float64 NumPy vector (`(n,)` probabilities or `(n, 2)` weights) takes a fused path. On first use the plan is flattened into a table of every root-consistent combination of leaf signatures (at most 2^16 entries). A query multiplies each row's literal weights, sums rows per signature, multiplies signatures per combination and scatters the combination products back, with no per-node dispatch. Weights are used unscaled: with every nonzero literal in `[low, top]`, all intermediates stay within `exp(±SAFE_RANGE)` when `owned·max(0, −ln low)` and `log_rows + owned·max(0, ln top)` are both at most `SAFE_RANGE`. The whole query, including input checks and result assembly, runs in one call to a small C kernel ([_guardrail_native.py](../src/alg_sharpsat/_guardrail_native.py)). The kernel is compiled with the system C compiler on first use, cached in a private per-user directory (`ALG_SHARPSAT_CACHE` overrides it) and checked against NumPy on each plan; `ALG_SHARPSAT_NATIVE=0` disables it. Without a compiler the same algorithm runs in NumPy. Invalid weights, a variable whose two weights are zero, bounds outside `SAFE_RANGE` and tables above the size caps use the general path above, so results and errors are unchanged.
 
 **`float32`:** batched CPU, MPS, or CUDA evaluation uses the same stabilized algorithm at float32 precision. Use `mode="float32", device="mps"` or the `mode="mps"` alias. `device="auto"` probes CUDA, MPS, then CPU; explicit unsupported requests fail. These probes check floating scatter/reduction and matrix operations independently of v1's modular int64 requirements. Float64 requests require CPU. Inputs are prepared on the host, so accelerator timings include transfers; native hardware support and a speedup are not assumed.
 

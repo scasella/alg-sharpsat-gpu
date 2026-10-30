@@ -35,7 +35,8 @@ Every file under `src/alg_sharpsat` has a distinct responsibility:
 | [stage3_design_engine.py](src/alg_sharpsat/stage3_design_engine.py) | Bounded CPU occurrence-design/Möbius jet reference. |
 | [stage4_swap_mobius.py](src/alg_sharpsat/stage4_swap_mobius.py) | Exact miniature SWAP spectra, Boolean Möbius identities and counting reference. |
 | [stage5_wmc_guardrail.py](src/alg_sharpsat/stage5_wmc_guardrail.py) | Compile sparse support/join trees with cost-based plan selection; weighted partition function, marginals and batch evaluation. |
-| [_guardrail_fast.py](src/alg_sharpsat/_guardrail_fast.py) | Private linear-domain float64 plan evaluation and float-guided MAP search. |
+| [_guardrail_fast.py](src/alg_sharpsat/_guardrail_fast.py) | Private linear-domain float64 plan evaluation, fused single-query tables and float-guided MAP search. |
+| [_guardrail_native.py](src/alg_sharpsat/_guardrail_native.py) | Optional C kernel for fused single queries, compiled once into a private per-user cache; NumPy is the fallback. |
 | [_guardrail_exact.py](src/alg_sharpsat/_guardrail_exact.py) | Private bounded integer/modular upward/downward weighted passes and CRT. |
 | [_guardrail_inference.py](src/alg_sharpsat/_guardrail_inference.py) | Private MAP backtracking and rejection-free conditional sampling. |
 | [policy_dsl.py](src/alg_sharpsat/policy_dsl.py) | Named variables/rules, parser, deterministic CNF compilation, clamps and exact policy diff. |
@@ -92,6 +93,13 @@ Every file under `src/alg_sharpsat` has a distinct responsibility:
   bound holds; other queries must take the log-domain path. Float-guided MAP
   must return the exact integer pass's answer: on any tie or near tie along the
   chosen path it defers to that pass, which keeps first-choice ties.
+  Compilation speedups must not change plans: candidates must keep the
+  statuses, costs, retained rows and compile work recorded in
+  [tests/data/plan_selection_v350.json](tests/data/plan_selection_v350.json).
+  A single float64 NumPy query uses the fused flat table (through the C kernel
+  when it builds); it must defer to the general path for invalid weights, a
+  variable whose two weights are zero, literal bounds outside `SAFE_RANGE` and
+  tables above the size caps, and the kernel must agree with the NumPy fallback.
 - **Policy diffs:** compile the conjunction of old and new rules in a fresh
   auxiliary namespace. Align probabilities by variable name even when variable
   order differs. Added mass/count is new minus intersection; removed is old
@@ -143,6 +151,7 @@ unmarked tests: a gate run does not replace the full suite.
 | g18 | [test_llm_intercept.py](tests/test_llm_intercept.py), [test_evidence_clamping.py](tests/test_evidence_clamping.py), [test_intercept_api.py](tests/test_intercept_api.py) | Extraction schema/provenance, role-aware boundary clamps and evidence preservation. |
 | g19 | [test_v35_fast_paths.py](tests/test_v35_fast_paths.py) | Cost-based plan selection, linear-domain float64 against the log-domain path and exact values, float-guided MAP against the exact pass. |
 | g20 | [test_v35_fast_paths.py](tests/test_v35_fast_paths.py) | Bridge-cut inclusion–exclusion against brute force, explicit selection, budgets and edge cases. |
+| g21 | [test_v35_fast_paths.py](tests/test_v35_fast_paths.py) | Fused single queries (C kernel and NumPy) against the log-domain path and exact values, deferrals, kernel cache safety, and reproduction of the v3.5.0 plan choices. |
 
 For arithmetic changes, also run [test_tensor_arithmetic.py](tests/test_tensor_arithmetic.py)
 and [test_jet_arithmetic.py](tests/test_jet_arithmetic.py), which contain unmarked

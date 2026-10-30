@@ -4,13 +4,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 from decimal import Decimal
-from math import gcd, lcm, log
+from math import exp, gcd, inf, lcm, log, nan
 from time import perf_counter
-from copy import deepcopy
+from copy import copy, deepcopy
 import numpy as np
 import torch
 from .cnf import CNF
-from .stage3_sparse_contract import SparseCounter
+from .stage3_sparse_contract import SparseCounter, _first_in_run
 from .stage3_gpu_engine import ResourceLimitError, UnsupportedDeviceError
 from .stage1_sparsify import (
     partition_and_decouple_boundary,
@@ -66,39 +66,88 @@ class PlanNode:
     original_vars: tuple = ()
     assignments: object = None
     key_idx: object = None
+    # Packed local rows and the bit of each original variable; candidate plans
+    # keep these and decode ``assignments`` only once a plan is adopted.
+    packed_rows: object = None
+    row_bits: object = None
 
     @property
     def key_count(self):
         return len(self.keys)
 
 
+_ONE = np.ones(1)
+
+
+def _single_result(marginal, partition, log_partition, acceptance, kl):
+    """Single-query WMCResult of 0-d float64 tensors and a marginal vector."""
+    values = [
+        torch.from_numpy(np.array(x)) for x in (partition, log_partition, acceptance, kl)
+    ]
+    return WMCResult(
+        values[0], torch.from_numpy(marginal), values[1], values[2], values[3]
+    )
+
+
+def _unique_inverse(values):
+    """``np.unique(values, return_inverse=True)`` for nonnegative int64 keys.
+
+    Signature keys use at most 63 bits, so they are never negative. Keys from
+    a range comparable to their number use a presence table instead of a sort.
+    """
+    top = int(values.max()) if len(values) else 0
+    if len(values) and top < 4 * len(values) + 1024:
+        present = np.zeros(top + 1, dtype=bool)
+        present[values] = True
+        lookup = np.cumsum(present) - 1
+        return np.flatnonzero(present), lookup[values]
+    order = np.argsort(values, kind="stable")
+    ordered = values[order]
+    first = _first_in_run(ordered)
+    inverse = np.empty(len(values), dtype=np.int64)
+    inverse[order] = np.cumsum(first) - 1
+    return ordered[first], inverse
+
+
 class _Compiler(SparseCounter):
+    # Plans always compile on the CPU, whose exact-kernel probe cannot change
+    # within a process; probe it once.
+    _cpu_probe = None
+
+    def _select_device(self, device):
+        if device != "cpu":
+            return super()._select_device(device)
+        if _Compiler._cpu_probe is None:
+            _Compiler._cpu_probe = super()._select_device(device)
+        selected, reasons = _Compiler._cpu_probe
+        return selected, list(reasons)
+
     def _finish(self, group, frontier):
         layout = self._layouts[group]
         keys = self._signature_keys(frontier, layout).astype(np.int64)
-        unique, inv, counts = np.unique(keys, return_inverse=True, return_counts=True)
+        unique, inv = _unique_inverse(keys)
         owned = tuple(
             v
             for v in layout["order"]
             if v < self.actual_original_num_vars and v not in self.alias
         )
         self._budget(len(frontier), max(32, len(owned) + 16))
-        assignments = np.array(
-            [((frontier >> layout["positions"][v]) & 1) for v in owned], dtype=bool
-        ).T
-        if not owned:
-            assignments = np.zeros((len(frontier), 0), dtype=bool)
-        self._budget(len(frontier), max(32, len(owned) + 16))
         self.leaves.append(
             PlanNode(
                 layout["scope"],
                 unique,
                 original_vars=owned,
-                assignments=assignments,
                 key_idx=inv,
+                packed_rows=frontier,
+                row_bits=np.array(
+                    [layout["positions"][v] for v in owned], dtype=np.int64
+                ),
             )
         )
-        return super()._finish(group, frontier)
+        counts = np.bincount(inv, minlength=len(unique))
+        return self._factor(
+            group, frontier, torch.from_numpy(unique), torch.from_numpy(counts)
+        )
 
 
 def _fraction(x):
@@ -123,6 +172,29 @@ def _fraction(x):
 AUTO_EXPLORE_COST = 16384
 AUTO_GROUP_CANDIDATES = (6, 4)
 _NODE_COST = 512
+
+
+def _snapshot(stats):
+    """Independent copy of compile statistics; containers hold only scalars."""
+    copied = copy(stats)
+    for name, value in vars(stats).items():
+        if isinstance(value, list):
+            setattr(copied, name, list(value))
+        elif isinstance(value, dict):
+            setattr(copied, name, deepcopy(value))
+    return copied
+
+
+def _node_bytes(node) -> int:
+    """Plan memory, counting undecoded leaf rows at their decoded size."""
+    pending = 0
+    if node.packed_rows is not None:
+        pending = len(node.packed_rows) * len(node.original_vars)
+    return pending + node.keys.nbytes + sum(
+        getattr(node, k).nbytes
+        for k in ("pair_left", "pair_right", "out_idx", "assignments", "key_idx")
+        if getattr(node, k) is not None
+    )
 
 
 def plan_cost(compiled) -> int:
@@ -170,6 +242,7 @@ class CompiledGuardrail:
         max_degree: int | None = None,
         max_width: int | None = None,
         device: str = "auto",
+        _cache: dict | None = None,
         **options,
     ):
         if num_groups == "auto":
@@ -187,18 +260,28 @@ class CompiledGuardrail:
         self.device = device
         self.max_memory_bytes = options.get("max_memory_bytes", 512 * 1024 * 1024)
         self.max_work = options.get("max_work", 2_000_000_000)
+        # Candidate plans of one formula share the transformed formula, its
+        # spectral bisection orders and the device probe.
+        cache = {} if _cache is None else _cache
         c = _Compiler.__new__(_Compiler)
         c.leaves = []
+        c._cache = cache
         c.actual_original_num_vars = cnf.num_vars
-        transformed = (
-            reduce_clause_width_deterministic(cnf, max_width)
-            if max_width is not None
-            else cnf
-        )
-        if max_degree is not None:
-            transformed = split_high_degree_variables(transformed, max_degree)
+        transformed = cache.get("transformed")
+        if transformed is None:
+            transformed = (
+                reduce_clause_width_deterministic(cnf, max_width)
+                if max_width is not None
+                else cnf
+            )
+            if max_degree is not None:
+                transformed = split_high_degree_variables(transformed, max_degree)
+            cache["transformed"] = transformed
         partitioned = partition_and_decouple_boundary(
-            transformed, num_groups, block_size
+            transformed,
+            num_groups,
+            block_size,
+            cache=cache.setdefault("partition", {}),
         )
         _Compiler.__init__(c, partitioned, "cpu", **options)
         self.stats = c.stats
@@ -208,6 +291,7 @@ class CompiledGuardrail:
         self.free_vars = tuple(v for v in range(cnf.num_vars) if v not in owned)
         active = list(range(len(self.nodes)))
         work = 0
+        plan_bytes = sum(map(_node_bytes, self.nodes))
         while len(active) > 1:
             a, b = min(
                 ((a, b) for ii, a in enumerate(active) for b in active[ii + 1 :]),
@@ -222,8 +306,9 @@ class CompiledGuardrail:
             rp = right.keys & shared
             order = np.argsort(rp)
             rp = rp[order]
-            lo = np.searchsorted(rp, left.keys & shared)
-            hi = np.searchsorted(rp, left.keys & shared, side="right")
+            lp = left.keys & shared
+            lo = np.searchsorted(rp, lp)
+            hi = np.searchsorted(rp, lp, side="right")
             lengths = hi - lo
             count = int(lengths.sum())
             work += count
@@ -243,29 +328,11 @@ class CompiledGuardrail:
             for i in remaining:
                 needed |= self.nodes[i].scope
             keep = (left.scope | right.scope) & needed
-            keys, oi = np.unique(
-                (left.keys[li] | right.keys[ri]) & keep, return_inverse=True
-            )
+            keys, oi = _unique_inverse((left.keys[li] | right.keys[ri]) & keep)
             self.nodes.append(PlanNode(keep, keys, a, b, li, ri, oi))
             active = remaining + [len(self.nodes) - 1]
-            if (
-                sum(
-                    n.keys.nbytes
-                    + sum(
-                        getattr(n, k).nbytes
-                        for k in (
-                            "pair_left",
-                            "pair_right",
-                            "out_idx",
-                            "assignments",
-                            "key_idx",
-                        )
-                        if getattr(n, k) is not None
-                    )
-                    for n in self.nodes
-                )
-                > self.max_memory_bytes
-            ):
+            plan_bytes += _node_bytes(self.nodes[-1])
+            if plan_bytes > self.max_memory_bytes:
                 raise ResourceLimitError("compiled plan exceeds max_memory_bytes")
         if not active:
             self.nodes.append(
@@ -288,7 +355,7 @@ class CompiledGuardrail:
         self.stats.selected_engine = "wmc_guardrail"
         # Deterministic compile effort: local enumeration plus join pairs.
         self._compile_work = max(c._local_work, default=0) + work
-        self.raw_sparse_stats = deepcopy(self.stats)
+        self.raw_sparse_stats = _snapshot(self.stats)
         self._prune_unreachable()
         self._tensor_cache = {}
         self._probe_cache = {}
@@ -306,16 +373,19 @@ class CompiledGuardrail:
             "selected_num_groups": num_groups,
             "cost": plan_cost(self),
         }
+        if _cache is None:
+            self._decode_rows()
 
     def _select_plan(self, cnf, **options):
         """Compile candidate partitions and adopt the cheapest plan."""
         started = perf_counter()
+        cache = {}
 
         def build(groups, **limits):
             begin = perf_counter()
             try:
                 plan = CompiledGuardrail(
-                    cnf, num_groups=groups, **{**options, **limits}
+                    cnf, num_groups=groups, _cache=cache, **{**options, **limits}
                 )
             except ResourceLimitError as exc:
                 return None, {
@@ -369,6 +439,7 @@ class CompiledGuardrail:
                 candidates.append(record)
                 if plan is not None and record["cost"] < best_cost:
                     best, best_cost = plan, record["cost"]
+        best._decode_rows()
         self.__dict__.update(best.__dict__)
         # Candidate limits applied to compilation only; evaluation keeps the
         # caller's budgets.
@@ -385,6 +456,121 @@ class CompiledGuardrail:
             "cost": best_cost,
             "candidates": candidates,
         }
+
+    def _decode_rows(self):
+        """Decode the adopted plan's packed leaf rows into assignment matrices."""
+        for node in self.leaves:
+            if node.packed_rows is not None:
+                node.assignments = (
+                    (node.packed_rows[:, None] >> node.row_bits) & 1
+                ).astype(bool)
+                node.packed_rows = node.row_bits = None
+
+    def _fused(self):
+        """Flat single-query tables, built on first use; None if too large."""
+        plan = self.__dict__.get("_fused_plan", False)
+        if plan is False:
+            from ._guardrail_fast import FusedPlan
+
+            plan = self._fused_plan = FusedPlan.build(self)
+        return plan
+
+    def _workspace(self):
+        """Float rows one query touches, for the evaluation budgets."""
+        rows = self.__dict__.get("_workspace_rows")
+        if rows is None:
+            rows = self._workspace_rows = (
+                sum(
+                    n.key_count * 3
+                    + (
+                        len(n.pair_left) * 4
+                        if n.pair_left is not None
+                        else len(n.key_idx) * 3
+                    )
+                    for n in self.nodes
+                )
+                + self.original_num_vars * 4
+            )
+        return rows
+
+    def _evaluate_single(self, inputs, weights, input_kind):
+        """Fused float64 query for one float64 NumPy vector.
+
+        Returns None, deferring to the general path, for other inputs, invalid
+        or out-of-budget queries, a variable with two zero weights, ranges past
+        ``SAFE_RANGE`` and plans whose flat table would be too large.
+        """
+        if weights is not None:
+            if inputs is not None:
+                return None
+            source, kind = weights, "weights"
+        else:
+            source, kind = inputs, input_kind
+        n = self.original_num_vars
+        if type(source) is not np.ndarray or source.dtype != np.float64 or not n:
+            return None
+        if kind == "weights" and source.shape == (n, 2):
+            probabilities = False
+        elif kind == "probabilities" and source.shape == (n,):
+            probabilities = True
+        else:
+            return None
+        fused = self._fused()
+        rows = self._workspace()
+        if (
+            fused is None
+            or rows > self.max_work
+            or max(rows * 8, source.size * 24) > self.max_memory_bytes
+        ):
+            return None
+        if fused.native is not None:
+            if not source.flags.c_contiguous:
+                source = np.ascontiguousarray(source)
+            out = np.empty(n + 4)
+            if fused.native(
+                fused.native_address, source.ctypes.data, probabilities, out.ctypes.data
+            ):
+                return None
+            return _single_result(out[:n], *out[n:].tolist())
+        if not fused.numpy_ok:
+            return None
+        raw = np.stack((1 - source, source), axis=-1) if probabilities else source
+        ordered = np.sort(raw, axis=None)
+        low, top = ordered[0], ordered[-1]
+        if not (low >= 0 and top < inf):
+            return None
+        zeros = low == 0
+        if zeros:
+            if not (raw.max(1) > 0).all():
+                return None
+            low = raw[raw > 0].min()
+        if not fused.safe(low, top):
+            return None
+        # Flat literal weights; the gather's padding index 2n reads the final 1.
+        core, numerators = fused.evaluate(np.concatenate((raw.ravel(), _ONE)), zeros)
+        sums = raw.sum(1)
+        product = float(sums.prod())
+        prior = log(product) if 0 < product < inf else float(np.log(sums).sum())
+        free = fused.free
+        log_partition = -inf
+        if core > 0:
+            log_partition = log(core)
+            if len(free):
+                log_partition += float(np.log(sums[free]).sum())
+        if log_partition > -inf:
+            marginal = numerators / core
+            if len(free):
+                marginal[free] = raw[free, 1] / sums[free]
+            kl = prior - log_partition
+        else:
+            marginal, kl = np.full(n, nan), nan
+        try:
+            partition = exp(log_partition)
+        except OverflowError:
+            partition = inf
+        return _single_result(
+            marginal, partition, log_partition, exp(log_partition - prior), kl
+        )
 
     def _fast(self):
         """Sorted float64 evaluation arrays, built once on first use."""
@@ -407,22 +593,36 @@ class CompiledGuardrail:
                 pair_masks[i] = mask
                 allowed[node.left][node.pair_left[mask]] = True
                 allowed[node.right][node.pair_right[mask]] = True
+        # Nodes whose signatures all survive keep their numbering (None).
         remaps = []
         for node, mask in zip(self.nodes, allowed):
-            mapping = np.full(node.key_count, -1, dtype=np.int64)
-            mapping[mask] = np.arange(int(mask.sum()))
+            mapping = None
+            if not mask.all():
+                mapping = np.full(node.key_count, -1, dtype=np.int64)
+                mapping[mask] = np.arange(int(mask.sum()))
             remaps.append(mapping)
         for i, node in enumerate(self.nodes):
-            node.keys = node.keys[allowed[i]]
+            remap = remaps[i]
             if node.left < 0:
-                rows = allowed[i][node.key_idx]
-                node.assignments = node.assignments[rows]
-                node.key_idx = remaps[i][node.key_idx[rows]]
-            else:
+                if remap is not None:
+                    node.keys = node.keys[allowed[i]]
+                    rows = allowed[i][node.key_idx]
+                    if node.packed_rows is not None:
+                        node.packed_rows = node.packed_rows[rows]
+                    else:
+                        node.assignments = node.assignments[rows]
+                    node.key_idx = remap[node.key_idx[rows]]
+                continue
+            left, right, out = node.pair_left, node.pair_right, node.out_idx
+            if remap is not None:
                 mask = pair_masks[i]
-                node.pair_left = remaps[node.left][node.pair_left[mask]]
-                node.pair_right = remaps[node.right][node.pair_right[mask]]
-                node.out_idx = remaps[i][node.out_idx[mask]]
+                node.keys = node.keys[allowed[i]]
+                left, right, out = left[mask], right[mask], remap[out[mask]]
+            if remaps[node.left] is not None:
+                left = remaps[node.left][left]
+            if remaps[node.right] is not None:
+                right = remaps[node.right][right]
+            node.pair_left, node.pair_right, node.out_idx = left, right, out
 
     def _cached_tensors(self, target, dtype):
         """Materialize immutable plan indices once per device and arithmetic type."""
@@ -850,6 +1050,10 @@ class CompiledGuardrail:
         Floating zero-mass posteriors are NaN; exact undefined entries are None.
         ``log_partition`` stays meaningful when floating partition mass underflows.
         """
+        if mode == "float64" and device in (None, "cpu", "auto"):
+            single = self._evaluate_single(inputs, weights, input_kind)
+            if single is not None:
+                return single
         if mode == "exact_rational":
             from ._guardrail_exact import evaluate_exact
 
@@ -872,20 +1076,7 @@ class CompiledGuardrail:
         if len(logs) == 0:
             raise ValueError("batch must contain at least one weight vector")
         dtype = torch.float32 if mode == "float32" else torch.float64
-        rows = self.__dict__.get("_workspace_rows")
-        if rows is None:
-            rows = self._workspace_rows = (
-                sum(
-                    n.key_count * 3
-                    + (
-                        len(n.pair_left) * 4
-                        if n.pair_left is not None
-                        else len(n.key_idx) * 3
-                    )
-                    for n in self.nodes
-                )
-                + self.original_num_vars * 4
-            )
+        rows = self._workspace()
         bytes_per = max(1, rows * (4 if mode == "float32" else 8))
         if bytes_per > self.max_memory_bytes:
             raise ResourceLimitError("evaluation workspace exceeds max_memory_bytes")

@@ -1,7 +1,14 @@
-"""v3.5 fast paths: plan selection, linear-domain float64, float-guided MAP, bridge cuts."""
+"""v3.5 fast paths: plan selection, linear-domain float64, float-guided MAP, bridge cuts.
 
+v3.5.1 adds the fused single-query path, its optional C kernel and a fixture
+of v3.5.0 plan choices that the faster compiler must reproduce.
+"""
+
+from concurrent.futures import ThreadPoolExecutor
 from fractions import Fraction
 from itertools import product
+import json
+from pathlib import Path
 import random
 
 import numpy as np
@@ -9,7 +16,9 @@ import pytest
 import torch
 from hypothesis import given, settings, strategies as st
 
-from alg_sharpsat.benchmarks import bipartite_3sat, coupled_3sat
+import alg_sharpsat._guardrail_fast as fast
+import alg_sharpsat._guardrail_native as native
+from alg_sharpsat.benchmarks import bipartite_3sat, coupled_3sat, random_3sat
 from alg_sharpsat.cnf import CNF, Clause, Literal, brute_force_count, dpll_count
 from alg_sharpsat.domains import get_domains
 from alg_sharpsat.stage1_sparsify import partition_and_decouple_boundary
@@ -268,3 +277,167 @@ def test_bridge_cut_counts_match_every_assignment_split():
     models = sum(all(any(bits[l.var] == l.pos for l in c.literals) for c in cnf.clauses)
                  for bits in product((False, True), repeat=6))
     assert count == models
+
+
+def both_single_paths(compiled, *args, **kwargs):
+    """One query through the native kernel (when built) and the NumPy fallback."""
+    fused = compiled._fused()
+    first = compiled.evaluate(*args, mode="float64", **kwargs)
+    if fused is None or fused.native is None:
+        return first, first
+    kernel, fused.native = fused.native, None
+    try:
+        return first, compiled.evaluate(*args, mode="float64", **kwargs)
+    finally:
+        fused.native = kernel
+
+
+def assert_single_shapes(result, n):
+    for name in ("partition_function", "log_partition", "acceptance_prob", "kl_divergence_nats"):
+        value = getattr(result, name)
+        assert isinstance(value, torch.Tensor) and value.shape == () and value.dtype == torch.float64
+    assert result.posterior_marginals.shape == (n,)
+    assert result.posterior_marginals.dtype == torch.float64
+
+
+@pytest.mark.g21
+@settings(max_examples=80, deadline=None)
+@given(weighted_cases(), st.integers(0, 2**16))
+def test_fused_single_query_matches_log_domain_path(case, seed):
+    cnf, probs, groups = case
+    compiled = compile_guardrail(cnf, num_groups=groups)
+    for result in both_single_paths(compiled, probs[0]):
+        assert_single_shapes(result, cnf.num_vars)
+        assert_same(result, log_domain(compiled, probs[0]))
+    # Unnormalized weight pairs, including single zero weights.
+    scale = np.random.default_rng(seed).uniform(0.25, 4.0, size=(cnf.num_vars, 1))
+    weights = np.stack([1 - probs[0], probs[0]], -1) * scale
+    with np.errstate(divide="ignore"):
+        logs = np.log(weights)
+    slow = compiled._evaluate_floating(logs[None], False, torch.device("cpu"), torch.float64)
+    for result in both_single_paths(compiled, weights=weights):
+        assert_same(result, slow)
+    assert_same(compiled.evaluate(weights=np.asfortranarray(weights), mode="float64"), slow)
+
+
+@pytest.mark.g21
+@pytest.mark.parametrize("domain", sorted(get_domains()))
+def test_policies_use_the_fused_path(domain):
+    pack = get_domains()[domain]
+    compiled = compile_guardrail(pack.policy.to_cnf())
+    assert compiled._fused() is not None
+    names = pack.policy.variable_names
+    preset = pack.presets[next(iter(pack.presets))]
+    p = np.array([float(Fraction(str(preset[name]))) for name in names])
+    p = np.concatenate([p, np.full(compiled.original_num_vars - len(p), 0.5)])
+    exact = compiled.evaluate([Fraction(x).limit_denominator(10**6) for x in p],
+                              mode="exact_rational")
+    for result in both_single_paths(compiled, p):
+        assert float(result.partition_function) == pytest.approx(
+            float(exact.partition_function), rel=1e-12, abs=0)
+        expected = np.array([float(x) for x in exact.posterior_marginals])
+        assert np.allclose(result.posterior_marginals.numpy(), expected, rtol=0, atol=1e-12)
+
+
+@pytest.mark.g21
+def test_fused_path_defers_unsafe_invalid_and_unsupported_queries(monkeypatch):
+    cnf = formula(6, [[1, 2], [-2, 3], [3, 4, -5], [5, 6]])
+    compiled = compile_guardrail(cnf, num_groups=2)
+    base = np.full((6, 2), 0.5)
+
+    def check_deferred(weights):
+        assert compiled._evaluate_single(None, weights, "probabilities") is None
+        slow = compiled._evaluate_floating(np.log(weights)[None], False, torch.device("cpu"),
+                                           torch.float64)
+        assert_same(compiled.evaluate(weights=weights, mode="float64"), slow)
+
+    with np.errstate(divide="ignore"):
+        both_zero = base.copy()
+        both_zero[2] = 0.0
+        check_deferred(both_zero)
+    wide = base.copy()
+    wide[:, 0] = 1e-300
+    check_deferred(wide)
+    for bad in (-0.5, np.nan, np.inf):
+        weights = base.copy()
+        weights[1, 1] = bad
+        assert compiled._evaluate_single(None, weights, "probabilities") is None
+        with pytest.raises(ValueError):
+            compiled.evaluate(weights=weights, mode="float64")
+    with pytest.raises(ValueError):
+        compiled.evaluate(np.full(6, 1.5), mode="float64")
+    # Other dtypes and batches keep the general path.
+    assert compiled._evaluate_single(base.astype(np.float32), None, "weights") is None
+    assert compiled._evaluate_single(base[None], None, "weights") is None
+    unsat = compile_guardrail(formula(2, [[1], [-1], [2]]))
+    assert unsat._fused() is None
+    assert float(unsat.evaluate(np.full(2, 0.5), mode="float64").partition_function) == 0.0
+    fused = compiled._fused()
+    monkeypatch.setattr(fused, "native", None)
+    monkeypatch.setattr(fast, "FUSED_NUMPY_MAX_GATHER", 0)
+    assert compiled._evaluate_single(None, base, "probabilities") is None
+    monkeypatch.setattr(fast, "FUSED_MAX_ENTRIES", 1)
+    capped = compile_guardrail(cnf, num_groups=2)
+    assert capped._fused() is None
+    assert_same(capped.evaluate(np.full(6, 0.3), mode="float64"),
+                log_domain(capped, np.full(6, 0.3)))
+
+
+@pytest.mark.g21
+def test_native_kernel_is_optional_and_needs_a_private_cache(monkeypatch, tmp_path):
+    monkeypatch.setenv("ALG_SHARPSAT_NATIVE", "0")
+    assert native._load() is None
+    shared = tmp_path / "shared"
+    shared.mkdir()
+    shared.chmod(0o777)
+    monkeypatch.setenv("ALG_SHARPSAT_CACHE", str(shared))
+    with pytest.raises(OSError):
+        native._cache_dir()
+    monkeypatch.delenv("ALG_SHARPSAT_NATIVE")
+    assert native._load() is None
+    private = tmp_path / "private"
+    monkeypatch.setenv("ALG_SHARPSAT_CACHE", str(private))
+    assert native._cache_dir() == private
+    assert private.stat().st_mode & 0o077 == 0
+
+
+@pytest.mark.g21
+def test_native_kernel_matches_numpy_under_concurrent_queries():
+    if native.kernel() is None:
+        pytest.skip("no C compiler: the native kernel is unavailable")
+    compiled = compile_guardrail(get_domains()["cloud_ops_agent"].policy.to_cnf())
+    assert compiled._fused().native is not None
+    rng = np.random.default_rng(5)
+    queries = rng.uniform(0.05, 0.95, size=(64, compiled.original_num_vars))
+    expected = [both_single_paths(compiled, q)[1] for q in queries]
+    with ThreadPoolExecutor(4) as pool:
+        results = list(pool.map(lambda q: compiled.evaluate(q, mode="float64"), queries))
+    for result, reference in zip(results, expected):
+        assert_same(result, reference)
+
+
+PLANS_V350 = json.loads((Path(__file__).parent / "data" / "plan_selection_v350.json").read_text())
+
+
+def fixture_formula(name):
+    if name.startswith("domain_"):
+        return get_domains()[name.removeprefix("domain_")].policy.to_cnf()
+    family, n, seed = name.split("_")
+    generator = {"coupled": coupled_3sat, "bipartite": bipartite_3sat, "random": random_3sat}[family]
+    return generator(int(n[1:]), seed=int(seed[1:]))
+
+
+@pytest.mark.g21
+@pytest.mark.parametrize("name", sorted(PLANS_V350))
+def test_auto_plan_selection_reproduces_v350(name):
+    expected = PLANS_V350[name]
+    compiled = compile_guardrail(fixture_formula(name))
+    plan = compiled.stats.plan_selection
+    assert plan["selected_num_groups"] == expected["selected_num_groups"]
+    assert plan["cost"] == expected["cost"]
+    assert [[c["num_groups"], c["status"], c.get("cost")] for c in plan["candidates"]] == \
+        expected["candidates"]
+    assert compiled.stats.retained_assignment_counts == expected["retained_assignment_counts"]
+    assert compiled._compile_work == expected["compile_work"]
+    assert compiled.raw_sparse_stats.local_assignment_counts == expected["local_assignment_counts"]
+    assert compiled.raw_sparse_stats.join_pair_counts == expected["join_pair_counts"]

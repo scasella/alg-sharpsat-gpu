@@ -7,7 +7,6 @@ Repeated literals in one clause count as one incidence.
 """
 from __future__ import annotations
 
-from collections import Counter
 from dataclasses import dataclass
 
 import numpy as np
@@ -175,41 +174,74 @@ class PartitionedCNF:
             raise ValueError("each boundary link must occur in exactly one measurement block")
 
 
-def _spectral_groups(cnf: CNF, num_groups: int) -> tuple[tuple[int, ...], ...]:
-    """Balanced recursive spectral bisection with deterministic disconnected fallback."""
+def _component_labels(linked: np.ndarray) -> np.ndarray:
+    """Connected-component labels of a dense symmetric Boolean matrix.
+
+    Small graphs propagate minimum labels directly, which avoids scipy's
+    per-call graph validation; any correct labelling yields the same groups.
+    """
+    n = len(linked)
+    if n > 256:
+        return connected_components(linked, directed=False)[1]
+    labels = np.arange(n)
+    while True:
+        updated = np.minimum(labels, np.where(linked, labels, n).min(1))
+        updated = updated[updated]
+        if np.array_equal(updated, labels):
+            return labels
+        labels = updated
+
+
+def _spectral_groups(cnf: CNF, num_groups: int, cache: dict | None = None) -> tuple[tuple[int, ...], ...]:
+    """Balanced recursive spectral bisection with deterministic disconnected fallback.
+
+    ``cache`` shares the adjacency matrix and bisection orders between calls
+    for the same formula with different group counts.
+    """
     n = cnf.num_vars
-    rows, cols = [], []
-    for clause in cnf.clauses:
-        variables = sorted({l.var for l in clause.literals})
-        for i, a in enumerate(variables):
-            for b in variables[i + 1:]:
-                rows += (a, b)
-                cols += (b, a)
-    adjacency = np.zeros((n, n))
-    np.add.at(adjacency, (np.asarray(rows, dtype=int), np.asarray(cols, dtype=int)), 1.0)
+    cache = {} if cache is None else cache
+    adjacency = cache.get("adjacency")
+    if adjacency is None:
+        rows, cols = [], []
+        for clause in cnf.clauses:
+            variables = sorted({l.var for l in clause.literals})
+            for i, a in enumerate(variables):
+                for b in variables[i + 1:]:
+                    rows += (a, b)
+                    cols += (b, a)
+        adjacency = cache["adjacency"] = np.zeros((n, n))
+        np.add.at(adjacency, (np.asarray(rows, dtype=int), np.asarray(cols, dtype=int)), 1.0)
+    orders = cache.setdefault("orders", {})
     quotas = [n // num_groups + (i < n % num_groups) for i in range(num_groups)]
 
     def order(nodes):
+        key = tuple(nodes)
+        if key not in orders:
+            orders[key] = spectral_order(nodes)
+        return orders[key]
+
+    def spectral_order(nodes):
         if len(nodes) <= 1:
             return nodes
         # Explicit components avoid arbitrary bases for a degenerate nullspace.
         # They are listed by smallest member, each in increasing order.
         index = np.asarray(nodes, dtype=int)
-        _, labels = connected_components(adjacency[np.ix_(index, index)] > 0, directed=False)
+        subgraph = adjacency[np.ix_(index, index)]
+        labels = _component_labels(subgraph > 0)
         grouped = {}
         for node, label in zip(nodes, labels.tolist()):
             grouped.setdefault(label, []).append(node)
         components = sorted((sorted(c) for c in grouped.values()), key=lambda c: c[0])
         if len(components) > 1:
             return [v for component in components for v in component]
-        subgraph = adjacency[np.ix_(index, index)]
         laplacian = np.diag(subgraph.sum(axis=1)) - subgraph
         _, vectors = np.linalg.eigh(laplacian)
         fiedler = vectors[:, 1]
         nonzero = np.flatnonzero(np.abs(fiedler) > 1e-12)
         if nonzero.size and fiedler[nonzero[0]] < 0:
             fiedler = -fiedler
-        return [nodes[i] for i in sorted(range(len(nodes)), key=lambda i: (round(float(fiedler[i]), 12), nodes[i]))]
+        values = fiedler.tolist()
+        return [nodes[i] for i in sorted(range(len(nodes)), key=lambda i: (round(values[i], 12), nodes[i]))]
 
     def bisect(nodes, sizes):
         if len(sizes) == 1:
@@ -223,7 +255,7 @@ def _spectral_groups(cnf: CNF, num_groups: int) -> tuple[tuple[int, ...], ...]:
 
 
 def partition_and_decouple_boundary(cnf: CNF, num_groups: int = 2, block_size: int = 4, *,
-                                    groups=None) -> PartitionedCNF:
+                                    groups=None, cache: dict | None = None) -> PartitionedCNF:
     """Make local formulas, sharing one proxy per (master, destination group).
 
     Every declared input variable is retained. Each clause is owned by the
@@ -232,13 +264,17 @@ def partition_and_decouple_boundary(cnf: CNF, num_groups: int = 2, block_size: i
     Equality constraints are represented by boundary links, not local clauses.
     Blocks have one master group but may have several destinations or repeated
     masters; their population count therefore counts links with multiplicity.
-    ``groups`` reuses a spectral partition already computed for this formula.
+    ``groups`` reuses a spectral partition already computed for this formula;
+    ``cache`` shares bisection orders and clause variable sets between group
+    counts of one formula.
     """
     cnf.validate()
     _integer(num_groups, "num_groups", 1)
     _integer(block_size, "block_size", 1)
-    if groups is None:
+    if groups is None and cache is None:
         groups = _spectral_groups(cnf, num_groups)
+    elif groups is None:
+        groups = _spectral_groups(cnf, num_groups, cache)
     elif len(groups) != num_groups or sorted(v for g in groups for v in g) != list(range(cnf.num_vars)):
         raise ValueError("groups must partition every variable into num_groups groups")
     groups = [list(v) for v in groups]
@@ -247,8 +283,19 @@ def partition_and_decouple_boundary(cnf: CNF, num_groups: int = 2, block_size: i
     proxies: dict[tuple[int, int], int] = {}
     links = []
     next_var = cnf.num_vars
-    for clause in cnf.clauses:
-        votes = Counter(owners[v] for v in {l.var for l in clause.literals})
+    clause_vars = None if cache is None else cache.get("clause_vars")
+    if clause_vars is None:
+        clause_vars = [{l.var for l in clause.literals} for clause in cnf.clauses]
+        if cache is not None:
+            cache["clause_vars"] = clause_vars
+    for clause, variables in zip(cnf.clauses, clause_vars):
+        votes = {}
+        for var in variables:
+            votes[owners[var]] = votes.get(owners[var], 0) + 1
+        if len(votes) == 1:
+            # Every variable is local to one group: keep the clause as is.
+            clauses[next(iter(votes))].append(clause)
+            continue
         group = min(votes, key=lambda gi: (-votes[gi], gi)) if votes else 0
         local_literals = []
         for literal in clause.literals:

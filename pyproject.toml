@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "alg-sharpsat-gpu"
-version = "0.3.5"
+version = "0.3.5.1"
 description = "Executable audit of the Oct 2026 ETH refutation mechanism and sparse boundary-contraction #SAT micro-engine"
 readme = "README.md"
 license = {text = "MIT"}
@@ -36,6 +36,7 @@ addopts = "-ra"
 markers = [
   "g19: cost-based plan selection, linear-domain float64 and float-guided exact MAP",
   "g20: bridge-cut inclusion-exclusion counting",
+  "g21: fused single-query float64 path, native kernel and v3.5.0 plan reproduction",
   "g18: live extraction and role-aware evidence clamping",
   "g16: symbolic policy DSL, domains, and exact policy diff",
   "g17: interactive guardrail studio REST and CLI integration",
