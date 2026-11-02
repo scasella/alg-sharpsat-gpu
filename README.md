@@ -1,4 +1,4 @@
-# alg-sharpsat-gpu v3.5
+# alg-sharpsat-gpu v3.5.1
 
 An exact Python/PyTorch prototype of the supplied cut-and-interpolate #SAT
 construction. It implements counting-preserving CNF transformations, local
@@ -12,12 +12,19 @@ rejection-free conditional sampling. V3.3 adds a local interactive Studio,
 named policy DSL, and exact policy blast-radius auditing. V3.4 adds live
 Codex Luna scenario extraction and evidence locks across inference. V3.5 adds
 cost-based guardrail plan selection, a linear-domain float64 evaluator,
-float-guided exact MAP, and bridge-cut inclusion–exclusion counting.
+float-guided exact MAP, and bridge-cut inclusion–exclusion counting. V3.5.1
+answers a single float64 query in one fused call and roughly halves compile
+time while selecting the same plans.
 
 **Start here:** [ELI5 explanation and four runnable use cases](docs/eli5-and-use-cases.md).
 For integration, read the [API and Studio guide](docs/wmc-guardrail.md).
 Coding agents should start with [AGENTS.md](AGENTS.md) ([Claude entry point](CLAUDE.md)).
 
+> **V3.5.1 performance:** a single policy query (Z and every marginal) takes
+> 8–11 µs instead of 62–75 µs, and policy compilation 1.8–2.3 ms instead of
+> 3.7–5.0 ms, with the same plans as v3.5.0. [What changed](#v351-fused-single-queries-and-faster-compilation) ·
+> [External benchmark](docs/external-benchmark-v3.5.md).
+>
 > **V3.5 performance:** bridge-cut counting finishes the coupled fixtures
 > through n=300, and cost-based guardrail plans bring policy batches to about
 > 1 ms and exact MAP to about 0.1 ms. [What changed](#v35-cost-based-plans-fast-float64-and-bridge-cut-counting) ·
@@ -72,8 +79,8 @@ python -m alg_sharpsat.benchmarks
 ```
 
 Python 3.11 or later is required. Dependencies are declared in `pyproject.toml`.
-This tree is v3.5.0; the Python distribution version is `0.3.5`. The previous
-release tag is `v3.4.0`.
+This tree is v3.5.1; the Python distribution version is `0.3.5.1`. The previous
+release tag is `v3.5.0`.
 The original v3.1 release is retained as tag `v3.1.0`.
 The [v3.1 release verification report](verification-release.xml) records 437 passed
 tests and six skips for unavailable CUDA/MPS hardware. The GitHub Actions
@@ -171,6 +178,57 @@ boundaries. The v1 and v2 entry points retain their explicit interpolation paths
 `Literal.var` is zero-based (`0..num_vars-1`). DIMACS uses its standard signed,
 one-based identifiers. Declared unused variables contribute a factor of two.
 The empty formula has `2**num_vars` models; an empty clause has none.
+
+## V3.5.1: fused single queries and faster compilation
+
+V3.5.1 closes the one gate v3.5.0 missed (a single query under 30 µs) and
+brings policy compilation back under 2.5 ms.
+
+**Fused single queries.** On first use, a compiled plan is flattened into a
+table of every root-consistent combination of leaf signatures. One float64
+query is then a fixed sequence: multiply each row's literal weights, sum rows
+per signature, multiply signatures per combination, and scatter the products
+back for marginals. It runs as one call to a small C kernel
+([_guardrail_native.py](src/alg_sharpsat/_guardrail_native.py)), compiled with
+the system C compiler on first use and cached in a private per-user directory;
+without a compiler the same algorithm runs in NumPy. Invalid weights, a
+variable with two zero weights, ranges outside the safe bounds and very large
+tables keep the previous path, so results and errors are unchanged.
+
+**Faster compilation, same plans.** Plan selection still compiles the 2-, 6-
+and 4-group candidates and keeps the cheapest by `plan_cost`. The candidates
+now share spectral bisection work and the CPU probe, candidates keep their
+rows bit-packed until one is adopted, and several per-group steps use fewer
+array operations. The choices, candidate costs and retained rows on 73
+formulas are checked against a v3.5.0 fixture
+([tests/data/plan_selection_v350.json](tests/data/plan_selection_v350.json)).
+
+Measured on an Apple M4 Pro (CPU, one thread), policies in the order
+clinical / cloud ops / fintech:
+
+| Measurement | v3.5.0 | v3.5.1 | Comparator |
+|---|---:|---:|---:|
+| Policy single query | 72 / 75 / 62 µs | 7.5 / 10.8 / 8.9 µs | PySDD 5–6 µs |
+| Policy compile | 3.74 / 4.98 / 3.65 ms | 1.77 / 2.34 / 1.91 ms | PySDD 14.4 / 11.8 / 12.6 ms |
+| Policy compile + exact query | 4.5 / 5.8 / 4.3 ms | 2.6 / 3.3 / 2.6 ms | GANAK one-shot − launch 9.0 / 27.5 / 25.5 ms |
+| Policy 256-query batch | 0.83 / 1.07 / 0.93 ms | 0.84 / 1.10 / 0.95 ms | PySDD loop 1.47 / 2.07 / 1.50 ms |
+| Policy exact MAP | 0.094 / 0.098 / 0.083 ms | 0.11 / 0.097 / 0.078 ms | RC2Stratified 0.32 / 0.28 / 0.27 ms |
+
+Across all 58 weighted instances, single queries got faster on every one and
+beat PySDD's on 41. The first float64 query after a compile also builds the
+fused tables (0.2–1.4 ms), and the kernel itself is compiled once per
+machine (about 0.24 s). Cloud ops compiles 5.0× faster than PySDD in this
+run but 4.7× in an earlier one, so that ratio is at the edge of the 5× aim.
+Without the C kernel, policy queries take about 21–29 µs.
+See the [external benchmark](docs/external-benchmark-v3.5.md) for the full
+tables and the [guardrail guide](docs/wmc-guardrail.md#numerical-guarantees-and-devices)
+for the numerical bounds.
+
+Validation: **749 passed, 8 skipped** offline ([report](verification-v3.5.1.xml)),
+with the same seven hardware skips and opt-in live Codex test as v3.5.0. The
+new gate g21 checks fused queries (C kernel and NumPy) against the log-domain
+path and exact values, the deferral cases, the kernel's cache safety, and the
+v3.5.0 plan choices.
 
 ## V3.5: cost-based plans, fast float64 and bridge-cut counting
 

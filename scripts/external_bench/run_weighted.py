@@ -6,6 +6,9 @@ Exact rational WMC is compared with one-shot GANAK runs; the cold column times
 ``compile_guardrail(cnf).evaluate(..., mode="exact_rational")`` end to end.
 MAP is compared with PySAT RC2Stratified. Every float64 marginal (one query
 and all 256 batch rows) is checked against exact rational marginals.
+Compile is timed 9 times and the warm single query 300 times (medians); the
+first float64 query on a fresh compile, which builds the fused single-query
+tables, is timed separately, and the single-query path that ran is recorded.
 """
 import contextlib
 import io
@@ -115,14 +118,24 @@ def run(name, cnf, n_named, k, batch):
     row = {"n_named": n_named, "n_vars": n_all, "clauses": len(cnf.clauses)}
     wx, wf, wb = pairs_exact(k, n_all), pairs_float(k, n_all), pairs_float(batch, n_all)
     try:
-        compiled, row["repo_compile_s"] = timed(lambda: compile_guardrail(cnf), 3)
+        compiled, row["repo_compile_s"] = timed(lambda: compile_guardrail(cnf), 9)
         plan = compiled.stats.plan_selection
         row["repo_plan"] = {"selected_num_groups": plan["selected_num_groups"], "mode": plan["mode"],
                             "cost": plan["cost"], "candidates": plan.get("candidates", [])}
         _, row["repo_cold_exact_s"] = timed(
             lambda: compile_guardrail(cnf).evaluate(weights=wx, mode="exact_rational"), 3)
+        def first_query():
+            fresh = compile_guardrail(cnf)
+            start = time.perf_counter()
+            fresh.evaluate(weights=wf, mode="float64")
+            return time.perf_counter() - start
+
+        row["repo_first_query_s"] = median(first_query() for _ in range(3))
         compiled.evaluate(weights=wf, mode="float64")
-        r64, row["repo_q1_float64_s"] = timed(lambda: compiled.evaluate(weights=wf, mode="float64"), 30)
+        fused = compiled._fused()
+        row["repo_q1_path"] = ("general" if fused is None
+                               else "native" if fused.native is not None else "numpy_fused")
+        r64, row["repo_q1_float64_s"] = timed(lambda: compiled.evaluate(weights=wf, mode="float64"), 300)
         compiled.evaluate(weights=wb, mode="float64")
         rb, row["repo_batch256_float64_s"] = timed(lambda: compiled.evaluate(weights=wb, mode="float64"), 5)
         if n_all == n_named:

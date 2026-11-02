@@ -12,6 +12,7 @@ log-domain tensor path instead, which keeps rare-row reductions exact.
 
 from __future__ import annotations
 
+import ctypes
 from math import log
 
 import numpy as np
@@ -299,3 +300,171 @@ class FastPlan:
                 stack.append((item["left"], int(item["pl"][choice])))
                 stack.append((item["right"], int(item["pr"][choice])))
         return choices
+
+
+# A flat table holds at most this many (combination, leaf) entries, and the
+# owned-bit matrix at most this many (variable, row) entries. Without the C
+# kernel, plans whose padded row gather exceeds FUSED_NUMPY_MAX_GATHER entries
+# keep the general path, which is faster there.
+FUSED_MAX_ENTRIES = 1 << 16
+FUSED_MAX_BITS = 1 << 20
+FUSED_NUMPY_MAX_GATHER = 1 << 16
+
+
+class FusedPlan:
+    """One-query float64 evaluation over a flat table of signature combinations.
+
+    Each root-consistent choice of one signature per leaf is listed once, so
+    the upward pass is one product per combination and the downward pass one
+    segment sum per signature: a fixed sequence of about a dozen NumPy calls,
+    however many nodes the plan has. Literal weights are used unscaled. With
+    every nonzero literal in ``[low, top]``, each nonzero product of owned
+    literals lies in ``[low**n, top**n]`` and each sum is at most the number
+    of row tuples times ``top**n``; ``safe`` keeps both inside
+    ``exp(±SAFE_RANGE)``, so no intermediate is subnormal or infinite.
+    """
+
+    def __init__(self, compiled, leaves, rows):
+        nodes = compiled.nodes
+        n = compiled.original_num_vars
+        offsets, start = {}, 0
+        for i in leaves:
+            offsets[i] = start
+            start += nodes[i].key_count
+        self.keys = start
+        width = max(1, max(len(nodes[i].original_vars) for i in leaves))
+        # Row r multiplies literals[gather[:, r]]; index 2n holds the constant 1.
+        self.gather = np.full((width, rows), 2 * n, dtype=np.int64)
+        self.row_key = np.empty(rows, dtype=np.int64)
+        self.bits = np.zeros((n, rows))
+        r = 0
+        for i in leaves:
+            node = nodes[i]
+            count = len(node.key_idx)
+            variables = np.asarray(node.original_vars, dtype=np.int64)
+            bits = node.assignments.T
+            self.gather[: len(variables), r : r + count] = 2 * variables[:, None] + bits
+            self.row_key[r : r + count] = offsets[i] + node.key_idx
+            self.bits[variables, r : r + count] = bits
+            r += count
+        # Expand combinations bottom-up; each node's table is grouped by its key.
+        tables = {}
+        for i, node in enumerate(nodes):
+            if node.left < 0:
+                table = np.full((len(leaves), node.key_count), -1, dtype=np.int64)
+                table[leaves.index(i)] = offsets[i] + np.arange(node.key_count)
+                tables[i] = table, np.arange(node.key_count)
+                continue
+            (left, left_key), (right, right_key) = tables.pop(node.left), tables.pop(node.right)
+            left_count = np.bincount(left_key, minlength=nodes[node.left].key_count)
+            right_count = np.bincount(right_key, minlength=nodes[node.right].key_count)
+            left_start = np.cumsum(left_count) - left_count
+            right_start = np.cumsum(right_count) - right_count
+            sizes = left_count[node.pair_left] * right_count[node.pair_right]
+            pair = np.repeat(np.arange(len(sizes)), sizes)
+            offset = np.arange(len(pair)) - np.repeat(np.cumsum(sizes) - sizes, sizes)
+            across = right_count[node.pair_right][pair]
+            li = left_start[node.pair_left][pair] + offset // across
+            ri = right_start[node.pair_right][pair] + offset % across
+            key = node.out_idx[pair]
+            order = np.argsort(key, kind="stable")
+            table = np.maximum(left[:, li], right[:, ri])[:, order]
+            tables[i] = np.ascontiguousarray(table), key[order]
+        self.combos = tables[compiled.root][0]
+        # Signature masses are segment sums of combination products; every
+        # retained signature occurs in at least one combination.
+        order, self.starts, self.missing = _segments(self.combos.ravel(), self.keys)
+        self.order = order % self.combos.shape[1]
+        self.free = np.asarray(compiled.free_vars, dtype=np.int64)
+        self.owned = n - len(self.free)
+
+    @classmethod
+    def build(cls, compiled):
+        """Return a fused plan, or None when its tables would be too large."""
+        nodes = compiled.nodes
+        leaves = [i for i, node in enumerate(nodes) if node.left < 0]
+        rows = sum(len(nodes[i].key_idx) for i in leaves)
+        log_rows = sum(log(max(1, len(nodes[i].key_idx))) for i in leaves)
+        combinations = []
+        for node in nodes:
+            if node.left < 0:
+                combinations.append(np.ones(node.key_count))
+            else:
+                products = combinations[node.left][node.pair_left] * combinations[node.right][node.pair_right]
+                combinations.append(np.bincount(node.out_idx, products, node.key_count))
+        entries = float(combinations[compiled.root].sum()) * len(leaves)
+        if (
+            not 0 < entries <= FUSED_MAX_ENTRIES
+            or compiled.original_num_vars * rows > FUSED_MAX_BITS
+            or log_rows > SAFE_RANGE
+        ):
+            return None
+        plan = cls(compiled, leaves, rows)
+        plan.log_rows = log_rows
+        if plan.missing is not None:
+            return None
+        plan._attach_native()
+        return plan
+
+    def _attach_native(self):
+        """Use the C kernel when it builds and reproduces this plan's results."""
+        from ._guardrail_native import Plan, kernel
+
+        self.native = None
+        query = kernel()
+        if query is None:
+            return
+        n = self.bits.shape[0]
+        self.free = np.ascontiguousarray(self.free, dtype=np.int64)
+        # Compressed rows: each row's literal indices without padding, and
+        # the variables it sets to true.
+        literals = self.gather.T
+        valid = literals != 2 * n
+        ones = valid & (literals & 1).astype(bool)
+        self.native_arrays = (
+            np.concatenate(([0], np.cumsum(valid.sum(1)))),
+            literals[valid],
+            np.concatenate(([0], np.cumsum(ones.sum(1)))),
+            literals[ones] >> 1,
+        )
+        self.native_plan = Plan(
+            n, self.gather.shape[1], self.keys, self.combos.shape[0],
+            self.combos.shape[1], len(self.free), self.owned, self.log_rows, SAFE_RANGE,
+            *(array.ctypes.data for array in self.native_arrays),
+            self.row_key.ctypes.data, self.combos.ctypes.data, self.free.ctypes.data,
+        )
+        self.native_address = ctypes.addressof(self.native_plan)
+        # A self-check guards against a stale or mismatched shared library.
+        weights = np.tile([0.375, 0.625], (n, 1))
+        out = np.empty(n + 4)
+        core, numerators = self.evaluate(np.append(weights.ravel(), 1.0), False)
+        expected = numerators / core
+        expected[self.free] = 0.625
+        if not query(self.native_address, weights.ctypes.data, 0, out.ctypes.data) and (
+            np.allclose(out[:n], expected, rtol=0, atol=1e-12)
+            and abs(out[n + 1] - log(core)) <= 1e-12 * max(1.0, abs(log(core)))
+        ):
+            self.native = query
+
+    def safe(self, low, top):
+        """Whether nonzero literals in ``[low, top]`` keep every value normal."""
+        return (
+            self.owned * max(0.0, -log(low)) <= SAFE_RANGE
+            and self.log_rows + self.owned * max(0.0, log(top)) <= SAFE_RANGE
+        )
+
+    @property
+    def numpy_ok(self):
+        return self.gather.size <= FUSED_NUMPY_MAX_GATHER
+
+    def evaluate(self, literals, zeros):
+        """Return (core, numerators) for flat literal weights with a final 1."""
+        rows = literals[self.gather].prod(0)
+        up = np.bincount(self.row_key, rows, self.keys)
+        products = up[self.combos].prod(0)
+        mass = np.add.reduceat(products[self.order], self.starts)
+        if zeros:
+            down = np.divide(mass, up, out=np.zeros(self.keys), where=up > 0)
+        else:
+            down = mass / up
+        return float(products.sum()), self.bits @ (rows * down[self.row_key])

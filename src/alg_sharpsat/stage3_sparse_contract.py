@@ -6,6 +6,7 @@ been included. No dense source-by-proxy matrix or reference solver is used.
 """
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass, field
 from math import prod
 from time import perf_counter
@@ -18,6 +19,14 @@ from .stage1_sparsify import PartitionedCNF, _spectral_groups, partition_and_dec
 from .stage2_algebraic import crt_reconstruct, primes_for_bound
 from .stage3_bridge_cut import bridge_cut_count, find_bridge_cut
 from .stage3_gpu_engine import ResourceLimitError, UnsupportedDeviceError, select_device
+
+
+def _first_in_run(keys):
+    """Boolean mask of the first element of each run of equal sorted keys."""
+    first = np.empty(len(keys), dtype=bool)
+    first[:1] = True
+    np.not_equal(keys[1:], keys[:-1], out=first[1:])
+    return first
 
 
 @dataclass
@@ -73,17 +82,7 @@ class SparseCounter:
         if type(semi_join_pushdown) is not bool:
             raise ValueError("semi_join_pushdown must be a bool")
         self.partitioned = partitioned
-        self.device, reasons = select_device(device)
-        # searchsorted is essential to the sparse path, beyond the v1 probe.
-        try:
-            probe = torch.tensor([1, 3], dtype=torch.int64, device=self.device)
-            if torch.searchsorted(probe, probe).cpu().tolist() != [0, 1]:
-                raise RuntimeError("searchsorted returned incorrect indices")
-        except (RuntimeError, NotImplementedError) as exc:
-            if device != "auto":
-                raise UnsupportedDeviceError(f"sparse key search unavailable on {device}") from exc
-            reasons.append(f"{self.device} sparse search unavailable: {exc}")
-            self.device = torch.device("cpu")
+        self.device, reasons = self._select_device(device)
         self.max_local_assignments, self.max_join_pairs = max_local_assignments, max_join_pairs
         self.max_memory_bytes, self.max_work = max_memory_bytes, max_work
         self.assignment_chunk_size = assignment_chunk_size
@@ -110,6 +109,20 @@ class SparseCounter:
         self.stats.peak_joint_rows = max(self.stats.joint_signature_counts, default=0)
         self.stats.build_seconds = perf_counter() - start
 
+    def _select_device(self, device):
+        selected, reasons = select_device(device)
+        # searchsorted is essential to the sparse path, beyond the v1 probe.
+        try:
+            probe = torch.tensor([1, 3], dtype=torch.int64, device=selected)
+            if torch.searchsorted(probe, probe).cpu().tolist() != [0, 1]:
+                raise RuntimeError("searchsorted returned incorrect indices")
+        except (RuntimeError, NotImplementedError) as exc:
+            if device != "auto":
+                raise UnsupportedDeviceError(f"sparse key search unavailable on {device}") from exc
+            reasons.append(f"{selected} sparse search unavailable: {exc}")
+            selected = torch.device("cpu")
+        return selected, reasons
+
     def _budget(self, rows: int, bytes_per_row: int = 64) -> None:
         if rows * bytes_per_row > self.max_memory_bytes:
             raise ResourceLimitError("sparse tensor workspace exceeds max_memory_bytes")
@@ -122,23 +135,25 @@ class SparseCounter:
         clauses = []
         for clause in p.group_clauses[group]:
             literals = {(lit.var, lit.pos) for lit in clause.literals}
-            if not any((v, not sign) in literals for v, sign in literals):
+            # Tautologies contain some variable with both signs.
+            if len({v for v, _ in literals}) == len(literals):
                 clauses.append(tuple(sorted(literals)))
         active = set(boundary) | {v for c in clauses for v, _ in c}
         self.stats.free_variables += len(p.group_vars[group]) - len(active)
         self.stats.active_local_variables += len(active)
         if len(active) > 63:
             raise ResourceLimitError("local sparse truth-table keys support at most 63 active variables")
-        frequency = {v: sum(v == u for c in clauses for u, _ in c) for v in active}
+        frequency = Counter(u for c in clauses for u, _ in c)
         order = sorted(active, key=lambda v: (-frequency[v], v))
-        direct = len(self.bits) + len(active - boundary.keys()) <= 63
-        if direct:
-            positions = dict(boundary)
-            positions.update((v, len(self.bits) + i)
-                             for i, v in enumerate(v for v in order if v not in boundary))
+        if not self.stats.semi_join_pushdown:
+            direct = len(self.bits) + len(active - boundary.keys()) <= 63
+            if direct:
+                positions = dict(boundary)
+                positions.update((v, len(self.bits) + i)
+                                 for i, v in enumerate(v for v in order if v not in boundary))
+            else:
+                positions = {v: i for i, v in enumerate(order)}
         else:
-            positions = {v: i for i, v in enumerate(order)}
-        if self.stats.semi_join_pushdown:
             # Give each incoming source a consecutive bit register, in its
             # proxy branching order. Prefix membership can then use a small
             # one-dimensional Boolean lookup instead of binary searches.
@@ -147,7 +162,9 @@ class SparseCounter:
             positions = {v: i for i, v in enumerate(proxies + [v for v in order if v not in self.alias])}
             direct = False
         return dict(boundary=boundary, scope=scope, clauses=clauses, order=order,
-                    positions=positions, direct=direct)
+                    positions=positions, direct=direct,
+                    shifts=np.array([positions[v] for v in boundary], dtype=np.int64)[:, None],
+                    bits=np.array(list(boundary.values()), dtype=np.int64)[:, None])
 
     def _zero_frontier(self, empty=False):
         return np.zeros(0 if empty else 1, dtype=np.int64) if self.device.type == "cpu" else torch.zeros(
@@ -193,14 +210,46 @@ class SparseCounter:
                 survivors += len(candidate)
                 self._accepted(group, survivors)
                 pieces.append(candidate)
-            frontier = (np.concatenate(pieces) if cpu else torch.cat(pieces)) if pieces else frontier[:0]
+            frontier = self._joined(pieces, cpu) if pieces else frontier[:0]
         return frontier
+
+    @staticmethod
+    def _joined(pieces, cpu):
+        if len(pieces) == 1:
+            return pieces[0]
+        return np.concatenate(pieces) if cpu else torch.cat(pieces)
+
+    @staticmethod
+    def _byte_tables(layout):
+        """Per frontier byte, the signature bits each of its 256 values sets."""
+        if 'byte_tables' not in layout:
+            chunks = {}
+            for var, bit in layout['boundary'].items():
+                position = layout['positions'][var]
+                chunks.setdefault(position >> 3, []).append((position & 7, bit))
+            byte = np.arange(256, dtype=np.int64)[:, None]
+            layout['byte_tables'] = [
+                (8 * chunk, np.bitwise_or.reduce(
+                    ((byte >> np.array([s for s, _ in items])) & 1) << np.array([b for _, b in items]),
+                    axis=1))
+                for chunk, items in sorted(chunks.items())]
+        return layout['byte_tables']
 
     def _signature_keys(self, frontier, layout):
         cpu = self.device.type == "cpu"
         dtype = np.uint32 if len(self.bits) <= 32 else np.int64
         if layout['direct']:
             return (frontier & layout['scope']).astype(dtype) if cpu else frontier & layout['scope']
+        if cpu and len(frontier) >= 512:
+            # Large frontiers translate each byte of a row through a table.
+            keys = np.zeros(len(frontier), dtype=np.int64)
+            for shift, table in self._byte_tables(layout):
+                keys |= table[(frontier >> shift) & 255]
+            return keys.astype(dtype)
+        if cpu and len(frontier) * len(layout['bits']) <= 1 << 20:
+            # Gather every boundary bit at once; rows of (bits, frontier) reduce fastest.
+            values = ((frontier >> layout['shifts']) & 1) << layout['bits']
+            return np.bitwise_or.reduce(values, axis=0).astype(dtype)
         keys = np.zeros(len(frontier), dtype=dtype) if cpu else torch.zeros_like(frontier)
         for var, bit in layout['boundary'].items():
             values = ((frontier >> layout['positions'][var]) & 1) << bit
@@ -212,16 +261,19 @@ class SparseCounter:
         keys = self._signature_keys(frontier, layout)
         if self.device.type == "cpu":
             keys.sort()
-            starts = np.flatnonzero(np.r_[True, keys[1:] != keys[:-1]]) if len(keys) else np.empty(0, dtype=np.int64)
+            starts = np.flatnonzero(_first_in_run(keys))
             unique = keys[starts].astype(np.int64)
-            counts = np.diff(np.r_[starts, len(keys)]) if len(keys) else np.empty(0, dtype=np.int64)
+            counts = np.diff(starts, append=len(keys))
             unique, counts = torch.from_numpy(unique), torch.from_numpy(counts)
         else:
             unique, counts = torch.unique(keys, sorted=True, return_counts=True)
+        return self._factor(group, frontier, unique, counts)
+
+    def _factor(self, group, frontier, unique, counts):
         self._budget(len(unique), 24)
         self.stats.local_assignment_counts.append(len(frontier))
         self.stats.joint_signature_counts.append(len(unique))
-        return SparseFactor(layout['scope'], unique, counts)
+        return SparseFactor(self._layouts[group]['scope'], unique, counts)
 
     def _local(self, group: int) -> SparseFactor:
         layout = self._layouts[group]
@@ -234,7 +286,7 @@ class SparseCounter:
         # Sort-based: NumPy's hash-based unique can degrade by ~40x on
         # structured bitmask keys whose low bits are mostly zero.
         keys = np.sort(keys)
-        return keys[np.r_[True, keys[1:] != keys[:-1]]] if len(keys) else keys
+        return keys[_first_in_run(keys)]
 
     def _semijoin_factors(self):
         # First obtain every source's support under its owned-only clauses.
@@ -255,25 +307,34 @@ class SparseCounter:
             self.stats.feasible_master_mask_counts.append(len(support))
         factors = []
         cpu = self.device.type == "cpu"
+        links_by_group = [[] for _ in self._layouts]
+        for link in self.partitioned.boundary_links:
+            links_by_group[link.proxy_group].append(link)
         for group, layout in enumerate(self._layouts):
             incoming = {}
-            for link in self.partitioned.boundary_links:
-                if link.proxy_group == group:
-                    incoming.setdefault(link.master_group, []).append(link.proxy_var)
+            for link in links_by_group[group]:
+                incoming.setdefault(link.master_group, []).append(link.proxy_var)
             projections = []
             for source, variables in incoming.items():
+                if cpu and not layout['direct']:
+                    # Prefix tables and searches tolerate repeated values, so
+                    # the support is encoded without first being made distinct.
+                    shifts = np.array([self.bits[self.alias[v]] for v in variables], dtype=np.int64)[:, None]
+                    places = np.array([layout['positions'][v] for v in variables], dtype=np.int64)[:, None]
+                    encoded = np.bitwise_or.reduce(
+                        ((supports[source].astype(np.int64) >> shifts) & 1) << places, axis=0)
+                    projections.append((source, encoded))
+                    continue
                 scope = sum(1 << self.bits[self.alias[v]] for v in variables)
                 projected = self._distinct(supports[source] & scope)
                 if layout['direct']:
                     encoded = projected.astype(np.int64) if cpu else projected
                 else:
-                    encoded = np.zeros(len(projected), dtype=np.int64) if cpu else torch.zeros_like(projected)
-                    projected = projected.astype(np.int64) if cpu else projected
+                    encoded = torch.zeros_like(projected)
                     for var in variables:
                         encoded |= ((projected >> self.bits[self.alias[var]]) & 1) << layout['positions'][var]
                 projections.append((source, encoded))
-            source_for_proxy = {link.proxy_var: link.master_group for link in self.partitioned.boundary_links
-                                if link.proxy_group == group}
+            source_for_proxy = {link.proxy_var: link.master_group for link in links_by_group[group]}
             encoded_by_source = dict(projections)
             bases = {source: min(layout['positions'][v] for v in variables)
                      for source, variables in incoming.items()}
@@ -292,20 +353,31 @@ class SparseCounter:
                 prefix_masks[source] = prefix_masks.get(source, 0) | bit
                 prefix_sizes[source] = prefix_sizes.get(source, 0) + 1
                 prefix = prefix_masks[source]
-                allowed = self._distinct(encoded_by_source[source] & prefix)
-                constrained = len(allowed) != 1 << prefix_sizes[source]
-                if not len(allowed):
+                lookup = None
+                lookup_size = 1 << prefix_sizes[source]
+                small = lookup_size <= min(1 << 20, self.max_memory_bytes // 4)
+                if cpu and small:
+                    # A source register's prefix is its lowest bits, so the
+                    # projected support indexes a membership table directly.
+                    table = np.zeros(lookup_size, dtype=bool)
+                    table[(encoded_by_source[source] & prefix) >> bases[source]] = True
+                    present = int(np.count_nonzero(table))
+                else:
+                    allowed = self._distinct(encoded_by_source[source] & prefix)
+                    present = len(allowed)
+                constrained = present != lookup_size
+                if not present:
                     frontier = frontier[:0]
                     break
                 patterns = self._patterns(completed[i], layout['positions'])
-                lookup = None
-                lookup_size = 1 << prefix_sizes[source]
-                if constrained and lookup_size <= min(1 << 20, self.max_memory_bytes // 4):
+                if constrained and small:
                     self._budget(self._staged_rows * 32 + lookup_size, 1)
                     self._charge(group, lookup_size, 1)
-                    lookup = np.zeros(lookup_size, dtype=bool) if cpu else torch.zeros(
-                        lookup_size, dtype=torch.bool, device=self.device)
-                    lookup[allowed >> bases[source]] = True
+                    if cpu:
+                        lookup = table
+                    else:
+                        lookup = torch.zeros(lookup_size, dtype=torch.bool, device=self.device)
+                        lookup[allowed >> bases[source]] = True
                 self._charge(group, len(frontier) * 2,
                              1 + sum(map(len, completed[i])) + int(constrained))
                 self._budget(len(frontier) * 2, 32)
@@ -332,7 +404,7 @@ class SparseCounter:
                     survivors += len(candidate)
                     self._accepted(group, survivors)
                     pieces.append(candidate)
-                frontier = (np.concatenate(pieces) if cpu else torch.cat(pieces)) if pieces else frontier[:0]
+                frontier = self._joined(pieces, cpu) if pieces else frontier[:0]
             self._staged_rows -= len(phase1[group])
             phase1[group] = None
             factor = self._finish(group, frontier)

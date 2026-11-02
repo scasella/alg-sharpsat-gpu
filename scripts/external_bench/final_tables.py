@@ -133,10 +133,14 @@ print("\nchecks:", {k: f"{a}/{b}" for k, (a, b) in checks.items()},
 print("\nGate checks:")
 domains = {name: r for name, r in weighted.items() if name.startswith("domain_")}
 for name, r in sorted(domains.items()):
+    compile_s, sdd_s = r["repo_compile_s"], r["sdd_compile_s"]
     print(f"- {name}: batch {ms(r['repo_batch256_float64_s'])} ms (<1.5: "
           f"{r['repo_batch256_float64_s'] < 1.5e-3}; SDD loop {ms(r['sdd_batch256_s'])}), "
           f"MAP {ms(r['repo_map_exact_s'])} ms (<0.20: {r['repo_map_exact_s'] < 2e-4}; RC2 {ms(r['rc2_map_s'])}), "
-          f"query {ms(r['repo_q1_float64_s'])} ms (<0.03: {r['repo_q1_float64_s'] < 3e-5})")
+          f"query {ms(r['repo_q1_float64_s'])} ms (<0.03: {r['repo_q1_float64_s'] < 3e-5}; "
+          f"path {r.get('repo_q1_path', '—')}; first query {ms(r.get('repo_first_query_s'))}), "
+          f"compile {ms(compile_s)} ms (<2.5: {compile_s < 2.5e-3}; SDD {ms(sdd_s)}, "
+          f"{sdd_s / compile_s:.1f}x, >=5x: {sdd_s >= 5 * compile_s})")
 for n in (100, 150, 200, 300):
     rows = groups.get(("coupled", n), [])
     status = [r["auto"].get("status") for r in rows]
@@ -148,18 +152,21 @@ if PREVIOUS:
     old_c = json.loads((PREVIOUS / "counting.json").read_text())
     old_w = json.loads((PREVIOUS / "weighted.json").read_text())
     print("\nRepository medians, previous run → this run (ms):\n")
-    print("| rows | previous repo sparse | this run repo auto |")
-    print("|---|---:|---:|")
+    print("| rows | previous contraction | this run contraction | previous auto | this run auto |")
+    print("|---|---:|---:|---:|---:|")
     old_groups = defaultdict(list)
     for name, row in old_c.items():
         if not name.startswith("_"):
             old_groups[family_size(name)].append(row)
     for key in sorted(k for k in groups if k[0] == "coupled" and k[1] >= 50):
-        print(f"| coupled n={key[1]} | {cell(old_groups[key], 'sparse')} | {cell(groups[key], 'auto')} |")
+        before = old_groups[key]
+        print(f"| coupled n={key[1]} | {cell(before, 'sparse')} | {cell(groups[key], 'sparse')} "
+              f"| {cell(before, 'auto') if any('auto' in r for r in before) else '—'} | {cell(groups[key], 'auto')} |")
     print("\n| instance | metric | previous | this run |")
     print("|---|---|---:|---:|")
     for name in sorted(domains):
         for column, label in (("repo_compile_s", "compile"), ("repo_q1_float64_s", "query"),
+                              ("repo_cold_exact_s", "cold exact"),
                               ("repo_batch256_float64_s", "256 batch"), ("repo_q1_exact_s", "exact query"),
                               ("repo_map_exact_s", "MAP")):
             before = old_w.get(name, {}).get(column)
