@@ -21,6 +21,7 @@ import alg_sharpsat._guardrail_native as native
 from alg_sharpsat.benchmarks import bipartite_3sat, coupled_3sat, random_3sat
 from alg_sharpsat.cnf import CNF, Clause, Literal, brute_force_count, dpll_count
 from alg_sharpsat.domains import get_domains
+import alg_sharpsat.stage1_sparsify as stage1
 from alg_sharpsat.stage1_sparsify import partition_and_decouple_boundary
 from alg_sharpsat.stage3_bridge_cut import bridge_cut_count, find_bridge_cut
 from alg_sharpsat.stage3_gpu_engine import ResourceLimitError
@@ -429,8 +430,14 @@ def fixture_formula(name):
 
 @pytest.mark.g21
 @pytest.mark.parametrize("name", sorted(PLANS_V350))
-def test_auto_plan_selection_reproduces_v350(name):
+def test_auto_plan_selection_reproduces_v350(name, monkeypatch):
+    # Spectral bisection may depend on the LAPACK build when a Fiedler
+    # eigenvalue repeats, so the partitions v3.5.0 produced are supplied and
+    # everything compiled from them is compared.
     expected = PLANS_V350[name]
+    partitions = expected["partitions"]
+    monkeypatch.setattr(stage1, "_spectral_groups", lambda cnf, num_groups, cache=None:
+                        tuple(tuple(group) for group in partitions[str(num_groups)]))
     compiled = compile_guardrail(fixture_formula(name))
     plan = compiled.stats.plan_selection
     assert plan["selected_num_groups"] == expected["selected_num_groups"]

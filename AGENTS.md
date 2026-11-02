@@ -93,9 +93,11 @@ Every file under `src/alg_sharpsat` has a distinct responsibility:
   bound holds; other queries must take the log-domain path. Float-guided MAP
   must return the exact integer pass's answer: on any tie or near tie along the
   chosen path it defers to that pass, which keeps first-choice ties.
-  Compilation speedups must not change plans: candidates must keep the
-  statuses, costs, retained rows and compile work recorded in
-  [tests/data/plan_selection_v350.json](tests/data/plan_selection_v350.json).
+  Compilation speedups must not change plans: from the partitions recorded in
+  [tests/data/plan_selection_v350.json](tests/data/plan_selection_v350.json),
+  candidates must keep the recorded statuses, costs, retained rows and compile
+  work. Spectral bisection itself can differ between LAPACK builds where a
+  Fiedler eigenvalue repeats.
   A single float64 NumPy query uses the fused flat table (through the C kernel
   when it builds); it must defer to the general path for invalid weights, a
   variable whose two weights are zero, literal bounds outside `SAFE_RANGE` and

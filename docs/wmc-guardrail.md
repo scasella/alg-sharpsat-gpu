@@ -60,8 +60,11 @@ With `num_groups="auto"`, compilation first builds the two-group plan. Its
 `plan_cost` estimates float work per query: leaf rows times their weighted
 variables, join pairs, signatures and a fixed per-node dispatch charge. Plans
 costing more than `AUTO_EXPLORE_COST` also compile 6 and 4 groups. The
-candidate set is fixed, not timed, so the same formula always gets the same
-plan. Candidates may not enumerate or join more than twice the baseline's
+candidate set is fixed, not timed, so on one platform the same formula always
+gets the same plan. Across linear-algebra builds the spectral bisection can
+differ where a Fiedler eigenvalue repeats: fintech's six-group candidate costs
+11,054 with macOS Accelerate and 11,687 with Linux OpenBLAS, though both
+select four groups. Candidates may not enumerate or join more than twice the baseline's
 tables; those that would stop with a resource limit. The cheapest completed
 plan is kept. After backward pruning every retained row extends to a model, so
 a partitioned plan never does more row work than the direct model table; the
@@ -76,8 +79,9 @@ orders, clause variable sets and the CPU kernel probe, and each candidate keeps
 its leaf rows bit-packed: only the adopted plan decodes them into assignment
 matrices. The selection rule and its inputs are unchanged.
 [tests/data/plan_selection_v350.json](../tests/data/plan_selection_v350.json)
-records the v3.5.0 choice, candidate costs, retained rows and compile work for
-73 formulas, and the g21 tests require the compiler to reproduce them.
+records the v3.5.0 choice, candidate costs, retained rows, compile work and
+partitions for 73 formulas, and the g21 tests require the compiler to
+reproduce them from those partitions.
 
 `compiled.raw_sparse_stats` records frontier construction; `compiled.stats` also reports compile seconds, phase-1 counts, master supports, and retained assignment counts. `compiled.leaves` and `compiled.nodes` expose the compact plan for inspection; treat them as immutable. Device index/assignment tensors are cached on first use. After rational evaluation, `compiled.last_evaluation` reports the integer bound, arithmetic backend, primes, and pass count.
 
